@@ -1,10 +1,10 @@
 /*
-Theme Name: Template 1.0
+Theme Name: Two Rivers 1.0
 Author: Carey Estes
 Author URI: http://careyestes.com
-Description: This is designed to work as a base template for all sites, with proper plugins and base styles setup
+Description: Custom template for the Two Rivers site
 Version: 1.0
-Text Domain: template
+Text Domain: two-rivers
 
 */
 /* ==========================================================================
@@ -18,11 +18,13 @@ Text Domain: template
  * Mixin for clearfix
  * @include clearfix;
 */
-/*
- * @font-face mixin
- * Bulletproof font-face via Font Squirrel
- * @include fontface('family', 'assets/fonts/', 'myfontname');
- */
+@font-face {
+  font-family: 'langdonregular';
+  src: url("assets/fonts/langdon-webfont.eot");
+  src: url("assets/fonts/langdon-webfont.eot?#iefix") format("embedded-opentype"), url("assets/fonts/langdon-webfont.woff2") format("woff2"), url("assets/fonts/langdon-webfont.woff") format("woff"), url("assets/fonts/langdon-webfont.ttf") format("truetype"), url("assets/fonts/langdon-webfont.svg#langdonregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -450,12 +452,12 @@ html {
  * Customize the background color to match your design.
  */
 ::-moz-selection {
-  background: orange;
+  background: yellow;
   text-shadow: none;
 }
 
 ::selection {
-  background: orange;
+  background: yellow;
   text-shadow: none;
 }
 
@@ -521,18 +523,13 @@ textarea {
 /* ==========================================================================
    General
    ========================================================================== */
+body {
+  background: url(assets/images/wood-bg.jpg);
+}
+
 /* ==========================================================================
    Links
    ========================================================================== */
-a,
-a:visited {
-  color: red;
-}
-
-a:hover {
-  color: blue;
-}
-
 /* ==========================================================================
    Images
    ========================================================================== */
@@ -658,153 +655,61 @@ address {
 }
 
 /* ==========================================================================
-   Grid
-   ========================================================================== */
-.grid {
-  margin: 0 0 20px 0;
-}
-.grid:before, .grid:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-.grid:after {
-  clear: both;
-}
-
-[class*='col-'] {
-  float: left;
-  padding-right: 20px;
-}
-.grid [class*='col-']:last-of-type {
-  padding-right: 0;
-}
-
-.col-1-2 {
-  width: 50%;
-}
-
-.col-1-3 {
-  width: 33.33%;
-}
-
-.col-2-3 {
-  width: 66.66%;
-}
-
-.col-1-4 {
-  width: 25%;
-}
-
-.col-3-4 {
-  width: 75%;
-}
-
-.col-1-8 {
-  width: 12.5%;
-}
-
-.col-7-8 {
-  width: 87.5%;
-}
-
-.module {
-  padding: 20px;
-}
-
-/* Opt-in outside padding */
-.grid-pad {
-  padding: 20px 0 20px 20px;
-}
-.grid-pad [class*='col-']:last-of-type {
-  padding-right: 20px;
-}
-
-/* ==========================================================================
-   Layout
-   ========================================================================== */
-#page {
-  max-width: 1000px;
-  margin: 20px auto;
-}
-
-.content-area {
-  float: left;
-  margin: 0 -25% 0 0;
-  width: 100%;
-}
-
-.site-main {
-  margin: 0 25% 0 0;
-}
-
-.site-content .widget-area {
-  float: right;
-  overflow: hidden;
-  width: 25%;
-}
-
-.site-footer {
-  clear: both;
-  width: 100%;
-}
-
-/* ==========================================================================
    Header
    ========================================================================== */
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-/* ==========================================================================
-   Menus
-   ========================================================================== */
-.main-navigation {
-  clear: both;
+.site-header {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1em 0 0;
+}
+.site-header hgroup {
+  float: left;
+  width: 260px;
+  height: 162px;
+  margin: 0 3em 0 0;
+  background: url(assets/images/two-rivers-logo.png) no-repeat;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .site-header hgroup {
+    background: url(assets/images/two-rivers-logo@2x.png) no-repeat;
+  }
+}
+.site-header .main-navigation {
   display: block;
   float: left;
-  width: 100%;
+  margin: 3.4em 0 0 0;
+  border-top: 2px dotted #000;
+  border-bottom: 2px dotted #000;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+  font-size: 1.4em;
 }
-
-.main-navigation ul {
+.site-header .main-navigation a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+}
+.site-header .main-navigation a:hover {
+  color: #a50000;
+}
+.site-header .main-navigation ul {
   list-style: none;
   margin: 0;
   padding-left: 0;
 }
-
-.main-navigation li {
+.site-header .main-navigation ul li {
   float: left;
   position: relative;
+  padding-left: 4%;
 }
 
-.main-navigation a {
-  display: block;
-  text-decoration: none;
-}
-
-.main-navigation ul ul {
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
-  display: none;
-  float: left;
-  left: 0;
-  position: absolute;
-  top: 1.5em;
-  z-index: 99999;
-}
-
-.main-navigation ul ul ul {
-  left: 100%;
-  top: 0;
-}
-
-.main-navigation ul ul a {
-  width: 200px;
-}
-
-.main-navigation ul li:hover > ul {
-  display: block;
-}
-
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 /* Small menu */
 .menu-toggle {
   cursor: pointer;
@@ -929,34 +834,6 @@ object {
    Blog pages
    ========================================================================== */
 /* ==========================================================================
-   Widgets
-   ========================================================================== */
-.widget {
-  margin: 0 0 1.5em;
-}
-
-/* Make sure select elements fit in widgets */
-.widget select {
-  max-width: 100%;
-}
-
-/* Search widget */
-.widget_search .search-submit {
-  display: none;
-}
-
-/* ==========================================================================
-   Comments
-   ========================================================================== */
-.comment-content a {
-  word-wrap: break-word;
-}
-
-/* ==========================================================================
-   Forms
-   ========================================================================== */
-/* Gravity Forms */
-/* ==========================================================================
    Helper classes
    ========================================================================== */
 /*
@@ -1071,4 +948,8 @@ object {
   h3 {
     page-break-after: avoid;
   }
+}
+hr {
+  height: 7px;
+  background: url(assets/images/divider.gif) repeat-x;
 }

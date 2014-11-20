@@ -58,20 +58,20 @@ add_action( 'wp_enqueue_scripts', 'twentytwelve_scripts_styles' );
  * @param string $mce_css CSS path to load in TinyMCE.
  * @return string Filtered CSS path.
  */
-function twentytwelve_mce_css( $mce_css ) {
-	$font_url = twentytwelve_get_font_url();
+// function twentytwelve_mce_css( $mce_css ) {
+// 	$font_url = twentytwelve_get_font_url();
 
-	if ( empty( $font_url ) )
-		return $mce_css;
+// 	if ( empty( $font_url ) )
+// 		return $mce_css;
 
-	if ( ! empty( $mce_css ) )
-		$mce_css .= ',';
+// 	if ( ! empty( $mce_css ) )
+// 		$mce_css .= ',';
 
-	$mce_css .= esc_url_raw( str_replace( ',', '%2C', $font_url ) );
+// 	$mce_css .= esc_url_raw( str_replace( ',', '%2C', $font_url ) );
 
-	return $mce_css;
-}
-add_filter( 'mce_css', 'twentytwelve_mce_css' );
+// 	return $mce_css;
+// }
+// add_filter( 'mce_css', 'twentytwelve_mce_css' );
 
 /**
  * Filter the page title.

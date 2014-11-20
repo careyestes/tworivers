@@ -3,6 +3,49 @@
    ========================================================================== */
 
 .site-header {
+	width: 100%;
+	max-width: $maxWidth;
+	margin: 0 auto;
+	padding: 1em 0 0;
+	hgroup {
+		float: left;
+		width: 260px;
+		height: 162px;
+		margin: 0 3em 0 0;
+		background: url(assets/images/two-rivers-logo.png) no-repeat;
+		@include hideText();
+		@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+      background: url(assets/images/two-rivers-logo@2x.png) no-repeat;
+		}
+	}
+	.main-navigation {
+		display: block;
+		float: left;
+		margin: 3.4em 0 0 0;
+		border-top: 2px dotted #000;
+		border-bottom: 2px dotted #000;
+		font-family: $langdon;
+		text-transform: uppercase;
+		font-size: 1.4em;
+		a {
+			display: block;
+			text-decoration: none;
+			color: #000;
+			&:hover {
+				color: $red;
+			}
+		}
+		ul {
+			list-style: none;
+			margin: 0;
+			padding-left: 0;
+			li {
+				float: left;
+				position: relative;
+				padding-left: 4%;
+			}
+		}
+	}
 }
 
 .site-description {
