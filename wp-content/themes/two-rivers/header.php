@@ -50,4 +50,6 @@
 	</header><!-- #masthead -->
 	<hr>
 
+	<?php get_template_part('header','carousel'); ?>
+
 	<div id="main" class="wrapper">

@@ -1,5 +1,10 @@
 (function($) {
 
-	// all Javascript code goes here
+	$('.homepageCarousel').slick({
+		autoplay: true,
+		autoplaySpeed: 5000,
+		arrows: true,
+	  adaptiveHeight: true,
+	});
 
 })(jQuery);

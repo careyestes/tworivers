@@ -1,0 +1,18 @@
+.carouselContainer {
+	position: relative;
+	width: 100%;
+	height: auto;
+	min-height: 400px;
+	padding-top: 3em;
+	background: url(assets/images/burlap.jpg);
+	.backgroundLogo {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		width: 855px;
+		height: 215px;
+		margin: -107px auto 0;
+		background: url(assets/images/carousel-logo.png) no-repeat;
+	}
+}
