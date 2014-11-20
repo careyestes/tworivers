@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Mixins
+   ========================================================================== */
+
+/*
+ * Mixin for easy media queries
+ * @include bp(tablet) { SCSS here };
+*/
+@mixin bp($point) {
+	@if $point == desktop {
+		@media (max-width : 1600px) { @content; }
+	}
+	@if $point == tablet {
+		@media (max-width : 1024px) { @content; }
+	}
+	@else if $point == phone {
+		@media (max-width : 768px) { @content; }
+	}
+}
+
+/*
+ * Mixin for clearfix
+ * @include clearfix;
+*/
+@mixin clearfix {
+	&:before,
+	&:after {
+	    content: " "; /* 1 */
+	    display: table; /* 2 */
+	}
+
+	&:after {
+	    clear: both;
+	}
+}
