@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -545,6 +546,7 @@ img {
    ========================================================================== */
 h1, h2, h3, h4, h5, h6 {
   clear: both;
+  color: #4b2406;
 }
 
 p {
@@ -1154,7 +1156,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1203,14 +1205,156 @@ hr {
   margin: 0 4% 1em 0;
 }
 
+.storyboardLevel {
+  position: relative;
+  min-height: 700px;
+  padding: 4em 0;
+}
 .storyboardLevel h3 {
+  position: relative;
+  z-index: 0;
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  border-bottom: 3px dotted #4b2406;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+  text-align: right;
+  font-size: 3em;
+  line-height: 1em;
+}
+.storyboardLevel .object {
+  position: absolute;
+}
+.storyboardLevel .copy {
+  position: absolute;
+  width: 40%;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.8);
+  font-family: "Georgia", Times, serif;
+  font-size: 1em;
+  color: #4b2406;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.storyboardLevel .readMore {
+  display: block;
+  width: 180px;
+  height: 40px;
+  margin: 0 auto;
+  padding: 0 0.5em;
+  text-align: center;
+  background: #50b5d3;
+  border: 0;
+}
+.storyboardLevel .readMore .readMoreText {
+  display: block;
+  padding-top: 0.1em;
+  border: 1px solid #fff;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+  font-size: 1.3em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.familyOfBrands .beans {
+  top: 50px;
+  left: -35px;
+  z-index: 1;
+  width: 395px;
+  height: 402px;
+  background: url(assets/images/parallax-Family-Beans.png);
+}
+.familyOfBrands .leaves {
+  top: 40%;
+  right: 0;
+  z-index: 2;
+  width: 150px;
+  height: 374px;
+  background: url(assets/images/parallax-Family-Leaves.png);
+}
+.familyOfBrands .coffeeNapkin {
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  width: 382px;
+  height: 361px;
+  margin: 0 auto;
+  background: url(assets/images/parallax-Family-CoffeeNapkin.png);
+}
+.familyOfBrands .cappuccino {
+  top: 80%;
+  left: 40px;
+  width: 309px;
+  height: 340px;
+  background: url(assets/images/parallax-Family-Capuccino.png);
+  z-index: 4;
+}
+.familyOfBrands .copy {
+  top: 60%;
+}
+
+.privateLabel .tea {
+  top: 30%;
+  left: -32%;
+  right: 0;
+  width: 327px;
+  height: 303px;
+  margin: 0 auto;
+  z-index: 5;
+  background: url(assets/images/parallax-Private-Tea.png);
+}
+.privateLabel .copy {
+  top: 50%;
+  right: -30%;
+}
+
+.industryExpertise .brownSugar {
+  top: 20%;
+  left: 0;
+  width: 161px;
+  height: 468px;
+  background: url(assets/images/parallax-Industry-Sugar.png);
+}
+.industryExpertise .cocoa {
+  top: 50%;
+  left: 0;
+  right: -40%;
+  z-index: 6;
+  width: 419px;
+  height: 295px;
+  margin: 0 auto;
+  background: url(assets/images/parallax-Industry-Cocoa.png);
+}
+.industryExpertise .copy {
+  top: 28%;
+  left: -20%;
+}
+
+.lids {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 4em 0;
+}
+.lids h3 {
+  width: 100%;
+  margin: 0;
   border-bottom: 3px dotted #000;
   font-family: "langdonregular";
   text-transform: uppercase;
   text-align: right;
   font-size: 3em;
   line-height: 1em;
+}
+.lids h4 {
+  position: relative;
+  top: -25px;
+  margin: 0;
+  padding: 0;
+  font-family: "langdonregular";
+  font-size: 1.2em;
+  text-transform: uppercase;
 }

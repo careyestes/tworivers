@@ -42,6 +42,38 @@ if(function_exists("register_field_group")) {
 	      ),
 	    'menu_order' => 0,
 	));
+  register_field_group(array(
+	    'id' => 'acf_brand_categories',
+	    'title' => 'Categories',
+	    'fields' => array(
+		    array(
+						'key'          => 'tr_brand_categories',
+						'label'        => __('Type'),
+						'name'         => 'brand_categories',
+						'type'         => 'radio',
+						'choices'      => array('coffee' => 'Coffee', 'tea' =>  'Tea', 'hot-chocolate' =>  'Hot Chocolate'),
+						'required'     => true
+ 		    ),
+		  ),
+		  'location' => array(
+			  array(
+	        array(
+	          'param'    => 'post_type',
+	          'operator' => '==',
+	          'value'    => 'tr_brands',
+	          'order_no' => 0,
+	          'group_no' => 0,
+	        ),
+	      ),
+	    ),
+	      'options'        => array(
+	        'position'       => 'side',
+	        'layout'         => 'default',
+	        'hide_on_screen' => array(
+	        ),
+	      ),
+	    'menu_order' => 0,
+	));
 	register_field_group(array(
 	    'id' => 'acf_brand_info',
 	    'title' => 'Brand Info',
@@ -85,12 +117,12 @@ if(function_exists("register_field_group")) {
 	            'name' => 'brand_flavor_type',
 	            'instructions' => 'Add the Roast Type',
 	            'type' => 'radio',
-	            'choices' => array('Light', 'Medium', 'Dark', 'Flavored'),
+	            'choices' => array('light'=>'Light','medium'=>'Medium','dark'=>'Dark','flavored'=>'Flavored'),
 	          ),
 	          array(
 							'key' => 'field_546e9b9583355',
-							'label' => 'flavor_image',
-							'name' => 'Flavor Image',
+							'label' => 'flavor Image',
+							'name' => 'flavor_image',
 							'prefix' => '',
 							'type' => 'image',
 							'instructions' => 'Add Flavor Lid Image',

@@ -9,8 +9,9 @@
 			<?php while($brandThumbQuery->have_posts()): $brandThumbQuery->the_post(); ?>
 			<?php 
 				$brandThumb = get_field('brand_image_black');
-			?>
-			<a href="<?php the_permalink() ?>"><img class="brandThumbBlack" src="<?php echo $brandThumb['url'] ?>"></a>
+				if(isset($brandThumb['url'])): ?>
+					<a href="<?php the_permalink() ?>"><img class="brandThumbBlack" src="<?php echo $brandThumb['url'] ?>"></a>
+				<?php endif ?>
 			<?php endwhile ?>
 		<?php endif ?>
 </section>
