@@ -1,0 +1,12 @@
+.brandThumbs {
+	width: 100%;
+	max-width: $maxWidth;
+	margin: 0 auto;
+	padding: 2em 0;
+	text-align: center;
+	.brandThumbBlack {
+		width: 15%;
+		height: auto;
+		margin: 0 4% 1em 0;
+	}
+}
