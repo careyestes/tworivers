@@ -1202,3 +1202,15 @@ hr {
   height: auto;
   margin: 0 4% 1em 0;
 }
+
+.storyboardLevel h3 {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-bottom: 3px dotted #000;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+  text-align: right;
+  font-size: 3em;
+  line-height: 1em;
+}

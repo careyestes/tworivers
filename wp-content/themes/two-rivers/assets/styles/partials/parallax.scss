@@ -1,0 +1,13 @@
+.storyboardLevel {
+	h3 {
+		width: 100%;
+		max-width: $maxWidth;
+		margin: 0 auto;
+		border-bottom: 3px dotted #000;
+		font-family: $langdon;
+		text-transform: uppercase;
+		text-align: right;
+		font-size: 3em;
+		line-height: 1em;
+	}
+}
