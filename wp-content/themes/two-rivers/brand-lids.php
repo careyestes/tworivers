@@ -1,92 +1,161 @@
 <?php 
+	$flavorTypes         = getFlavorTypes();
 	$lightRoastsArray    = array();
 	$mediumRoastsArray   = array();
 	$darkRoastsArray     = array();
 	$flavoredRoastsArray = array();
+	$otherTypeArray      = array();
 ?>
 <section class="lids">
-  <h3>Coffee</h3>
-  <h4>Roast Type</h4>
-  <?php
-    $args = array(
-    	'post_type' => 'tr_brands',
-    	'posts_per_page' => -1,
-    	'meta_key' => 'brand_categories',
-    	'meta_value' => 'Coffee',
-    	'orderby' => 'meta_value', 
-			'order' => 'ASC' 
-    );
-    $coffeeQuery = new WP_Query($args);
-    if($coffeeQuery->have_posts()): ?>
-	    <?php while($coffeeQuery->have_posts()): $coffeeQuery->the_post(); ?>
-	    	<?php 
-		    	$lids = get_field('brand_lids');
-		    	if($lids) {
-			    	foreach($lids as $lid) {
-			    		if($lid['brand_flavor_type'] == 'light') {
-			    			$lightRoastsArray[] = array( 
-			    				'url' => $lid['flavor_image'], 
-			    				'excerpt' => $lid['brand_flavor_excerpt']
-			    			);
-			    		}
-			    		if($lid['brand_flavor_type'] == 'medium') {
-			    			$mediumRoastsArray[] = array( 
-			    				'url' => $lid['flavor_image'], 
-			    				'excerpt' => $lid['brand_flavor_excerpt']
-			    			);
-			    		}
-			    		if($lid['brand_flavor_type'] == 'dark') {
-			    			$darkRoastsArray[] = array( 
-			    				'url' => $lid['flavor_image'], 
-			    				'excerpt' => $lid['brand_flavor_excerpt']
-			    			);
-			    		}
-			    		if($lid['brand_flavor_type'] == 'flavored') {
-			    			$flavoredRoastsArray[] = array( 
-			    				'url' => $lid['flavor_image'], 
-			    				'excerpt' => $lid['brand_flavor_excerpt']
-			    			);
-			    		}
-			    		
-			    	}
-			    }
-	    	?>
-	    <?php endwhile ?>
-	  <?php endif ?>
-	<section class="roastRow lightRow">
-		<?php $l = 1; foreach($lightRoastsArray as $lid): ?>
-			<?php if($l <= 6): ?>
-				<div class="lidBlock">
-					<img class="lidImage" src="<?php echo $lid['url'] ?>">
-					<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
-				</div>
-			<?php endif; ?>
-			<?php $l++; ?>
+	<?php if($flavorTypes): ?>
+		<?php foreach($flavorTypes as $type): ?>
+			  <h3><?php echo $type['title']; ?></h3>
+			  <h4>Roast Type</h4>
+			  <?php
+			    $args = array(
+			    	'post_type' => 'tr_brands',
+			    	'posts_per_page' => -1,
+			    	'meta_key' => 'brand_categories',
+			    	'meta_value' => $type['slug'],
+			    	'orderby' => 'meta_value', 
+						'order' => 'ASC' 
+			    );
+			    $query = new WP_Query($args);
+			    if($query->have_posts()): ?>
+				    <?php while($query->have_posts()): $query->the_post(); ?>
+				    	<?php 
+					    	$lids = get_field('brand_lids');
+					    	if($lids) {
+						    	foreach($lids as $lid) {
+						    		if($type['slug'] == "coffee") {
+								    		if($lid['brand_flavor_type'] == 'light') {
+								    			$lightRoastsArray[] = array( 
+								    				'url' => $lid['flavor_image'], 
+								    				'title' => $lid['brand_flavor_title'],
+								    				'excerpt' => $lid['brand_flavor_excerpt'],
+								    				'slug' => get_the_permalink()
+								    			);
+								    		} elseif($lid['brand_flavor_type'] == 'medium') {
+								    			$mediumRoastsArray[] = array( 
+								    				'url' => $lid['flavor_image'], 
+								    				'title' => $lid['brand_flavor_title'],
+								    				'excerpt' => $lid['brand_flavor_excerpt'],
+								    				'slug' => get_the_permalink()
+								    			);
+								    		} elseif($lid['brand_flavor_type'] == 'dark') {
+								    			$darkRoastsArray[] = array( 
+								    				'url' => $lid['flavor_image'],
+								    				'title' => $lid['brand_flavor_title'], 
+								    				'excerpt' => $lid['brand_flavor_excerpt'],
+								    				'slug' => get_the_permalink()
+								    			);
+								    		} elseif($lid['brand_flavor_type'] == 'flavored') {
+								    			$flavoredRoastsArray[] = array( 
+								    				'url' => $lid['flavor_image'], 
+								    				'title' => $lid['brand_flavor_title'],
+								    				'excerpt' => $lid['brand_flavor_excerpt'],
+								    				'slug' => get_the_permalink()
+								    			);
+								    		}
+						    		} else {
+						    			$otherTypeArray[] = array( 
+						    				'url' => $lid['flavor_image'],
+						    				'title' => $lid['brand_flavor_title'], 
+						    				'excerpt' => $lid['brand_flavor_excerpt'],
+						    				'slug' => get_the_permalink()
+						    			);
+						    		}
+						    	}
+						    }
+				    	?>
+				    <?php endwhile ?>
+				  <?php endif ?>
+				  <?php wp_reset_postdata(); ?>
+
+				<?php if($lightRoastsArray && count($lightRoastsArray) > 0): ?>
+						<section class="roastRow lightRow">
+							<h5>Light</h5>
+							<?php $l = 1; foreach($lightRoastsArray as $lid): ?>
+								<?php if($l <= 5): ?>
+									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+										<img class="lidImage" src="<?php echo $lid['url'] ?>">
+										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
+										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+									</a>
+								<?php endif; $l++; ?>
+							<?php endforeach ?>
+						</section>
+					<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+				<?php endif; $lightRoastsArray = false; ?>
+
+
+				<?php if($mediumRoastsArray && count($mediumRoastsArray) > 0): ?>
+						<section class="roastRow mediumRow">
+							<h5>Medium</h5>
+							<?php $l = 1; foreach($mediumRoastsArray as $lid): ?>
+								<?php if($l <= 5): ?>
+								<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+									<img class="lidImage" src="<?php echo $lid['url'] ?>">
+									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
+									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+								</a>
+								<?php endif; $l++ ?>
+							<?php endforeach ?>
+						</section>
+					<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+				<?php endif; $mediumRoastsArray = false; ?>
+
+
+				<?php if($darkRoastsArray && count($darkRoastsArray) > 0): ?>
+						<section class="roastRow darkRow">
+							<h5>Dark</h5>
+							<?php $l = 1; foreach($darkRoastsArray as $lid): ?>
+							<?php if($l <= 5): ?>
+								<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+									<img class="lidImage" src="<?php echo $lid['url'] ?>">
+									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
+									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+								</a>
+							<?php endif; $l++; ?>
+							<?php endforeach ?>
+						</section>
+						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+				<?php endif; $darkRoastsArray = false; ?>
+				
+
+				<?php if($flavoredRoastsArray && count($flavoredRoastsArray) > 0): ?>
+						<section class="roastRow flavoredRow">
+							<h5>Flavored</h5>
+							<?php $l = 1; foreach($flavoredRoastsArray as $lid): ?>
+								<?php if($l <= 5): ?>
+									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+										<img class="lidImage" src="<?php echo $lid['url'] ?>">
+										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
+										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+									</a>
+								<?php endif; $l++; ?>
+							<?php endforeach ?>
+						</section>
+				<?php endif; $flavoredRoastsArray = false; ?>
+
+
+				<?php if($otherTypeArray && count($otherTypeArray) > 0): ?>
+						<section class="roastRow <?php echo $type ?>Row">
+						<h5></h5>
+							<?php $l = 1; foreach($otherTypeArray as $lid): ?>
+								<?php if($l <= 5): ?>
+									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+										<img class="lidImage" src="<?php echo $lid['url'] ?>">
+										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
+										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+									</a>
+								<?php endif; $l++; ?>
+							<?php endforeach; $otherTypeArray = false; ?>
+						</section>
+						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+				<?php endif ?>
+
+
 		<?php endforeach ?>
-	</section>
-	<button class="readMore" type="button"><a class="readMoreText" href="#">Read More</a></button>
-	<section class="roastRow mediumRow">
-		<?php foreach($mediumRoastsArray as $lid): ?>
-			<div class="lidBlock">
-				<img class="lidImage" src="<?php echo $lid['url'] ?>">
-				<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
-			</div>
-		<?php endforeach ?>
-	</section>
-	<section class="roastRow darkRow">
-		<?php foreach($darkRoastsArray as $lid): ?>
-			<div class="lidBlock">
-				<img class="lidImage" src="<?php echo $lid['url'] ?>">
-				<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
-			</div>
-		<?php endforeach ?>
-	</section>
-	<section class="roastRow flavoredRow">
-		<?php foreach($flavoredRoastsArray as $lid): ?>
-			<div class="lidBlock">
-				<img class="lidImage" src="<?php echo $lid['url'] ?>">
-				<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
-			</div>
-		<?php endforeach ?>
-	</section>
+	<?php endif ?>
 </section>

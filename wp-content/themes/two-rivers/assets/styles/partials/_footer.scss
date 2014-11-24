@@ -3,4 +3,58 @@
    ========================================================================== */
 
 .site-footer {
+	background: url(assets/images/footer-bg.jpg);
+	min-height: 500px;
+	margin: 0;
+	padding: 0;
+	.siteMapContainer {
+		max-width: $maxWidth;
+		margin: 0 auto;
+		padding: 0 1em 1em;
+		background: url(assets/images/burlap.jpg);
+		.siteMapContainerInner {
+			padding: 0 1.1em;
+			background: rgba(255, 255, 255, 0.4);
+			h2 {
+				margin: 0;
+				padding: 0.2em 0;
+				background: url(assets/images/header-background-diamond.gif) repeat-x left bottom;
+				font-family: $langdon;
+				text-transform: uppercase;
+				text-align: center;
+			}
+			.widgetColumn {
+				float: left;
+				width: 30%;
+				margin: 0 3% 2em 0;
+				h4 {
+					margin: 0.5em 0 0;
+					padding: 0 0.5em;
+					border-bottom: 1px solid $brown;
+					font-weight: normal;
+					font-size: 1.3em;
+				}
+				p {
+					margin: 0;
+					padding: 0.8em 0 0 1.3em;
+				}
+				.menu {
+					list-style: none;
+					margin: 0;
+					padding: 0.8em 0 0 1.3em;
+					li {
+						margin-bottom: 0.2em;
+						a {
+							text-decoration: none;
+							font-size: 1.1em;
+							color: $brown;
+							&:hover {
+								color: $blue;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

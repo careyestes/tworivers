@@ -1,0 +1,50 @@
+/* Custom CSS for Site Info Plugin */
+.wrap .form-table h2 {
+	margin-bottom: 10px;
+	padding-bottom: 0;
+	border-bottom: 1px dotted #ccc;
+	font-size: 18px;
+	line-height: normal;
+}
+.site_info_form .form-table th {
+	width: 100%;
+	padding-bottom: 0;
+}
+.site_info_form .form-table input {
+	margin: 0 10px 0 0;
+	padding: 5px;
+	border-radius: 3px;
+}
+.site_info_form .form-table .addOneButton.button-primary {
+	height: 30px;
+	margin-right: 10px;
+	line-height: 29px;
+	box-shadow: none;
+}
+.site_info_form .form-table .removeButton.button-primary {
+	height: 30px;
+	margin-right: 10px;
+	line-height: 29px;
+	background: #d40808;
+	border-color: #900606;
+	box-shadow: none;
+}
+.site_info_form .form-table .hiddenButton {
+	display: none;
+}
+.site_info_form .form-table td {
+	float: left;
+	padding: 0;
+}
+.view_map {
+	display: block;
+	background: url(../images/googleMapMarker.png) no-repeat left;
+	font-size: 14px;
+	padding-left: 12px;
+}
+#linkdrawer .view_map, .sidebar .view_map {
+	background: url(../images/googleMapMarker-orange.png) no-repeat left;
+}
+.site_info_widget {
+	line-height: 1.4em;
+}

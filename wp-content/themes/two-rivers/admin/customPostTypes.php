@@ -69,3 +69,38 @@ function brand_post_type() {
         register_post_type( 'tr_brands', $args );
         flush_rewrite_rules();
 }
+
+add_action('init', 'brand_categories_post_type');
+function brand_categories_post_type() {
+        $labels = array(
+                'name' => 'Brand Types',
+                'singular_name' => 'Type',
+                'menu_name' => 'Brand Types',
+                'add_new' => 'Add Type',
+                'add_new_item' => 'Add Type',
+                'edit' => 'Edit',
+                'edit_item' => 'Edit Type',
+                'new_item' => 'New Types',
+                'view' => 'View Types',
+                'view_item' => 'View Types',
+                'search_items' => 'Search Types',
+                'not_found' => 'No Types Found',
+                'not_found_in_trash' => 'No Types Found in Trash',
+                'parent' => 'Parent Types',  
+        );
+        $args = array( 'labels' => $labels, 
+                'public' => true,
+                'publicly_queryable' => true,
+                'exclude_from_search' => false,
+                'show_ui' => true, 
+                'query_var' => true,
+                'rewrite' => array('slug'=>'type','with_front'=>true),
+                'capability_type' => 'post',
+                'hierarchical' => false,
+                'menu_position' => 20,
+                'supports' => array('title'),
+        );
+
+        register_post_type( 'tr_brands_types', $args );
+        flush_rewrite_rules();
+}

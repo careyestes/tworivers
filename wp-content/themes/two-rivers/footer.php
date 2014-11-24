@@ -10,13 +10,21 @@
  */
 ?>
 
-	<footer id="colophon" role="contentinfo">
-		<div class="site-info">
-			<?php do_action( 'twentytwelve_credits' ); ?>
-			<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'twentytwelve' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'twentytwelve' ); ?>"><?php printf( __( 'Proudly powered by %s', 'twentytwelve' ), 'WordPress' ); ?></a>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
 </div><!-- #page -->
+<hr class="finalDivider">
+<footer class="site-footer" id="colophon" role="contentinfo">
+	<div class="siteMapContainer">
+		<div class="siteMapContainerInner">
+			<h2>Site Map</h2>
+			<?php if ( is_active_sidebar( 'footer-sidebar' ) ) : ?>
+				<div class="widget-area" role="complementary">
+					<?php dynamic_sidebar( 'footer-sidebar' ); ?>
+				</div><!-- #first .widget-area -->
+			<?php endif; ?>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+</footer>
 
 <?php wp_footer(); ?>
 </body>
