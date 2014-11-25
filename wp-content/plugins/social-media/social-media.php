@@ -1,4 +1,4 @@
-<?php
+	<?php
 /*
 Plugin Name: Social Media Plugin
 Description: A social media plugin for the Two Rivers theme
@@ -72,16 +72,16 @@ class UT_SocialWidget extends WP_Widget {
 			$title = apply_filters('widget_title', $instance['title']);
 			if (!empty($title)) { echo $before_title . $title . $after_title; };
 			//*********************************
-			echo "<ul>";
-			if ($instance['facebook']=='') {} else { ?><li id="ico-facebook"><a href="<?php echo $instance['facebook']; ?>" target="_blank">Facebook</a><?php }
-			if ($instance['twitter']=='') {} else { ?><li id="ico-twitter"><a href="<?php echo $instance['twitter']; ?>" target="_blank">Twitter</a><?php }
-			if ($instance['youtube']=='') {} else { ?><li id="ico-youtube"><a href="<?php echo $instance['youtube']; ?>" target="_blank">YouTube</a><?php }
-			if ($instance['flickr']=='') {} else { ?><li id="ico-flickr"><a href="<?php echo $instance['flickr']; ?>" target="_blank">Flickr</a><?php }			
-			if ($instance['gplus']=='') {} else { ?><li id="ico-gplus"><a href="<?php echo $instance['gplus']; ?>" target="_blank">Google +</a><?php }	
-			if ($instance['instagram']=='') {} else { ?><li id="ico-instagram"><a href="<?php echo $instance['instagram']; ?>" target="_blank">Instagram</a><?php }
-			if ($instance['linkedin']=='') {} else { ?><li id="ico-linkedin"><a href="<?php echo $instance['linkedin']; ?>" target="_blank">LinkedIn</a><?php }	
-			if ($instance['pinterest']=='') {} else { ?><li id="ico-pinterest"><a href="<?php echo $instance['pinterest']; ?>" target="_blank">Pinterest</a><?php }
-			if ($instance['vimeo']=='') {} else { ?><li id="ico-vimeo"><a href="<?php echo $instance['vimeo']; ?>" target="_blank">Vimeo</a><?php }			
+			echo "<ul class='socialFooter'>";
+			if ($instance['facebook']=='') {} else { ?><li class="socialIcon" id="ico-facebook"><a href="<?php echo $instance['facebook']; ?>" target="_blank">Facebook</a><?php }
+			if ($instance['twitter']=='') {} else { ?><li class="socialIcon" id="ico-twitter"><a href="<?php echo $instance['twitter']; ?>" target="_blank">Twitter</a><?php }
+			if ($instance['youtube']=='') {} else { ?><li class="socialIcon" id="ico-youtube"><a href="<?php echo $instance['youtube']; ?>" target="_blank">YouTube</a><?php }
+			if ($instance['flickr']=='') {} else { ?><li class="socialIcon" id="ico-flickr"><a href="<?php echo $instance['flickr']; ?>" target="_blank">Flickr</a><?php }			
+			if ($instance['gplus']=='') {} else { ?><li class="socialIcon" id="ico-gplus"><a href="<?php echo $instance['gplus']; ?>" target="_blank">Google +</a><?php }	
+			if ($instance['instagram']=='') {} else { ?><li class="socialIcon" id="ico-instagram"><a href="<?php echo $instance['instagram']; ?>" target="_blank">Instagram</a><?php }
+			if ($instance['linkedin']=='') {} else { ?><li class="socialIcon" id="ico-linkedin"><a href="<?php echo $instance['linkedin']; ?>" target="_blank">LinkedIn</a><?php }	
+			if ($instance['pinterest']=='') {} else { ?><li class="socialIcon" id="ico-pinterest"><a href="<?php echo $instance['pinterest']; ?>" target="_blank">Pinterest</a><?php }
+			if ($instance['vimeo']=='') {} else { ?><li class="socialIcon" id="ico-vimeo"><a href="<?php echo $instance['vimeo']; ?>" target="_blank">Vimeo</a><?php }			
 			echo "</ul>";
 			//*********************************
 			echo $after_widget;

@@ -1096,6 +1096,100 @@ hr {
   background: url(assets/images/divider.gif) repeat-x;
 }
 
+.socialFooter {
+  list-style: none;
+  margin: 0;
+  padding: .8em 0 0 1.3em;
+}
+.socialFooter .socialIcon {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin: 0 5% 1em 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.socialFooter .socialIcon a {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+.socialFooter #ico-facebook a {
+  background: url(assets/images/social-facebook.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-facebook a {
+    background: url(assets/images/social-facebook@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-twitter a {
+  background: url(assets/images/social-twitter.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-twitter a {
+    background: url(assets/images/social-twitter@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-youtube a {
+  background: url(assets/images/social-youtube.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-youtube a {
+    background: url(assets/images/social-youtube@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-flickr a {
+  background: url(assets/images/social-flickr.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-flickr a {
+    background: url(assets/images/social-flickr@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-gplus a {
+  background: url(assets/images/social-google.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-gplus a {
+    background: url(assets/images/social-google@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-instagram a {
+  background: url(assets/images/social-instagram.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-instagram a {
+    background: url(assets/images/social-instagram@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-linkedin a {
+  background: url(assets/images/social-linkedin.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-linkedin a {
+    background: url(assets/images/social-linkedin@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-pinterest a {
+  background: url(assets/images/social-pinterest.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-pinterest a {
+    background: url(assets/images/social-pinterest@2x.png) no-repeat;
+  }
+}
+.socialFooter #ico-vimeo a {
+  background: url(assets/images/social-vimeo.png) no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .socialFooter #ico-vimeo a {
+    background: url(assets/images/social-vimeo@2x.png) no-repeat;
+  }
+}
+
 /* Slider */
 .slick-slider {
   position: relative;

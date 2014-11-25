@@ -19,13 +19,15 @@ $boxes = get_field('brand_boxes');
 			<img class="mainImageThumb" title="<?php echo $mainThumb['title'] ?>" src="<?php echo $mainThumb['url'] ?>">
 		</section>
 		<section class="brandBoxContainer">
-			<?php foreach($boxes as $box): ?>
-				<div class="brandContainerSingle">
-					<img src="<?php echo $box['flavor_box_image'] ?>">
-					<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
-					<?php echo $box['brand_flavor_desc'] ?>
-				</div>
-			<?php endforeach ?>
+			<?php if($boxes): ?>
+				<?php foreach($boxes as $box): ?>
+					<div class="brandContainerSingle">
+						<img src="<?php echo $box['flavor_box_image'] ?>">
+						<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
+						<?php echo $box['brand_flavor_desc'] ?>
+					</div>
+				<?php endforeach ?>
+			<?php endif; ?>
 			<div style="clear: both;"> </div>
 		</section>
 	</article><!-- #post -->
