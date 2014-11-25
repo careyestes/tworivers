@@ -3,8 +3,8 @@
 require('admin/twentytwelveDefaults.php');
 require('admin/stylesAndScripts.php');
 require('admin/customPostTypes.php');
-require('admin/customFields.php');
 require('admin/customFunctions.php');
+require('admin/customFields.php');
 
 add_action( 'widgets_init', 'tr_add_custom_widgets_init' );
 

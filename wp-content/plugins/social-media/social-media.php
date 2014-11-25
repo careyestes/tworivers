@@ -30,25 +30,25 @@ class UT_SocialWidget extends WP_Widget {
             
             ?>
 			<p><label for="<?php echo $this->get_field_id('title'); ?>">Title:<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>
-			"name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo attribute_escape($title); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('facebook'); ?>">Facebook link:<input class="widefat" id="<?php echo $this->get_field_id('facebook'); ?>
-			"name="<?php echo $this->get_field_name('facebook'); ?>" type="text" value="<?php echo attribute_escape($facebook); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('facebook'); ?>" type="text" value="<?php echo esc_attr($facebook); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('twitter'); ?>">Twitter link:<input class="widefat" id="<?php echo $this->get_field_id('twitter'); ?>
-			"name="<?php echo $this->get_field_name('twitter'); ?>" type="text" value="<?php echo attribute_escape($twitter); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('twitter'); ?>" type="text" value="<?php echo esc_attr($twitter); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('youtube'); ?>">YouTube link:<input class="widefat" id="<?php echo $this->get_field_id('youtube'); ?>
-			"name="<?php echo $this->get_field_name('youtube'); ?>" type="text" value="<?php echo attribute_escape($youtube); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('youtube'); ?>" type="text" value="<?php echo esc_attr($youtube); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('flickr'); ?>">Flickr link:<input class="widefat" id="<?php echo $this->get_field_id('flickr'); ?>
-			"name="<?php echo $this->get_field_name('flickr'); ?>" type="text" value="<?php echo attribute_escape($flickr); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('flickr'); ?>" type="text" value="<?php echo esc_attr($flickr); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('gplus'); ?>">Google+ link:<input class="widefat" id="<?php echo $this->get_field_id('gplus'); ?>
-			"name="<?php echo $this->get_field_name('gplus'); ?>" type="text" value="<?php echo attribute_escape($gplus); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('gplus'); ?>" type="text" value="<?php echo esc_attr($gplus); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('instagram'); ?>">Instagram link:<input class="widefat" id="<?php echo $this->get_field_id('instagram'); ?>
-			"name="<?php echo $this->get_field_name('instagram'); ?>" type="text" value="<?php echo attribute_escape($instagram); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('instagram'); ?>" type="text" value="<?php echo esc_attr($instagram); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('linkedin'); ?>">LinkedIn link:<input class="widefat" id="<?php echo $this->get_field_id('linkedin'); ?>
-			"name="<?php echo $this->get_field_name('linkedin'); ?>" type="text" value="<?php echo attribute_escape($linkedin); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('linkedin'); ?>" type="text" value="<?php echo esc_attr($linkedin); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('pinterest'); ?>">Pinterest link:<input class="widefat" id="<?php echo $this->get_field_id('pinterest'); ?>
-			"name="<?php echo $this->get_field_name('pinterest'); ?>" type="text" value="<?php echo attribute_escape($pinterest); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('pinterest'); ?>" type="text" value="<?php echo esc_attr($pinterest); ?>" /> </label> </p>
 			<p><label for="<?php echo $this->get_field_id('vimeo'); ?>">Vimeo link:<input class="widefat" id="<?php echo $this->get_field_id('vimeo'); ?>
-			"name="<?php echo $this->get_field_name('vimeo'); ?>" type="text" value="<?php echo attribute_escape($vimeo); ?>" /> </label> </p>
+			"name="<?php echo $this->get_field_name('vimeo'); ?>" type="text" value="<?php echo esc_attr($vimeo); ?>" /> </label> </p>
 
 			<?php 
         }  

@@ -2,6 +2,11 @@
 
 // Load from theme add ons
 // define( 'ACF_LITE', true ); //removes the admin menu
+$flavorTypes = getFlavorTypes();
+$catArray = array();
+foreach($flavorTypes as $type) {
+	$catArray[$type['slug']] = $type['title'];
+}
 
 if(function_exists("register_field_group")) {
 	register_field_group(array(
@@ -51,7 +56,7 @@ if(function_exists("register_field_group")) {
 						'label'        => __('Type'),
 						'name'         => 'brand_categories',
 						'type'         => 'radio',
-						'choices'      => array('coffee' => 'Coffee', 'tea' =>  'Tea', 'hot-chocolate' =>  'Hot Chocolate'),
+						'choices'      => $catArray,
 						'required'     => true
  		    ),
 		  ),
@@ -92,6 +97,13 @@ if(function_exists("register_field_group")) {
 		        'instructions'  => __('Image for the homepage group under the slider'),
 		    ),
 		    array(
+		        'key'           => 'tr_brand_image_main',
+		        'label'         => __('Brand Main Thumbnail'),
+		        'name'          => 'brand_image_main',
+		        'type'          => 'image',
+		        'instructions'  => __('Image for the top of the brand page.'),
+		    ),
+		    array(
 	        'key' => 'tr_brand_lids',
 	        'label' => __('Lids'),
 	        'name' => '',
@@ -101,7 +113,7 @@ if(function_exists("register_field_group")) {
 	        'key' => 'acf_brand_lids',
 	        'label' => __('Lids'),
 	        'name' => 'brand_lids',
-	        'instructions' => 'Add each Lid with description',
+	        'instructions' => 'Add each lid with excerpt.',
 	        'type' => 'repeater',
 	        'sub_fields' => array(
 	          array(
@@ -136,18 +148,68 @@ if(function_exists("register_field_group")) {
 							'library'           => 'all',
 						),
 	          array(
-	            'key' => 'acf_brand_flavor_desc',
-	            'label' => 'Flavor Description',
-	            'name' => 'brand_flavor_desc',
-	            'instructions' => 'Add the Flavor Description',
-	            'type' => 'textarea',
-	          ),
-	          array(
 	            'key' => 'acf_brand_flavor_excerpt',
 	            'label' => 'Flavor Excerpt',
 	            'name' => 'brand_flavor_excerpt',
 	            'instructions' => 'Add the Flavor Excerpt. This is a shortened version of the description. 12 words or less.',
 	            'type' => 'textarea',
+	          ),
+	        ),
+	        'row_min'      => '',
+	        'row_limit'    => '',
+	        'layout'       => 'row',
+	        'button_label' => 'Add Flavor',
+        ),
+				array(
+	        'key' => 'tr_brand_boxes',
+	        'label' => __('Boxes'),
+	        'name' => '',
+	        'type' => 'tab',
+	      ),
+	      array(
+	        'key' => 'acf_brand_boxes',
+	        'label' => __('Boxes'),
+	        'name' => 'brand_boxes',
+	        'instructions' => 'Add each box with description.',
+	        'type' => 'repeater',
+	        'sub_fields' => array(
+	          array(
+							'key'          => 'acf_brand_flavor_box_title',
+							'label'        => 'Flavor Title',
+							'name'         => 'brand_flavor_box_title',
+							'instructions' => 'Add the Flavor Title',
+							'type'         => 'text',
+							'required'     => true
+	          ),
+	          array(
+							'key'           => 'acf_brand_flavor_type',
+							'label'         => 'Flavor Roast Type',
+							'name'          => 'brand_flavor_box_type',
+							'instructions'  => 'Add the Roast Type',
+							'type'          => 'radio',
+							'choices'       => array('na'=>'N/A','light'=>'Light','medium'=>'Medium','dark'=>'Dark','flavored'=>'Flavored'),
+							'default_value' => 'na',
+	          ),
+	          array(
+							'key'               => 'field_546e9b9583355',
+							'label'             => 'flavor Image',
+							'name'              => 'flavor_box_image',
+							'prefix'            => '',
+							'type'              => 'image',
+							'instructions'      => 'Add Flavor Box Image',
+							'required'          => 0,
+							'conditional_logic' => 0,
+							'column_width'      => '',
+							'return_format'     => 'url',
+							'preview_size'      => 'thumbnail',
+							'library'           => 'all',
+						),
+	          array(
+	            'key' => 'acf_brand_flavor_desc',
+	            'label' => 'Flavor Description',
+	            'name' => 'brand_flavor_desc',
+	            'instructions' => 'Add the flavor description.',
+	            'type' => 'wysiwyg',
 	          ),
 	        ),
 	        'row_min'      => '',

@@ -1,0 +1,48 @@
+.brands {
+	.mainLogoBlock {
+		width: 300px;
+		margin: 0 auto;
+		padding: 2em 0;
+	}
+	.brandBoxContainer {
+		max-width: $maxWidth;
+		margin: 0 auto;
+		padding: 3em 0;
+		background: url(assets/images/header-background-diamond.gif) repeat-x left top;
+		.brandContainerSingle {
+			float: left;
+			width: 30%;
+			margin: 0 5% 3em 0;
+			&:nth-child(3n+3) {  
+			  margin-right: 0;
+			}
+			h2 {
+				margin: 0;
+				padding: 0.3em 0;
+				border-top: 1px dotted $brown;
+				font-size: 1em;
+			}
+			p {
+				margin: 0 0 1em;
+				font-size: 0.75em;
+			}
+		}
+	}
+	.nav-single {
+		margin-bottom: 3em;
+		.browseMore {
+			max-width: $maxWidth;
+			margin: 0.5em auto;
+			text-align: center;
+			font-family: $langdon;
+			font-size: 1.6em;
+			text-transform: uppercase;
+			border-bottom: 1px dotted $brown;
+		}
+		.browseMoreContainer {
+			max-width: $maxWidth;
+			margin: 0.5em auto;
+			text-align: center;
+		}
+	}
+}

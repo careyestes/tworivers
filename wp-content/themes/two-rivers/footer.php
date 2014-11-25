@@ -25,6 +25,7 @@
 		</div>
 	</div>
 </footer>
+<hr>
 
 <?php wp_footer(); ?>
 </body>
