@@ -11,8 +11,8 @@
 ?>
 
 </div><!-- #page -->
-<hr class="finalDivider">
 <footer class="site-footer" id="colophon" role="contentinfo">
+	<hr>
 	<div class="siteMapContainer">
 		<div class="siteMapContainerInner">
 			<h2>Site Map</h2>
@@ -25,7 +25,6 @@
 		</div>
 	</div>
 </footer>
-<hr>
 
 <?php wp_footer(); ?>
 </body>

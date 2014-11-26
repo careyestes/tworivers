@@ -25,31 +25,32 @@
 				    <?php while($query->have_posts()): $query->the_post(); ?>
 				    	<?php 
 					    	$lids = get_field('brand_lids');
+					    	// var_dump($lids);
 					    	if($lids) {
 						    	foreach($lids as $lid) {
-						    		if($type['slug'] == "coffee") {
-								    		if($lid['brand_flavor_type'] == 'light') {
+						    		if($type['slug'] == "coffee" && $lid['brand_flavor_lid_type']) {
+								    		if($lid['brand_flavor_lid_type'] == 'light') {
 								    			$lightRoastsArray[] = array( 
 								    				'url' => $lid['flavor_image'], 
 								    				'title' => $lid['brand_flavor_title'],
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_type'] == 'medium') {
+								    		} elseif($lid['brand_flavor_lid_type'] == 'medium') {
 								    			$mediumRoastsArray[] = array( 
 								    				'url' => $lid['flavor_image'], 
 								    				'title' => $lid['brand_flavor_title'],
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_type'] == 'dark') {
+								    		} elseif($lid['brand_flavor_lid_type'] == 'dark') {
 								    			$darkRoastsArray[] = array( 
 								    				'url' => $lid['flavor_image'],
 								    				'title' => $lid['brand_flavor_title'], 
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_type'] == 'flavored') {
+								    		} elseif($lid['brand_flavor_lid_type'] == 'flavored') {
 								    			$flavoredRoastsArray[] = array( 
 								    				'url' => $lid['flavor_image'], 
 								    				'title' => $lid['brand_flavor_title'],
@@ -59,7 +60,7 @@
 								    		}
 						    		} else {
 						    			$otherTypeArray[] = array( 
-						    				'url' => $lid['flavor_image'],
+						    				'url' => $lid['flavor_lid_image'],
 						    				'title' => $lid['brand_flavor_title'], 
 						    				'excerpt' => $lid['brand_flavor_excerpt'],
 						    				'slug' => get_the_permalink()

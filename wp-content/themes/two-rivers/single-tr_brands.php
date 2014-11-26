@@ -12,8 +12,7 @@ $postId = get_the_ID();
 $categoryType = get_field('brand_categories');
 ?>
 
-	<div id="primary" class="site-content brands">
-		<div id="content" role="main">
+	<div class="brands">
 
 			<?php while ( have_posts() ) : the_post(); ?>
 
@@ -43,6 +42,5 @@ $categoryType = get_field('brand_categories');
 
 			<?php endwhile; // end of the loop. ?>
 
-		</div><!-- #content -->
-	</div><!-- #primary -->
+	</div><!-- .brands -->
 <?php get_footer(); ?>

@@ -17,6 +17,5 @@
 			  </div>
 			<?php endif;
 		?>  
-	</div>
 </section>
 <hr>

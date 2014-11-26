@@ -790,9 +790,13 @@ address {
    Footer
    ========================================================================== */
 .site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: url(assets/images/footer-bg.jpg);
   min-height: 500px;
-  margin: 0;
+  margin: 0 auto -497px;
   padding: 0;
 }
 .site-footer .siteMapContainer {
@@ -1094,6 +1098,15 @@ hr {
   height: 5px;
   margin: 0;
   background: url(assets/images/divider.gif) repeat-x;
+}
+
+#page {
+  position: relative;
+}
+
+.site-content {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .socialFooter {

@@ -9,3 +9,13 @@ hr {
 	margin: 0;
 	background: url(assets/images/divider.gif) repeat-x;
 }
+
+#page {
+	position: relative;
+}
+
+//Basic Pages 
+.site-content {
+	max-width: $maxWidth;
+	margin: 0 auto;
+}

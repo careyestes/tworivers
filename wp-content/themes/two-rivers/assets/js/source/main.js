@@ -4,7 +4,7 @@
 		autoplay: true,
 		autoplaySpeed: 5000,
 		arrows: true,
-	  adaptiveHeight: true,
+    adaptiveHeight: true,
 	});
 
 	// Add sticky header on scroll
@@ -35,5 +35,26 @@
   		'left': '40px',
   		},'fast');
   });
+
+  var isShowing = false;
+  var pageHeight = $(document).height();
+  if (pageHeight > 3000) {
+    console.log(pageHeight);
+    $(window).scroll(function() {
+        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+            $('.site-footer').animate({ 'marginBottom': 0 }, 'fast');
+            $('#page').animate({ 'top': '-500px' }, 'fast');
+            isShowing = true;
+      }
+
+      else if (isShowing === true && $(window).scrollTop() + $(window).height() <= $(document).height() ) {
+        $('.site-footer').animate({ 'marginBottom': '-497px' }, 'fast');
+        $('#page').animate({ 'top': '0' }, 'fast')
+        isShowing = false;
+      }
+    });
+  } else {
+     $('.site-footer').css({ 'marginBottom': 0, 'position' : 'relative' });
+  }
 
 })(jQuery);
