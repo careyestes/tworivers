@@ -1700,3 +1700,10 @@ hr {
   margin: 0.5em auto;
   text-align: center;
 }
+.brands .nav-single .browseMoreContainer a .browseMoreImage {
+  width: 15%;
+  margin-right: 2%;
+}
+.brands .nav-single .browseMoreContainer a .browseMoreImage:nth-child(3n+3) {
+  margin-right: 0;
+}

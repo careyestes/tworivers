@@ -43,6 +43,13 @@
 			max-width: $maxWidth;
 			margin: 0.5em auto;
 			text-align: center;
+			a .browseMoreImage {
+				width: 15%;
+				margin-right: 2%;
+				&:nth-child(3n+3) {
+					margin-right: 0;
+				}  
+			}
 		}
 	}
 }
