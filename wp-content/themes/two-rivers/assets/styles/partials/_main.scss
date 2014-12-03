@@ -22,29 +22,28 @@ hr {
 
 .brandContainer {
 	padding: 2em 0 4em;
+	text-align: center;
 	&:after {
 		content: " ";
 		clear: both;
 		display: block;
 	}
 	.brandThumbnail {
-		width: 27%;
-		min-height: 251px;
-		float: left;
-		margin: 0 2% 0 0;
+		margin: 0 5% 0 0;
 		padding: 1em;
-		text-align: center;
-		border-right: 1px dotted $brown;
-		border-bottom: 1px dotted $brown;
+		&:nth-child(3n+3) {  
+			  margin-right: 0;
+			}
+		// border-right: 1px dotted $brown;
+		// border-bottom: 1px dotted $brown;
 		h2 {
 			font-family: $langdon;
 			font-size: 1.5em;
 			text-transform: uppercase;
 		}
 		.brandImage {
-			display: block;
 			text-align: center;
-			width: 100%;
+			width: 25%;
 			height: auto;
 		}
 	}

@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: Coffee Template
- * Description: Shows all coffee brands
+ * Template Name: Tea Template
+ * Description: Shows all tea brands
  *
  * @package WordPress
  * @subpackage utresponsive
@@ -17,7 +17,7 @@ get_header(); ?>
 					'post_type' => 'tr_brands',
 					'posts_per_page' => -1,
 					'meta_key' => 'brand_categories',
-					'meta_value' => 'coffee'
+					'meta_value' => 'tea'
 				);
 				$coffeeQuery = new WP_Query($coffeeArgs);
 
