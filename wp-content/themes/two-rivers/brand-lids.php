@@ -141,6 +141,7 @@
 								<?php endif; $l++; ?>
 							<?php endforeach ?>
 						</section>
+						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
 				<?php endif; $flavoredRoastsArray = false; ?>
 
 

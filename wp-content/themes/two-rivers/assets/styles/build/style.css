@@ -1605,6 +1605,7 @@ hr {
   position: relative;
   clear: both;
   width: 100%;
+  min-height: 200px;
 }
 .lids .roastRow h5 {
   float: left;
@@ -1639,7 +1640,7 @@ hr {
   display: block;
   clear: both;
   width: 100%;
-  margin-bottom: 2em;
+  margin-bottom: 4em;
   padding: 0;
   background: transparent;
   border: 0;
