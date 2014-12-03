@@ -19,3 +19,33 @@ hr {
 	max-width: $maxWidth;
 	margin: 0 auto;
 }
+
+.brandContainer {
+	padding: 2em 0 4em;
+	&:after {
+		content: " ";
+		clear: both;
+		display: block;
+	}
+	.brandThumbnail {
+		width: 27%;
+		min-height: 251px;
+		float: left;
+		margin: 0 2% 0 0;
+		padding: 1em;
+		text-align: center;
+		border-right: 1px dotted $brown;
+		border-bottom: 1px dotted $brown;
+		h2 {
+			font-family: $langdon;
+			font-size: 1.5em;
+			text-transform: uppercase;
+		}
+		.brandImage {
+			display: block;
+			text-align: center;
+			width: 100%;
+			height: auto;
+		}
+	}
+}
