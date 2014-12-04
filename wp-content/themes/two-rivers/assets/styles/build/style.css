@@ -795,7 +795,7 @@ address {
   left: 0;
   right: 0;
   background: url(assets/images/footer-bg.jpg);
-  min-height: 500px;
+  height: 500px;
   margin: 0 auto -497px;
   padding: 0;
 }
@@ -1102,6 +1102,14 @@ hr {
 
 #page {
   position: relative;
+  min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -500px;
+}
+#page:after {
+  content: "";
+  display: block;
+  height: 500px;
 }
 
 .site-content {

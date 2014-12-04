@@ -12,6 +12,14 @@ hr {
 
 #page {
 	position: relative;
+	min-height: 100%;
+  /* equal to footer height */
+  margin-bottom: -500px; 
+  &:after {
+  	content: "";
+	  display: block;
+	  height: 500px;
+  }
 }
 
 //Basic Pages 
