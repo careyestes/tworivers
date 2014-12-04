@@ -3,6 +3,7 @@
 		width: 300px;
 		margin: 0 auto;
 		padding: 2em 0;
+		text-align: center;
 	}
 	.brandBoxContainer {
 		max-width: $maxWidth;
@@ -10,11 +11,18 @@
 		padding: 3em 0;
 		background: url(assets/images/header-background-diamond.gif) repeat-x left top;
 		.brandContainerSingle {
+			display: block;
 			float: left;
 			width: 30%;
 			margin: 0 5% 3em 0;
+			padding: 1em;
+			outline: 0;
+			cursor: pointer;
 			&:nth-child(3n+3) {  
 			  margin-right: 0;
+			}
+			&.selected {
+				background: rgba(255,255,255,0.5);
 			}
 			h2 {
 				margin: 0;
@@ -50,6 +58,58 @@
 					margin-right: 0;
 				}  
 			}
+		}
+	}
+	.lightbox {
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 60%;
+		margin: -25% 0 0 -25%;
+		padding: 2em;
+		background: rgba(255,255,255,0.97);
+		box-shadow: 3px 3px 10px $brown;
+		&.active {
+			display: block;
+		}
+		p {
+			line-height: 1.45em;
+		}
+	}
+
+	.lightboxCloseButton {
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: 0;
+		background: transparent;
+		font-size: 0.9em;
+		color: $brown;
+		outline: 0;
+	}
+	.lightboxImage {
+		display: block;
+		float: right;
+		width: 50%;
+		margin-right: 3%;
+		border-bottom: 1px dotted $brown;
+	}
+	.lightboxHeader {
+		font-family: $langdon;
+		font-size: 2em;
+		text-transform: uppercase;
+		border-bottom: 1px dotted $brown;
+	}
+	.strengthMeter {
+		vertical-align: top;
+		font-family: $langdon;
+		text-transform: uppercase;
+		.strengthMeterBlock {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			background: $brown;
 		}
 	}
 }

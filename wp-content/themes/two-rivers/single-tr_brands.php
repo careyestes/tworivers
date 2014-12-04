@@ -32,8 +32,10 @@ $categoryType = get_field('brand_categories');
 					<?php if($randQuery->have_posts()): ?>
 						<section class="browseMoreContainer">
 							<?php while($randQuery->have_posts()): $randQuery->the_post(); ?>
-								<?php $browseImage = get_field('brand_image_black'); ?>
-								<a href="<?php the_permalink() ?>"><img class="browseMoreImage" src="<?php echo $browseImage['url'] ?>" title="<?php echo $browseImage['title'] ?>"></a>
+								<?php $browseImage = get_field('brand_image_black'); 
+								  if(isset($browseImage['url'])): ?>
+										<a href="<?php the_permalink() ?>"><img class="browseMoreImage" src="<?php echo $browseImage['url'] ?>" title="<?php echo $browseImage['title'] ?>"></a>
+									<?php endif ?>
 							<?php endwhile ?>
 						</section>
 					<?php endif ?>

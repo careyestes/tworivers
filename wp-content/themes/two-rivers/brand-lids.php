@@ -24,36 +24,36 @@
 			    if($query->have_posts()): ?>
 				    <?php while($query->have_posts()): $query->the_post(); ?>
 				    	<?php 
-					    	$lids = get_field('brand_lids');
+					    	$lids = get_field('brand_boxes');
 					    	// var_dump($lids);
 					    	if($lids) {
 						    	foreach($lids as $lid) {
-						    		if($type['slug'] == "coffee" && $lid['brand_flavor_lid_type']) {
-								    		if($lid['brand_flavor_lid_type'] == 'light') {
+						    		if($type['slug'] == "coffee" && $lid['brand_flavor_box_type']) {
+								    		if($lid['brand_flavor_box_type'] == 'light') {
 								    			$lightRoastsArray[] = array( 
 								    				'url' => $lid['flavor_lid_image'], 
-								    				'title' => $lid['brand_flavor_title'],
+								    				'title' => $lid['brand_flavor_box_title'],
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_lid_type'] == 'medium') {
+								    		} elseif($lid['brand_flavor_box_type'] == 'medium') {
 								    			$mediumRoastsArray[] = array( 
 								    				'url' => $lid['flavor_lid_image'], 
-								    				'title' => $lid['brand_flavor_title'],
+								    				'title' => $lid['brand_flavor_box_title'],
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_lid_type'] == 'dark') {
+								    		} elseif($lid['brand_flavor_box_type'] == 'dark') {
 								    			$darkRoastsArray[] = array( 
 								    				'url' => $lid['flavor_lid_image'],
-								    				'title' => $lid['brand_flavor_title'], 
+								    				'title' => $lid['brand_flavor_box_title'], 
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
-								    		} elseif($lid['brand_flavor_lid_type'] == 'flavored') {
+								    		} elseif($lid['brand_flavor_box_type'] == 'flavored') {
 								    			$flavoredRoastsArray[] = array( 
 								    				'url' => $lid['flavor_lid_image'], 
-								    				'title' => $lid['brand_flavor_title'],
+								    				'title' => $lid['brand_flavor_box_title'],
 								    				'excerpt' => $lid['brand_flavor_excerpt'],
 								    				'slug' => get_the_permalink()
 								    			);
@@ -61,7 +61,7 @@
 						    		} else {
 						    			$otherTypeArray[] = array( 
 						    				'url' => $lid['flavor_lid_image'],
-						    				'title' => $lid['brand_flavor_title'], 
+						    				'title' => $lid['brand_flavor_box_title'], 
 						    				'excerpt' => $lid['brand_flavor_excerpt'],
 						    				'slug' => get_the_permalink()
 						    			);
@@ -79,7 +79,7 @@
 							<h5>Light</h5>
 							<?php $l = 1; foreach($lightRoastsArray as $lid): ?>
 								<?php if($l <= 5): ?>
-									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
 										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
@@ -87,7 +87,7 @@
 								<?php endif; $l++; ?>
 							<?php endforeach ?>
 						</section>
-					<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+					<!-- <button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button> -->
 				<?php endif; $lightRoastsArray = false; ?>
 
 
@@ -97,7 +97,7 @@
 							<h5>Medium</h5>
 							<?php $l = 1; foreach($mediumRoastsArray as $lid): ?>
 								<?php if($l <= 5): ?>
-								<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+								<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 									<img class="lidImage" src="<?php echo $lid['url'] ?>">
 									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
 									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
@@ -105,7 +105,7 @@
 								<?php endif; $l++ ?>
 							<?php endforeach ?>
 						</section>
-					<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+					<!-- <button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button> -->
 				<?php endif; $mediumRoastsArray = false; ?>
 
 
@@ -115,7 +115,7 @@
 							<h5>Dark</h5>
 							<?php $l = 1; foreach($darkRoastsArray as $lid): ?>
 							<?php if($l <= 5): ?>
-								<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+								<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 									<img class="lidImage" src="<?php echo $lid['url'] ?>">
 									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
 									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
@@ -123,7 +123,7 @@
 							<?php endif; $l++; ?>
 							<?php endforeach ?>
 						</section>
-						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+						<!-- <button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button> -->
 				<?php endif; $darkRoastsArray = false; ?>
 				
 
@@ -133,7 +133,7 @@
 							<h5>Flavored</h5>
 							<?php $l = 1; foreach($flavoredRoastsArray as $lid): ?>
 								<?php if($l <= 5): ?>
-									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
 										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
@@ -141,7 +141,7 @@
 								<?php endif; $l++; ?>
 							<?php endforeach ?>
 						</section>
-						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+						<!-- <button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button> -->
 				<?php endif; $flavoredRoastsArray = false; ?>
 
 
@@ -151,7 +151,7 @@
 						<h5></h5>
 							<?php $l = 1; foreach($otherTypeArray as $lid): ?>
 								<?php if($l <= 5): ?>
-									<a href="<?php echo $lid['slug'] ?>" class="lidBlock">
+									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
 										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
@@ -159,7 +159,7 @@
 								<?php endif; $l++; ?>
 							<?php endforeach; $otherTypeArray = false; ?>
 						</section>
-						<button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button>
+						<!-- <button class="readMore" type="button"><a class="readMoreText" href="#">Read More »</a></button> -->
 				<?php endif ?>
 
 

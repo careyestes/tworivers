@@ -18,3 +18,16 @@ function getFlavorTypes() {
     }
     return $flavorTypes;
 }
+
+function getFlavorStrength($type) {
+	switch($type) {
+		case "light":
+			return 1;
+		case "medium":
+			return 2;
+		case "dark":
+			return 3;
+		default: 
+			return "n/a";
+	}
+}

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -1434,7 +1435,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1694,6 +1695,7 @@ hr {
   width: 300px;
   margin: 0 auto;
   padding: 2em 0;
+  text-align: center;
 }
 .brands .brandBoxContainer {
   max-width: 1000px;
@@ -1702,12 +1704,19 @@ hr {
   background: url(assets/images/header-background-diamond.gif) repeat-x left top;
 }
 .brands .brandBoxContainer .brandContainerSingle {
+  display: block;
   float: left;
   width: 30%;
   margin: 0 5% 3em 0;
+  padding: 1em;
+  outline: 0;
+  cursor: pointer;
 }
 .brands .brandBoxContainer .brandContainerSingle:nth-child(3n+3) {
   margin-right: 0;
+}
+.brands .brandBoxContainer .brandContainerSingle.selected {
+  background: rgba(255, 255, 255, 0.5);
 }
 .brands .brandBoxContainer .brandContainerSingle h2 {
   margin: 0;
@@ -1742,4 +1751,55 @@ hr {
 }
 .brands .nav-single .browseMoreContainer a .browseMoreImage:nth-child(3n+3) {
   margin-right: 0;
+}
+.brands .lightbox {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  margin: -25% 0 0 -25%;
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 3px 3px 10px #4b2406;
+}
+.brands .lightbox.active {
+  display: block;
+}
+.brands .lightbox p {
+  line-height: 1.45em;
+}
+.brands .lightboxCloseButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.9em;
+  color: #4b2406;
+  outline: 0;
+}
+.brands .lightboxImage {
+  display: block;
+  float: right;
+  width: 50%;
+  margin-right: 3%;
+  border-bottom: 1px dotted #4b2406;
+}
+.brands .lightboxHeader {
+  font-family: "langdonregular";
+  font-size: 2em;
+  text-transform: uppercase;
+  border-bottom: 1px dotted #4b2406;
+}
+.brands .strengthMeter {
+  vertical-align: top;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+}
+.brands .strengthMeter .strengthMeterBlock {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #4b2406;
 }

@@ -1,5 +1,38 @@
 (function($) {
 
+	function tabListener() {
+    var urlhash = window.location.hash;
+    var hash = urlhash.replace("#", ""); 
+    console.log(hash);
+    if(hash) {
+        var selected = $("#"+hash);
+        selected.addClass('selected');
+        lightboxClass = selected.attr('id');
+        $('.lightbox.'+lightboxClass).fadeIn('fast').addClass('active');
+    }
+	}
+
+	function removeHash () { 
+    history.pushState("", document.title, window.location.pathname + window.location.search);
+	}
+
+
+	tabListener();
+
+	// Manually add click to singles on brand page
+	$('.brandContainerSingle').click(function(event) {
+		$('.lightbox').fadeOut('fast').removeClass('active');
+		$('.brandContainerSingle').removeClass('selected');
+		window.location.hash = "#"+$(this).attr('id');
+		tabListener();
+	});
+
+	$('.lightboxCloseButton').click(function(event) {
+		$(this).parent().fadeOut('fast');
+		$('.brandContainerSingle').removeClass('selected');
+		removeHash();
+	});
+
 	$('.homepageCarousel').slick({
 		autoplay: true,
 		autoplaySpeed: 5000,
