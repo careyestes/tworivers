@@ -1707,10 +1707,11 @@ hr {
   display: block;
   float: left;
   width: 30%;
+  height: 300px;
+  overflow: hidden;
   margin: 0 5% 3em 0;
   padding: 1em;
   outline: 0;
-  cursor: pointer;
 }
 .brands .brandBoxContainer .brandContainerSingle:nth-child(3n+3) {
   margin-right: 0;
@@ -1727,6 +1728,11 @@ hr {
 .brands .brandBoxContainer .brandContainerSingle p {
   margin: 0 0 1em;
   font-size: 0.75em;
+}
+.brands .brandBoxContainer .brandContainerSingle .readmoreBrand {
+  background: transparent;
+  border: 0;
+  outline: 0;
 }
 .brands .nav-single {
   margin-bottom: 3em;

@@ -25,7 +25,9 @@ $boxes = get_field('brand_boxes');
 					<div id="<?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>" class="brandContainerSingle">
 						<img src="<?php echo $box['flavor_box_image'] ?>">
 						<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
-						<?php echo $box['brand_flavor_desc'] ?>
+						<div class="brandDescriptionContainer">
+							<p><?php echo $box['brand_flavor_excerpt']; ?> <button class="readmoreBrand">Read More »</button></p>
+						</div>
 					</div>
 					<article class="lightbox <?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>">
 							<button class="lightboxCloseButton" type="button">&times; CLOSE</button>

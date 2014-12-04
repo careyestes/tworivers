@@ -20,10 +20,10 @@
 	tabListener();
 
 	// Manually add click to singles on brand page
-	$('.brandContainerSingle').click(function(event) {
+	$('.readmoreBrand').click(function(event) {
 		$('.lightbox').fadeOut('fast').removeClass('active');
 		$('.brandContainerSingle').removeClass('selected');
-		window.location.hash = "#"+$(this).attr('id');
+		window.location.hash = "#"+$(this).parent().parent().parent().attr('id');
 		tabListener();
 	});
 
