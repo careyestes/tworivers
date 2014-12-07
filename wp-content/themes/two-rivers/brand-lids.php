@@ -82,7 +82,7 @@
 									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
-										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+										<!-- <p class="lidCopy"><?php echo $lid['excerpt']; ?></p> -->
 									</a>
 								<?php endif; $l++; ?>
 							<?php endforeach ?>
@@ -100,7 +100,7 @@
 								<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 									<img class="lidImage" src="<?php echo $lid['url'] ?>">
 									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
-									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+									<!-- <p class="lidCopy"><?php echo $lid['excerpt']; ?></p> -->
 								</a>
 								<?php endif; $l++ ?>
 							<?php endforeach ?>
@@ -118,7 +118,7 @@
 								<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 									<img class="lidImage" src="<?php echo $lid['url'] ?>">
 									<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
-									<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+									<!-- <p class="lidCopy"><?php echo $lid['excerpt']; ?></p> -->
 								</a>
 							<?php endif; $l++; ?>
 							<?php endforeach ?>
@@ -136,7 +136,7 @@
 									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
-										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+										<!-- <p class="lidCopy"><?php echo $lid['excerpt']; ?></p> -->
 									</a>
 								<?php endif; $l++; ?>
 							<?php endforeach ?>
@@ -154,7 +154,7 @@
 									<a href="<?php echo $lid['slug'].'#'.strtolower(str_replace('+', '-', urlencode($lid['title']))) ?>" class="lidBlock">
 										<img class="lidImage" src="<?php echo $lid['url'] ?>">
 										<h6 class="lidTitle"><?php echo $lid['title'] ?></h6>
-										<p class="lidCopy"><?php echo $lid['excerpt']; ?></p>
+										<!-- <p class="lidCopy"><?php echo $lid['excerpt']; ?></p> -->
 									</a>
 								<?php endif; $l++; ?>
 							<?php endforeach; $otherTypeArray = false; ?>
