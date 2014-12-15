@@ -9,7 +9,7 @@
  * @since Twenty Twelve 1.0
  */
 
-$mainThumb = get_field('brand_image_main');
+$mainThumb = get_field('brand_image_main_header_image');
 $boxes = get_field('brand_boxes');
 
 ?>
@@ -18,6 +18,9 @@ $boxes = get_field('brand_boxes');
 		<section class="mainLogoBlock">
 			<img class="mainImageThumb" title="<?php echo $mainThumb['title'] ?>" src="<?php echo $mainThumb['url'] ?>">
 		</section>
+		<section class="brandDescription">
+			<?php the_content(); ?>
+		</section>
 		<section class="brandBoxContainer">
 			<?php if($boxes): ?>
 				<?php foreach($boxes as $box): ?>
@@ -25,8 +28,9 @@ $boxes = get_field('brand_boxes');
 					<div id="<?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>" class="brandContainerSingle">
 						<img src="<?php echo $box['flavor_box_image'] ?>">
 						<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
+						<h3><?php echo $box['brand_flavor_box_style'] ?></h3>
 						<div class="brandDescriptionContainer">
-							<p><?php echo $box['brand_flavor_excerpt']; ?> <button class="readmoreBrand">Read More »</button></p>
+							<p><button class="readmoreBrand">More Product Info »</button></p>
 						</div>
 					</div>
 					<article class="lightbox <?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>">
@@ -36,10 +40,15 @@ $boxes = get_field('brand_boxes');
 							<?php 
 									$strengthNumber = getFlavorStrength($strength); 
 									if($strengthNumber != "n/a"): ?>
-									<p class="strengthMeter">Strength: <?php $i = 1;
-										while($i <= $strengthNumber) {
-											echo "<span class='strengthMeterBlock'></span> ";
+									<p class="strengthMeter">Strength: <?php $i = 1; $s = 1;
+										while($i <= 5) {
+											echo "<span class='strengthMeterBlock' ";
+												if($s <= $strengthNumber) {
+													echo "style='background-position: 0 -20px; ' ";
+												}
+											echo "></span> ";
 											$i++;
+											$s++;
 										}
 									?></p>
 							<?php endif ?>

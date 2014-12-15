@@ -24,9 +24,9 @@ function getFlavorStrength($type) {
 		case "light":
 			return 1;
 		case "medium":
-			return 2;
-		case "dark":
 			return 3;
+		case "dark":
+			return 5;
 		default: 
 			return "n/a";
 	}

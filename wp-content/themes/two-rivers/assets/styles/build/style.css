@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -735,7 +736,7 @@ address {
 
 .site-header {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto 1.2em;
   padding: 1em 0 0;
 }
@@ -743,7 +744,7 @@ address {
   float: left;
   width: 260px;
   height: 162px;
-  margin: 0 3em 0 0;
+  margin: 0 1.1em 0 0;
   background: url(assets/images/two-rivers-logo.png) no-repeat;
   text-indent: 100%;
   white-space: nowrap;
@@ -780,10 +781,30 @@ address {
 .site-header .main-navigation ul li {
   float: left;
   position: relative;
-  margin-left: 24px;
+  margin-left: 20px;
 }
 .site-header .main-navigation ul li:before {
   margin: 0 0 -2px;
+}
+.site-header .main-navigation ul li ul.sub-menu {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  width: 350%;
+  padding: 0.5em 0.5em 0 1em;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #4b2406;
+  font-size: 0.9em;
+}
+.site-header .main-navigation ul li ul.sub-menu li {
+  margin: 0 0 0.5em;
+}
+.site-header .main-navigation ul li ul.sub-menu li a {
+  color: #4b2406;
+}
+.site-header .main-navigation ul li.menu-item-has-children:hover ul.sub-menu {
+  display: block;
 }
 
 /* ==========================================================================
@@ -800,7 +821,7 @@ address {
   padding: 0;
 }
 .site-footer .siteMapContainer {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 1em 1em;
   background: url(assets/images/burlap.jpg);
@@ -1102,6 +1123,7 @@ hr {
 
 #page {
   position: relative;
+  overflow: hidden;
   min-height: 100%;
   /* equal to footer height */
   margin-bottom: -500px;
@@ -1113,7 +1135,7 @@ hr {
 }
 
 .site-content {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
@@ -1434,7 +1456,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1472,7 +1494,7 @@ hr {
 
 .brandThumbs {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2em 0;
   text-align: center;
@@ -1492,7 +1514,7 @@ hr {
   position: relative;
   z-index: 0;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   border-bottom: 3px dotted #4b2406;
   font-family: "langdonregular";
@@ -1691,13 +1713,17 @@ hr {
 }
 
 .brands .mainLogoBlock {
-  width: 300px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2em 0;
+  padding: 0 0;
   text-align: center;
 }
+.brands .brandDescription {
+  max-width: 960px;
+  margin: 0 auto;
+}
 .brands .brandBoxContainer {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 3em 0;
   background: url(assets/images/header-background-diamond.gif) repeat-x left top;
@@ -1720,9 +1746,15 @@ hr {
 }
 .brands .brandBoxContainer .brandContainerSingle h2 {
   margin: 0;
-  padding: 0.3em 0;
+  padding: 0.3em 0 0;
   border-top: 1px dotted #4b2406;
   font-size: 1em;
+}
+.brands .brandBoxContainer .brandContainerSingle h3 {
+  font-size: 0.9em;
+  margin: 0 0 0.5em;
+  font-family: "langdonregular";
+  text-transform: uppercase;
 }
 .brands .brandBoxContainer .brandContainerSingle p {
   margin: 0 0 1em;
@@ -1732,12 +1764,15 @@ hr {
   background: transparent;
   border: 0;
   outline: 0;
+  background: #4b2406;
+  color: #fff;
+  box-shadow: 1px 1px 1px #000;
 }
 .brands .nav-single {
   margin-bottom: 3em;
 }
 .brands .nav-single .browseMore {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0.5em auto;
   text-align: center;
   font-family: "langdonregular";
@@ -1746,7 +1781,7 @@ hr {
   border-bottom: 1px dotted #4b2406;
 }
 .brands .nav-single .browseMoreContainer {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0.5em auto;
   text-align: center;
 }
@@ -1806,5 +1841,5 @@ hr {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background: #4b2406;
+  background: transparent url(assets/images/brand-strengthGuage.png) no-repeat;
 }

@@ -1,9 +1,13 @@
 .brands {
 	.mainLogoBlock {
-		width: 300px;
+		max-width: $maxWidth;
 		margin: 0 auto;
-		padding: 2em 0;
+		padding: 0 0;
 		text-align: center;
+	}
+	.brandDescription {
+		max-width: 960px;
+		margin: 0 auto;
 	}
 	.brandBoxContainer {
 		max-width: $maxWidth;
@@ -27,9 +31,15 @@
 			}
 			h2 {
 				margin: 0;
-				padding: 0.3em 0;
+				padding: 0.3em 0 0;
 				border-top: 1px dotted $brown;
 				font-size: 1em;
+			}
+			h3 {
+				font-size: 0.9em;
+				margin:0 0 0.5em;
+				font-family: $langdon;
+				text-transform: uppercase;
 			}
 			p {
 				margin: 0 0 1em;
@@ -39,6 +49,9 @@
 				background: transparent;
 				border: 0;
 				outline: 0;
+				background: $brown;
+				color: #fff;
+				box-shadow: 1px 1px 1px #000;
 			}
 		}
 	}
@@ -115,7 +128,7 @@
 			display: inline-block;
 			width: 20px;
 			height: 20px;
-			background: $brown;
+			background: transparent url(assets/images/brand-strengthGuage.png) no-repeat;
 		}
 	}
 }

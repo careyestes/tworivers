@@ -101,6 +101,13 @@ if(function_exists("register_field_group")) {
 		        'label'         => __('Brand Main Thumbnail'),
 		        'name'          => 'brand_image_main',
 		        'type'          => 'image',
+		        'instructions'  => __('Color Thumbnail'),
+		    ), 
+		    array(
+		        'key'           => 'tr_brand_image_header_image',
+		        'label'         => __('Brand Main Thumbnail'),
+		        'name'          => 'brand_image_main_header_image',
+		        'type'          => 'image',
 		        'instructions'  => __('Image for the top of the brand page.'),
 		    ), 
 				array(
@@ -123,6 +130,13 @@ if(function_exists("register_field_group")) {
 							'instructions' => 'Add the Flavor Title',
 							'type'         => 'text',
 							'required'     => true
+	          ),
+	          array(
+							'key'          => 'acf_brand_flavor_box_style',
+							'label'        => 'Flavor Style',
+							'name'         => 'brand_flavor_box_style',
+							'instructions' => 'Add the Flavor Style',
+							'type'         => 'text',
 	          ),
 	          array(
 							'key'           => 'acf_brand_flavor_type',

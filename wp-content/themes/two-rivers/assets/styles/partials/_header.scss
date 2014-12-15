@@ -72,7 +72,7 @@
 		float: left;
 		width: 260px;
 		height: 162px;
-		margin: 0 3em 0 0;
+		margin: 0 1.1em 0 0;
 		background: url(assets/images/two-rivers-logo.png) no-repeat;
 		@include hideText();
 		@media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -103,9 +103,31 @@
 			li {
 				float: left;
 				position: relative;
-				margin-left: 24px;
+				margin-left: 20px;
 				&:before {
 					margin: 0 0 -2px;
+				}
+				ul.sub-menu {
+					display: none;
+					position: absolute;
+					z-index: 1000;
+					width: 350%;
+					padding: 0.5em 0.5em 0 1em;
+					list-style: none;
+					background: $txWhite;
+					border: 1px solid $brown;
+					font-size: 0.9em;
+					li {
+						margin: 0 0 0.5em;
+						a {
+							color: $brown;
+						}
+					}
+				}
+				&.menu-item-has-children:hover {
+					ul.sub-menu {
+						display: block;
+					}
 				}
 			}
 		}
