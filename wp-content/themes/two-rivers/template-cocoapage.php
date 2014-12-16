@@ -9,7 +9,7 @@
 
 get_header(); ?>
 
-	<div id="primary" class="site-content ">
+	<div id="primary" class="site-content brandContainerWrap">
 		<div id="content" class="brandContainer" role="main">
 
 			<?php 
@@ -33,5 +33,6 @@ get_header(); ?>
 
 		</div><!-- #content -->
 	</div><!-- #primary -->
+	<hr>
 
 <?php get_footer(); ?>

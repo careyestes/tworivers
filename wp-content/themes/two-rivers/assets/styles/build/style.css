@@ -1138,30 +1138,35 @@ hr {
   margin: 0 auto;
 }
 
-.brandContainer {
+.brandContainerWrap {
+  max-width: 100%;
+  background: url(assets/images/brand-chalkboardBackground.jpg) repeat-x;
+  background-size: cover;
+}
+.brandContainerWrap .brandContainer {
   padding: 2em 0 4em;
   text-align: center;
 }
-.brandContainer:after {
+.brandContainerWrap .brandContainer:after {
   content: " ";
   clear: both;
   display: block;
 }
-.brandContainer .brandThumbnail {
+.brandContainerWrap .brandContainer .brandThumbnail {
   margin: 0 5% 0 0;
   padding: 1em;
 }
-.brandContainer .brandThumbnail:nth-child(3n+3) {
+.brandContainerWrap .brandContainer .brandThumbnail:nth-child(3n+3) {
   margin-right: 0;
 }
-.brandContainer .brandThumbnail h2 {
+.brandContainerWrap .brandContainer .brandThumbnail h2 {
   font-family: "langdonregular";
   font-size: 1.5em;
   text-transform: uppercase;
 }
-.brandContainer .brandThumbnail .brandImage {
+.brandContainerWrap .brandContainer .brandThumbnail .brandImage {
   text-align: center;
-  width: 25%;
+  width: 15%;
   height: auto;
 }
 

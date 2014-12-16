@@ -29,31 +29,36 @@ hr {
 	margin: 0 auto;
 }
 
-.brandContainer {
-	padding: 2em 0 4em;
-	text-align: center;
-	&:after {
-		content: " ";
-		clear: both;
-		display: block;
-	}
-	.brandThumbnail {
-		margin: 0 5% 0 0;
-		padding: 1em;
-		&:nth-child(3n+3) {  
-			  margin-right: 0;
-			}
-		// border-right: 1px dotted $brown;
-		// border-bottom: 1px dotted $brown;
-		h2 {
-			font-family: $langdon;
-			font-size: 1.5em;
-			text-transform: uppercase;
+.brandContainerWrap {
+	max-width: 100%;
+	background: url(assets/images/brand-chalkboardBackground.jpg) repeat-x;
+	background-size: cover;
+	.brandContainer {
+		padding: 2em 0 4em;
+		text-align: center;
+		&:after {
+			content: " ";
+			clear: both;
+			display: block;
 		}
-		.brandImage {
-			text-align: center;
-			width: 25%;
-			height: auto;
+		.brandThumbnail {
+			margin: 0 5% 0 0;
+			padding: 1em;
+			&:nth-child(3n+3) {  
+				  margin-right: 0;
+				}
+			// border-right: 1px dotted $brown;
+			// border-bottom: 1px dotted $brown;
+			h2 {
+				font-family: $langdon;
+				font-size: 1.5em;
+				text-transform: uppercase;
+			}
+			.brandImage {
+				text-align: center;
+				width: 15%;
+				height: auto;
+			}
 		}
 	}
 }
