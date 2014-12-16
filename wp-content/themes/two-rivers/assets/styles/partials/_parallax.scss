@@ -54,6 +54,7 @@
 
 .familyOfBrands {
 	.beans {
+		display: none;
 		top: 50px;
 		left: -395px;
 		z-index: 1;
@@ -62,6 +63,7 @@
 		background: url(assets/images/parallax-Family-Beans.png);
 	}
 	.leaves {
+		display: none;
 		top: 40%;
 		right: -150px;
 		z-index: 2;
@@ -80,6 +82,7 @@
 		background: url(assets/images/parallax-Family-CoffeeNapkin.png);
 	}
 	.cappuccino {
+		display: none;
 		top: 80%;
 		left: -300px;
 		width: 309px;
@@ -88,7 +91,7 @@
 		z-index: 4
 	}
 	.copy {
-		top: 60%;
+		top: 50%;
 	}
 }
 

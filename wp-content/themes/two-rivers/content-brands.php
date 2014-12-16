@@ -9,7 +9,7 @@
  * @since Twenty Twelve 1.0
  */
 
-$mainThumb = get_field('brand_image_main_header_image');
+$mainThumb = get_field('brand_image_main');
 $boxes = get_field('brand_boxes');
 
 ?>
@@ -18,6 +18,7 @@ $boxes = get_field('brand_boxes');
 		<section class="mainLogoBlock">
 			<img class="mainImageThumb" title="<?php echo $mainThumb['title'] ?>" src="<?php echo $mainThumb['url'] ?>">
 		</section>
+		<hr>
 		<section class="brandDescription">
 			<?php the_content(); ?>
 		</section>

@@ -51,28 +51,63 @@
 
   // Parallax animations
   $('.brandThumbs').waypoint(function() {
-  	$('.beans').animate({
-  		'left': '-35px',
-  		},'fast');
+    var object = $(".beans");
+    var side = 'left';
+    var start = '-395px';
+    var end = '0';
+    slideParallax(object, side, start, end);
   });
 
 
   $('.familyOfBrands').waypoint(function() {
-  	$('.leaves').animate({
-  		'right': 0,
-  		},'fast');
+    var object = $(".leaves");
+    var side = 'right';
+    var start = '-150px';
+    var end = '0';
+    slideParallax(object, side, start, end);
   });
 
   $('.coffeeNapkin').waypoint(function() {
-  	$('.cappuccino').animate({
-  		'left': '40px',
-  		},'fast');
+    var object = $(".cappuccino");
+    var side = 'left';
+    var start = '-300px';
+    var end = '40px';
+    slideParallax(object, side, start, end);
   });
+
+  function slideParallax(object, side, start, end) {
+    if(side == 'left') {
+      if (object.is(":hidden")) {
+        $(object).css('display', 'block');
+        object.animate({
+          'left' : end,
+          },'fast');
+      } else {
+        object.animate({
+          'left' : start,
+          },'fast', function() {
+            $(this).css('display', 'none');
+          });
+      }
+    } else {
+      if (object.is(":hidden")) {
+        $(object).css('display', 'block');
+        object.animate({
+          'right' : end,
+          },'fast');
+      } else {
+        object.animate({
+          'right' : start,
+          },'fast', function() {
+            $(this).css('display', 'none');
+          });
+      }
+    }
+  }
 
   var isShowing = false;
   var pageHeight = $(document).height();
   if (pageHeight > 3000) {
-    console.log(pageHeight);
     $(window).scroll(function() {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             $('.site-footer').animate({ 'marginBottom': 0 }, 'fast');

@@ -103,13 +103,6 @@ if(function_exists("register_field_group")) {
 		        'type'          => 'image',
 		        'instructions'  => __('Color Thumbnail'),
 		    ), 
-		    array(
-		        'key'           => 'tr_brand_image_header_image',
-		        'label'         => __('Brand Main Thumbnail'),
-		        'name'          => 'brand_image_main_header_image',
-		        'type'          => 'image',
-		        'instructions'  => __('Image for the top of the brand page.'),
-		    ), 
 				array(
 	        'key' => 'tr_brand_boxes',
 	        'label' => __('Boxes & Lids'),
@@ -140,11 +133,22 @@ if(function_exists("register_field_group")) {
 	          ),
 	          array(
 							'key'           => 'acf_brand_flavor_type',
-							'label'         => 'Flavor Roast Type',
+							'label'         => 'Flavor Type',
 							'name'          => 'brand_flavor_box_type',
 							'instructions'  => 'Add the Roast Type',
 							'type'          => 'radio',
-							'choices'       => array('na'=>'N/A','light'=>'Light','medium'=>'Medium','dark'=>'Dark','flavored'=>'Flavored'),
+							'choices'       => array(
+																		'na'=>'N/A',
+																		'light'=>'Light Roast',
+																		'medium'=>'Medium Roast',
+																		'dark'=>'Dark Roast',
+																		'flavored'=>'Flavored Coffees', 
+																		'seasonal' => 'Seasonal Coffees',
+																		'black' => 'Black Tea',
+																		'green' => 'Green Tea',
+																		'herbal' => 'Herbal Tea',
+																		'exotic' => 'Exotic Tea'
+																	),
 							'default_value' => 'na',
 	          ),
 	          array(

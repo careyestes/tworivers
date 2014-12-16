@@ -1,9 +1,14 @@
 .brands {
 	.mainLogoBlock {
-		max-width: $maxWidth;
+		min-height: 260px;
 		margin: 0 auto;
 		padding: 0 0;
 		text-align: center;
+		background: url(assets/images/brand-chalkboardBackground.jpg) repeat-x;
+		background-size: cover;
+		.mainImageThumb {
+			padding: 1em 0;
+		}
 	}
 	.brandDescription {
 		max-width: 960px;
@@ -12,8 +17,8 @@
 	.brandBoxContainer {
 		max-width: $maxWidth;
 		margin: 0 auto;
-		padding: 3em 0;
-		background: url(assets/images/header-background-diamond.gif) repeat-x left top;
+		padding: 0 0 3em 0;
+		// background: url(assets/images/header-background-diamond.gif) repeat-x left top;
 		.brandContainerSingle {
 			display: block;
 			float: left;
