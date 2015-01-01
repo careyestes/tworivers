@@ -5,25 +5,25 @@
   <div class="object leaves"></div>
   <div class="object cappuccino"></div>
 	<h3>TRC Family of Brands</h3>
-	<article class="copy"><p>Lorem ipsum Et nulla sit nisi cupidatat Ut ut eu eu deserunt adipisicing irure fugiat non exercitation ea fugiat labore ut Ut ut minim nulla consequat ullamco magna id aute consequat nostrud irure in cupidatat eu do in laborum do adipisicing labore eu Ut anim sit fugiat in Excepteur nostrud consectetur et minim ea velit qui reprehenderit Duis in id elit sit laboris ea occaecat sed officia velit anim sunt dolore in in proident ea id culpa eu ut voluptate esse nostrud occaecat labore minim in ad dolore Ut adipisicing aliquip culpa laboris dolor ex Ut ad exercitation proident commodo culpa occaecat.</p>
-	<button class="readMore" type="button"><a class="readMoreText" href="#">Read More</a></button>
+	<article class="copy"><p>The Two Rivers Coffee company has created an array of brands that cater to many different tastes.  Each one of the TRC brands has its own unique identity. Each has its own story of how, why, and for whom, it was created and because of that, each resonate with different people for different reasons. </p>
+	<button class="readMore" type="button"><a class="readMoreText" href="family-of-brands">Read More</a></button>
 	</article>
 </section>
 
 <section class="storyboardLevel privateLabel">
   <div class="object tea"></div>
 	<h3>Private Label</h3>
-	<article class="copy"><p>Excesciiscil eum laborem reic totatur, es eum facepel enihicipsus, qui con coressim sundae voluptatatus acea nosto quis magnimillo officie nienderi doluptate nobisquid et voluptas doloreh endelenia num quo eum aut hil ius quaturepudam vollesed quas uta secesequatur soloratia alit laborit atquam idic tem facimin non eossedit aces sinti conseque corpor sae nullacest alit di ipiciis elestis non nat ad mi, ma nos qui is eos ut officia ndundissit, ipsuscias aut occab inctecat minust.</p>
-	<button class="readMore" type="button"><a class="readMoreText" href="#">Read More</a></button>
+	<article class="copy"><p>Roasters and Retailers across the U.S. are looking to tap into an extremely lucrative single serve market as more and more of their loyal customers discover the convenience of single serve brewing systems. As the co-packing partner for several different companies with many divergent needs, Two Rivers Coffee offers a complete single serve solution. We have perfected our turnkey system and have established a track record of proven success by putting optimal processes in place.  </p>
+	<button class="readMore" type="button"><a class="readMoreText" href="private-label">Read More</a></button>
 	</article>
 </section>
 
 <section class="storyboardLevel industryExpertise">
   <div class="object brownSugar"></div>
   <div class="object cocoa"></div>
-	<h3>Industry Expertise</h3>
-	<article class="copy"><p>Excesciiscil eum laborem reic totatur, es eum facepel enihicipsus, qui con coressim sundae voluptatatus acea nosto quis magnimillo officie nienderi doluptate nobisquid et voluptas doloreh endelenia num quo eum aut hil ius quaturepudam vollesed quas uta secesequatur soloratia alit laborit atquam idic tem facimin non eossedit aces sinti conseque corpor sae nullacest alit di ipiciis elestis non nat ad mi, ma nos qui is eos ut officia ndundissit, ipsuscias aut occab inctecat minust.</p>
-	<button class="readMore" type="button"><a class="readMoreText" href="#">Read More</a></button>
+	<h3>Better Cups</h3>
+	<article class="copy"><p>We scrutinize each of our single serve cups for absolute perfection, making sure every cup is filled precisely with the specified amount of coffee, tea or cocoa. Finally, we hand check every completed cup. If it’s not perfect, it’s not going anywhere. But the real secret is in the cup itself: Decades of experience in product engineering led to the design of our patented unique tension-based caged filter system. Our single serve cups have been tested and proven to be better. In fact, an independent test found that our advanced filter system helps the grounds diffuse better throughout, and enhancing the flavor by 15%.</p>
+	<button class="readMore" type="button"><a class="readMoreText" href="better-cups">Read More</a></button>
 	</article>
 </section>
 <hr>

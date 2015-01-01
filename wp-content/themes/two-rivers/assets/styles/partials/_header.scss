@@ -14,7 +14,7 @@
 	box-shadow: 0 0 8px $brown;
 	.stickyHeaderContainer {
 		width: 100%;
-		max-width: 820px;
+		max-width: $maxWidth;
 		margin: 0 auto;
 		padding: 0.5em 0 0;
 		.mastheadLogo {
@@ -56,6 +56,28 @@
 					margin-left: 24px;
 					&:before {
 						margin: 0 0 -2px;
+					}
+					ul.sub-menu {
+						display: none;
+						position: absolute;
+						z-index: 1000;
+						width: 350%;
+						padding: 0.5em 0.5em 0 1em;
+						list-style: none;
+						background: $txWhite;
+						border: 1px solid $brown;
+						font-size: 0.9em;
+						li {
+							margin: 0 0 0.5em;
+							a {
+								color: $brown;
+							}
+						}
+					}
+					&.menu-item-has-children:hover {
+						ul.sub-menu {
+							display: block;
+						}
 					}
 				}
 			}

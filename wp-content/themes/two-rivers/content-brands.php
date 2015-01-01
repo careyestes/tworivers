@@ -18,7 +18,7 @@ $boxes = get_field('brand_boxes');
 		<section class="mainLogoBlock">
 			<img class="mainImageThumb" title="<?php echo $mainThumb['title'] ?>" src="<?php echo $mainThumb['url'] ?>">
 		</section>
-		<hr>
+		<!-- <hr> -->
 		<section class="brandDescription">
 			<?php the_content(); ?>
 		</section>
@@ -31,12 +31,13 @@ $boxes = get_field('brand_boxes');
 						<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
 						<h3><?php echo $box['brand_flavor_box_style'] ?></h3>
 						<div class="brandDescriptionContainer">
+							<p><?php echo $box['brand_flavor_excerpt'] ?></p>
 							<p><button class="readmoreBrand">More Product Info »</button></p>
 						</div>
 					</div>
 					<article class="lightbox <?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>">
 							<button class="lightboxCloseButton" type="button">&times; CLOSE</button>
-							<img class="lightboxImage" src="<?php echo $box['flavor_box_image'] ?>">
+							<img class="lightboxImage" src="<?php echo $box['flavor_lid_image'] ?>">
 							<div class="lightboxHeader"><?php echo $box['brand_flavor_box_title'] ?></div>
 							<?php 
 									$strengthNumber = getFlavorStrength($strength); 

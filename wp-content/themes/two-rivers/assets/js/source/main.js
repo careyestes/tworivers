@@ -41,7 +41,7 @@
 	});
 
 	// Add sticky header on scroll
-  $('.carouselContainer').waypoint(function() {
+  $('.headerDivider').waypoint(function() {
     if ($(".stickyHeader").is(":hidden")) {
       $(".stickyHeader").slideDown(100);
     } else {

@@ -64,4 +64,4 @@
 			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu' => 'Main Menu', 'menu_class' => 'nav-menu', 'fallback_cb' => false ) ); ?>
 		</nav><!-- #site-navigation -->
 	</header><!-- #masthead -->
-	<hr>
+	<hr class="headerDivider">

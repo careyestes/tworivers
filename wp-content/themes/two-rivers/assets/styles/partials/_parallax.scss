@@ -20,11 +20,12 @@
 	}
 	.copy {
 		position: absolute;
-		width: 40%;
+		width: 35%;
 		padding: 1em;
 		background: rgba(255,255,255,0.8);
 		font-family: $georgia;
-		font-size: 1em;
+		font-size: 1.1em;
+		line-height: 1.5em;
 		color: $brown;
 		left:0;
 		right: 0;
