@@ -87,6 +87,7 @@
 	.lightbox {
 		display: none;
 		position: fixed;
+		z-index: 500;
 		top: 50%;
 		left: 50%;
 		width: 60%;
@@ -104,20 +105,23 @@
 
 	.lightboxCloseButton {
 		position: absolute;
+		z-index: 1000;
 		top: 0;
 		right: 0;
+		width: 40px;
+		height: 40px;
 		border: 0;
-		background: transparent;
-		font-size: 0.9em;
-		color: $brown;
+		background: $brown;
+		font-size: 2em;
+		line-height: 1em;
+		color: $txWhite;
 		outline: 0;
 	}
 	.lightboxImage {
 		display: block;
 		float: right;
-		width: 50%;
+		width: 20%;
 		margin-right: 3%;
-		border-bottom: 1px dotted $brown;
 	}
 	.lightboxHeader {
 		font-family: $langdon;

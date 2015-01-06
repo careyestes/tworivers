@@ -16,8 +16,34 @@
     history.pushState("", document.title, window.location.pathname + window.location.search);
 	}
 
+  function thumbTransition() {
+    $('.brandThumbnail').hover(function() {
+      var hasColor = $(this).find('.brandThumbColor');
+      if(hasColor.length != 0) {
+        $(this).find('.brandThumbBlack').fadeOut('fast');
+        $(this).find('.brandThumbColor').fadeIn('fast');
+      }
+    }, function() {
+      var hasColor = $(this).find('.brandThumbColor');
+      if(hasColor.length != 0) {
+        $(this).find('.brandThumbBlack').fadeIn('fast');
+        $(this).find('.brandThumbColor').fadeOut('fast');
+      }
+    });
+  }
 
+  thumbTransition();
 	tabListener();
+
+  var stateArray({"AL":[{"Rouses", "Winn-Dixie"}]});
+  console.log(stateArray);
+  // Build map on dist page
+  $('#map').usmap({
+    // The click action
+    click: function(event, data) {
+      $('.storeListing').text(data.name);
+    }
+  });
 
 	// Manually add click to singles on brand page
 	$('.readmoreBrand').click(function(event) {

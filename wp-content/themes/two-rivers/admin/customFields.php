@@ -95,6 +95,15 @@ if(function_exists("register_field_group")) {
 		        'name'          => 'brand_image_black',
 		        'type'          => 'image',
 		        'instructions'  => __('Image for the homepage group under the slider'),
+		        'preview_size'  => 'medium'
+		    ),
+		    array(
+		        'key'           => 'tr_brand_image_color',
+		        'label'         => __('Homepage Thumbnail Hover Image'),
+		        'name'          => 'brand_image_color',
+		        'type'          => 'image',
+		        'instructions'  => __('This is the color version of the image above. It should be sixed to the exact dimensions of the black and white version to assure they line up properly on hover.'),
+		        'preview_size'  => 'medium'
 		    ),
 		    array(
 		        'key'           => 'tr_brand_image_main',
@@ -102,6 +111,7 @@ if(function_exists("register_field_group")) {
 		        'name'          => 'brand_image_main',
 		        'type'          => 'image',
 		        'instructions'  => __('Color Thumbnail'),
+		        'preview_size'  => 'medium'
 		    ), 
 				array(
 	        'key' => 'tr_brand_boxes',

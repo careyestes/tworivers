@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -1140,6 +1141,11 @@ hr {
   background: url(assets/images/divider.gif) repeat-x;
 }
 
+.entry-title {
+  border-bottom: 1px solid #4b2406;
+  text-align: left;
+}
+
 #page {
   position: relative;
   overflow: hidden;
@@ -1158,11 +1164,19 @@ hr {
   margin: 0 auto;
 }
 
-.brandContainerWrap {
-  max-width: 100%;
-  background: url(assets/images/brand-chalkboardBackground.jpg) repeat-x;
-  background-size: cover;
+.entry-header {
+  text-align: center;
 }
+.entry-header img {
+  width: 100%;
+}
+
+.narrow {
+  max-width: 660px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .brandContainerWrap .brandContainer {
   padding: 2em 0 4em;
   text-align: center;
@@ -1480,7 +1494,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1523,10 +1537,38 @@ hr {
   padding: 2em 0;
   text-align: center;
 }
-.brandThumbs .brandThumbBlack {
+.brandThumbs .brandThumbnail {
+  display: inline-block;
+  position: relative;
   width: 15%;
-  height: auto;
+  height: 81px;
   margin: 0 4% 1em 0;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.brandThumbs .brandThumbnail .brandThumbBlack {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 81px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.brandThumbs .brandThumbnail .brandThumbColor {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 81px;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .storyboardLevel {
@@ -1828,6 +1870,7 @@ hr {
 .brands .lightbox {
   display: none;
   position: fixed;
+  z-index: 500;
   top: 50%;
   left: 50%;
   width: 60%;
@@ -1844,20 +1887,23 @@ hr {
 }
 .brands .lightboxCloseButton {
   position: absolute;
+  z-index: 1000;
   top: 0;
   right: 0;
+  width: 40px;
+  height: 40px;
   border: 0;
-  background: transparent;
-  font-size: 0.9em;
-  color: #4b2406;
+  background: #4b2406;
+  font-size: 2em;
+  line-height: 1em;
+  color: rgba(255, 255, 255, 0.9);
   outline: 0;
 }
 .brands .lightboxImage {
   display: block;
   float: right;
-  width: 50%;
+  width: 20%;
   margin-right: 3%;
-  border-bottom: 1px dotted #4b2406;
 }
 .brands .lightboxHeader {
   font-family: "langdonregular";
@@ -1875,4 +1921,16 @@ hr {
   width: 20px;
   height: 20px;
   background: transparent url(assets/images/brand-strengthGuage.png) no-repeat;
+}
+
+.mapContainer {
+  float: left;
+  width: 650px;
+  height: 650px;
+}
+
+.storeColumn {
+  float: left;
+  width: 450px;
+  text-align: left;
 }

@@ -25,8 +25,14 @@ $boxes = get_field('brand_boxes');
 		<section class="brandBoxContainer">
 			<?php if($boxes): ?>
 				<?php foreach($boxes as $box): ?>
-					<?php $strength = $box['brand_flavor_box_type']; ?>
-					<div id="<?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>" class="brandContainerSingle">
+					<?php 
+						$strength = $box['brand_flavor_box_type']; 
+						$url = strtolower($box['brand_flavor_box_title']);
+						$url = str_replace("'", "", $url);
+						$url = str_replace(' ', '-', $url);
+						$url = urlencode($url);
+					?>
+					<div id="<?php echo $url ?>" class="brandContainerSingle">
 						<img src="<?php echo $box['flavor_box_image'] ?>">
 						<h2><?php echo $box['brand_flavor_box_title'] ?></h2>
 						<h3><?php echo $box['brand_flavor_box_style'] ?></h3>
@@ -35,8 +41,8 @@ $boxes = get_field('brand_boxes');
 							<p><button class="readmoreBrand">More Product Info »</button></p>
 						</div>
 					</div>
-					<article class="lightbox <?php echo strtolower(str_replace('+', '-', urlencode($box['brand_flavor_box_title']))) ?>">
-							<button class="lightboxCloseButton" type="button">&times; CLOSE</button>
+					<article class="lightbox <?php echo $url; ?>">
+							<button class="lightboxCloseButton" type="button">&times;</button>
 							<img class="lightboxImage" src="<?php echo $box['flavor_lid_image'] ?>">
 							<div class="lightboxHeader"><?php echo $box['brand_flavor_box_title'] ?></div>
 							<?php 
