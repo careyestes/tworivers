@@ -35,8 +35,10 @@
   thumbTransition();
 	tabListener();
 
-  var stateArray({"AL":[{"Rouses", "Winn-Dixie"}]});
-  console.log(stateArray);
+  var optionArr=[]
+  optionArr={"AL": [{"name":"Rouses"},{"name":"Winn-Dixie"}]} 
+  var data=optionArr['AL'][1]['name'];
+  console.log(data);
   // Build map on dist page
   $('#map').usmap({
     // The click action
