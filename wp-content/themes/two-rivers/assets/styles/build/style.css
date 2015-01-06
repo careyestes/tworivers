@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -749,6 +750,9 @@ address {
 .stickyHeader .stickyHeaderContainer .main-navigation ul li ul.sub-menu li a {
   color: #4b2406;
 }
+.stickyHeader .stickyHeaderContainer .main-navigation ul li ul.sub-menu li.current-menu-item a {
+  color: #a50000;
+}
 .stickyHeader .stickyHeaderContainer .main-navigation ul li.menu-item-has-children:hover ul.sub-menu {
   display: block;
 }
@@ -805,6 +809,9 @@ address {
 .site-header .main-navigation ul li:before {
   margin: 0 0 -2px;
 }
+.site-header .main-navigation ul li.current-menu-item a {
+  color: #a50000;
+}
 .site-header .main-navigation ul li ul.sub-menu {
   display: none;
   position: absolute;
@@ -821,6 +828,9 @@ address {
 }
 .site-header .main-navigation ul li ul.sub-menu li a {
   color: #4b2406;
+}
+.site-header .main-navigation ul li ul.sub-menu li.current-menu-item a {
+  color: #a50000;
 }
 .site-header .main-navigation ul li.menu-item-has-children:hover ul.sub-menu {
   display: block;
@@ -1143,6 +1153,12 @@ hr {
 .entry-title {
   border-bottom: 1px solid #4b2406;
   text-align: left;
+  font-family: "langdonregular";
+  text-transform: uppercase;
+}
+
+.entry-content {
+  text-align: left;
 }
 
 #page {
@@ -1184,6 +1200,9 @@ hr {
   content: " ";
   clear: both;
   display: block;
+}
+.brandContainerWrap .brandContainer article {
+  text-align: left;
 }
 .brandContainerWrap .brandContainer .brandThumbnail {
   margin: 0 5% 0 0;
@@ -1493,7 +1512,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1926,10 +1945,27 @@ hr {
   float: left;
   width: 650px;
   height: 650px;
+  margin-right: 20px;
 }
 
 .storeColumn {
   float: left;
-  width: 450px;
+  width: 430px;
   text-align: left;
+}
+.storeColumn .storeListing {
+  width: 100%;
+  min-height: 75px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.storeColumn .storeListing .mapStoreItem {
+  display: block;
+  float: left;
+  width: 45%;
+  margin: 0 5% 2em 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "langdonregular";
 }

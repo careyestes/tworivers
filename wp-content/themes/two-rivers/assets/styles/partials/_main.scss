@@ -13,6 +13,12 @@ hr {
 .entry-title {
 	border-bottom: 1px solid $brown;
 	text-align: left;
+	font-family: $langdon;
+	text-transform: uppercase;
+}
+
+.entry-content {
+	text-align: left;
 }
 
 #page {
@@ -55,6 +61,9 @@ hr {
 			content: " ";
 			clear: both;
 			display: block;
+		}
+		article {
+			text-align: left;
 		}
 		.brandThumbnail {
 			margin: 0 5% 0 0;

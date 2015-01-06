@@ -72,6 +72,11 @@
 							a {
 								color: $brown;
 							}
+							&.current-menu-item {
+								a {
+									color: $red;
+								}
+							}
 						}
 					}
 					&.menu-item-has-children:hover {
@@ -129,6 +134,11 @@
 				&:before {
 					margin: 0 0 -2px;
 				}
+				&.current-menu-item {
+					a {
+						color: $red;
+					}
+				}
 				ul.sub-menu {
 					display: none;
 					position: absolute;
@@ -144,6 +154,11 @@
 						a {
 							color: $brown;
 						}
+						&.current-menu-item {
+								a {
+									color: $red;
+								}
+							}
 					}
 				}
 				&.menu-item-has-children:hover {

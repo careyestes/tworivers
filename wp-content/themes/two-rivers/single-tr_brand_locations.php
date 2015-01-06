@@ -11,8 +11,18 @@ $randMoreArgs = array(
 			$selectedArray = array();
 			$title = get_the_title();
 			$stateName = get_field('brand_location_state_name');
+			$storesObject = array();
+			$stores = get_field('brand_location_state_name_object');
+			foreach($stores as $store) {
+				$storesObject[] = array(
+					'storename'  => $store['location_state_name_text'],
+					'storeurl'   => $store['location_state_store_url'],
+					'storeimage' => $store['location_state_store_logo']['url']
+				);
+			}
 			$selectedArray['title'] = $title;
 			$selectedArray['statename'] = $stateName;
+			$selectedArray['stores'] = $storesObject;
 			echo json_encode($selectedArray);
 		}
 	}

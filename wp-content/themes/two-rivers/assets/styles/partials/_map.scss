@@ -2,9 +2,26 @@
 	float: left;
 	width: 650px;
 	height: 650px;
+	margin-right: 20px;
 }
 .storeColumn {
 	float: left;
-	width: 450px;
+	width: 430px;
 	text-align: left;
+	.storeListing {
+		width: 100%;
+		min-height: 75px;
+		background-repeat: no-repeat;
+		background-position: center center;
+		.mapStoreItem {
+			display: block;
+			float: left;
+			width: 45%;
+			margin:0 5% 2em 0;
+			text-align: center;
+			text-decoration: none;
+			text-transform: uppercase;
+			font-family: $langdon;
+		}
+	}
 }

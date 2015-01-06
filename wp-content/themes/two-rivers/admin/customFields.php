@@ -244,18 +244,31 @@ if(function_exists("register_field_group")) {
 		        'label'         => __('Stores'),
 		        'name'          => 'brand_location_state_name_object',
 		        'type' => 'repeater',
-	        'sub_fields' => array(
-	          array(
-							'key'          => 'tr_brand_location_state_name_text',
-							'label'        => 'Store Name',
-							'name'         => 'location_state_name_text',
-							'instructions' => 'Add the Store Title',
-							'type'         => 'text',
-							'required'     => true
-	          ),
-	        ),
-		    ),
-		  ),
+		        'sub_fields' => array(
+		          array(
+								'key'          => 'tr_brand_location_state_name_text',
+								'label'        => 'Store Name',
+								'name'         => 'location_state_name_text',
+								'instructions' => 'Add the Store Title',
+								'type'         => 'text',
+		          ),
+		          array(
+								'key'          => 'tr_brand_location_state_store_url',
+								'label'        => 'Store Url',
+								'name'         => 'location_state_store_url',
+								'instructions' => 'Add the link to the store.',
+								'type'         => 'text',
+		          ),
+		          array(
+								'key'          => 'tr_brand_location_state_store_logo',
+								'label'        => 'Store Logo',
+								'name'         => 'location_state_store_logo',
+								'instructions' => 'Add the Store Logo',
+								'type'         => 'image',
+		          ),
+		        ),
+			    ),
+			  ),
 		  'location' => array(
 			  array(
 	        array(

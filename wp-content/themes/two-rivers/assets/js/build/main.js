@@ -37,17 +37,27 @@
 
   // Build map on dist page
   $('#map').usmap({
-    // The click action
+    stateHoverStyles: {fill: '#50b5d3'},
+    stateHoverAnimation: 150,
+    labelBackingHoverStyles: {fill: '#50b5d3'},
     click: function(event, data) {
+      $('.storeListing').css('background-image', 'url('+php_object.assets_url+'/assets/images/ajax-loader.gif)');
       $.ajax({
-            url: "http://tworivers.local/locations/al/",
+            url: "http://tworivers.local/locations/"+data.name+"/",
             dataType: "json",
             success: function(data){
+              $('.storeListing').css('background-image', 'none');
               var querySuccess = data.successText;
-              $('.storeListing').text(data.statename);
+              var storeRoll = "";
+              $.each( data.stores, function(index, value){
+                  storeRoll = storeRoll+"<a target='_blank' class='mapStoreItem' href='"+value.storeurl+"'><img class='storeIconThumb' src='"+value.storeimage+"'><br>"+value.storename+"</a>";
+              });
+              $('.storeListing').html("<h3>"+data.statename+"</h3>");
+              $('.storeListing').append(storeRoll);
             },
             error: function(jqXHR, textStatus, errorThrown){
-              $('.storeListing').text("No stores available for that state");
+              $('.storeListing').css('background-image', 'none');
+              $('.storeListing').text("No stores listed for "+data.name);
             }
       });
     }
