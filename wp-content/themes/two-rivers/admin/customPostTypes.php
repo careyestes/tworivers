@@ -104,3 +104,38 @@ function brand_categories_post_type() {
         register_post_type( 'tr_brands_types', $args );
         flush_rewrite_rules();
 }
+
+add_action('init', 'brand_map_listing');
+function brand_map_listing() {
+        $labels = array(
+                'name' => 'Map Locations',
+                'singular_name' => 'Map Location',
+                'menu_name' => 'Map',
+                'add_new' => 'Add Map Location',
+                'add_new_item' => 'Add Map Location',
+                'edit' => 'Edit',
+                'edit_item' => 'Edit Map Location',
+                'new_item' => 'New Map Locations',
+                'view' => 'View Map Locations',
+                'view_item' => 'View Map Locations',
+                'search_items' => 'Search Map Locations',
+                'not_found' => 'No Map Locations Found',
+                'not_found_in_trash' => 'No Map Locations Found in Trash',
+                'parent' => 'Parent Map Locations',  
+        );
+        $args = array( 'labels' => $labels, 
+                'public' => false,
+                'publicly_queryable' => true,
+                'exclude_from_search' => true,
+                'show_ui' => true, 
+                'query_var' => true,
+                'rewrite' => array('slug'=>'locations','with_front'=>true),
+                'capability_type' => 'post',
+                'hierarchical' => false,
+                'menu_position' => 30,
+                'supports' => array('title'),
+        );
+
+        register_post_type( 'tr_brand_locations', $args );
+        flush_rewrite_rules();
+}

@@ -35,15 +35,21 @@
   thumbTransition();
 	tabListener();
 
-  var optionArr=[]
-  optionArr={"AL": [{"name":"Rouses"},{"name":"Winn-Dixie"}]} 
-  var data=optionArr['AL'][1]['name'];
-  console.log(data);
   // Build map on dist page
   $('#map').usmap({
     // The click action
     click: function(event, data) {
-      $('.storeListing').text(data.name);
+      $.ajax({
+            url: "http://tworivers.local/locations/al/",
+            dataType: "json",
+            success: function(data){
+              var querySuccess = data.successText;
+              $('.storeListing').text(data.statename);
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+              $('.storeListing').text("No stores available for that state");
+            }
+      });
     }
   });
 

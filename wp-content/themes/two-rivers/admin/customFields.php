@@ -229,4 +229,50 @@ if(function_exists("register_field_group")) {
 	      ),
 	    'menu_order' => 0,
 	));
+	register_field_group(array(
+	    'id' => 'acf_brand_location_fields',
+	    'title' => 'Map Location',
+	    'fields' => array(
+		    array(
+		        'key'           => 'tr_brand_location_state_name',
+		        'label'         => __('State Name'),
+		        'name'          => 'brand_location_state_name',
+		        'type'          => 'text',
+		    ),
+		    array(
+		        'key'           => 'tr_brand_location_state_name_object',
+		        'label'         => __('Stores'),
+		        'name'          => 'brand_location_state_name_object',
+		        'type' => 'repeater',
+	        'sub_fields' => array(
+	          array(
+							'key'          => 'tr_brand_location_state_name_text',
+							'label'        => 'Store Name',
+							'name'         => 'location_state_name_text',
+							'instructions' => 'Add the Store Title',
+							'type'         => 'text',
+							'required'     => true
+	          ),
+	        ),
+		    ),
+		  ),
+		  'location' => array(
+			  array(
+	        array(
+	          'param'    => 'post_type',
+	          'operator' => '==',
+	          'value'    => 'tr_brand_locations',
+	          'order_no' => 0,
+	          'group_no' => 0,
+	        ),
+	      ),
+	    ),
+	      'options'        => array(
+	        'position'       => 'normal',
+	        'layout'         => 'default',
+	        'hide_on_screen' => array(
+	        ),
+	      ),
+	    'menu_order' => 0,
+	));
 }
