@@ -50,7 +50,19 @@
               var querySuccess = data.successText;
               var storeRoll = "";
               $.each( data.stores, function(index, value){
-                  storeRoll = storeRoll+"<a target='_blank' class='mapStoreItem' href='"+value.storeurl+"'><img class='storeIconThumb' src='"+value.storeimage+"'><br>"+value.storename+"</a>";
+                if(value.storeurl) {
+                  storeRoll = storeRoll+"<a target='_blank' class='mapStoreItem' href='"+value.storeurl+"'>";
+                  if(value.storeimage) {
+                    storeRoll = storeRoll+"<img class='storeIconThumb' src='"+value.storeimage+"'><br>";
+                  }
+                  storeRoll = storeRoll+value.storename+"</a>";
+                } else {
+                  storeRoll = storeRoll+"<div class='mapStoreItem'>";
+                  if(value.storeimage) {
+                    storeRoll = storeRoll+"<img class='storeIconThumb' src='"+value.storeimage+"'><br>";
+                  }
+                  storeRoll = storeRoll+value.storename+"</div>";
+                }
               });
               $('.storeListing').html("<h3>"+data.statename+"</h3>");
               $('.storeListing').append(storeRoll);

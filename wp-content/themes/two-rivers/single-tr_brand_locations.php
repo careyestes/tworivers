@@ -14,11 +14,17 @@ $randMoreArgs = array(
 			$storesObject = array();
 			$stores = get_field('brand_location_state_name_object');
 			foreach($stores as $store) {
-				$storesObject[] = array(
-					'storename'  => $store['location_state_name_text'],
-					'storeurl'   => $store['location_state_store_url'],
-					'storeimage' => $store['location_state_store_logo']['url']
-				);
+				$storesArray = array();
+				if(isset($store['location_state_name_text']) && $store['location_state_name_text'] != "") {
+					$storesArray['storename'] = $store['location_state_name_text'];
+				}
+				if(isset($store['location_state_store_url']) && $store['location_state_store_url'] != "") {
+					$storesArray['storeurl'] = $store['location_state_store_url'];
+				}
+				if(isset($store['location_state_store_logo']) && $store['location_state_store_logo'] != "") {
+					$storesArray['storeimage'] = $store['location_state_store_logo']['url'];
+				}
+				$storesObject[] = $storesArray;
 			}
 			$selectedArray['title'] = $title;
 			$selectedArray['statename'] = $stateName;
