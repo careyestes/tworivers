@@ -202,13 +202,13 @@
     $(window).scroll(function() {
         if ($(window).scrollTop() + $(window).height() === $(document).height()) {
             $('.site-footer').animate({ 'marginBottom': 0 }, 'fast');
-            // $('#page').animate({ 'top': '-500px' }, 'fast');
+            // $('#page').animate({ 'marginBottom': '500px' }, 'fast');
             isShowing = true;
       }
 
       else if (isShowing === true && $(window).scrollTop() + $(window).height() <= $(document).height() ) {
         $('.site-footer').animate({ 'marginBottom': '-497px' }, 'fast');
-        // $('#page').animate({ 'top': '0' }, 'fast');
+        // $('#page').animate({ 'marginBottom': '0' }, 'fast');
         isShowing = false;
       }
     });

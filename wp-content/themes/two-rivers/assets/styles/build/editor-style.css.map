@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": ";;;AAGA,UAAW;EACV,MAAM,EAAE,WAAW;;;AAGpB,EAAG;EACD,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,GAAG;EACX,MAAM,EAAE,CAAC;EACT,UAAU,EAAE,WAAW;EACvB,MAAM,EAAE,CAAC;EACT,aAAa,EAAE,cAAc",
+"sources": ["../editor-style.scss"],
 "names": [],
 "file": "editor-style.css"
 }

@@ -19,6 +19,17 @@ hr {
 
 .entry-content {
 	text-align: left;
+	h2, h3, h4, h5, h6 {
+		clear: none;
+	}
+	hr {
+		clear: both;
+		height: 5px;
+		margin: 0;
+		background: transparent;
+		border: 0;
+		border-bottom: 1px dotted $brown;
+	}
 }
 
 #page {

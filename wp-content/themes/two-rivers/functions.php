@@ -5,6 +5,7 @@ require('admin/stylesAndScripts.php');
 require('admin/customPostTypes.php');
 require('admin/customFunctions.php');
 require('admin/customFields.php');
+require('admin/shortcodes.php');
 
 add_action( 'widgets_init', 'tr_add_custom_widgets_init' );
 

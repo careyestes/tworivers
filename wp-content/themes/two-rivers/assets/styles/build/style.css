@@ -1160,6 +1160,17 @@ hr {
 .entry-content {
   text-align: left;
 }
+.entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6 {
+  clear: none;
+}
+.entry-content hr {
+  clear: both;
+  height: 5px;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dotted #4b2406;
+}
 
 #page {
   position: relative;
