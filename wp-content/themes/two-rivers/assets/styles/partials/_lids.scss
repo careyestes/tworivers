@@ -28,22 +28,28 @@
 		margin: 1em 0;
 		// border-bottom: 1px dotted $brown;
 		// overflow: hidden;
+		&.lightRow, &.blackTea, &.otherRow {
+			h5 {
+				border: 0;
+			}
+		}
 		h5 {
-			float: left;
-			width: 14%;
-			font-size: 0.9em;
+			font-size: 1.2em;
 			font-weight: normal;
-			font-style: italic;
-			font-family: $georgia;
-			text-align: right;
+			font-family: $langdon;
+			text-align: left;
+			text-transform: uppercase;
 			padding: 0 1.5em 0 0;
+			margin: 0.5em 0 1em 0;
 			font-size: 1em;
+			font-size: 2em;
+			border-top: 1px dotted $brown;
 		}
 		.lidBlock {
 			display: block;
 			float: left;
 			width: 12%;
-			margin-right: 4%;
+			margin:0 5% 2em 0;
 			text-decoration: none;
 			.lidTitle {
 				margin: 5px 0;

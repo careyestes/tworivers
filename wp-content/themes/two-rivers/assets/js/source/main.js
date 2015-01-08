@@ -1,5 +1,9 @@
 (function($) {
 
+  function everySixth() {
+    $('.lidBlock:nth-child(7n)').css('marginRight', '0');
+  }
+
 	function tabListener() {
     var urlhash = window.location.hash;
     var hash = urlhash.replace("#", ""); 
@@ -32,6 +36,7 @@
     });
   }
 
+  everySixth();
   thumbTransition();
 	tabListener();
 
@@ -121,7 +126,7 @@
   });
 
 
-  $('.familyOfBrands').waypoint(function() {
+  $('#tootsie').waypoint(function() {
     var object = $(".leaves");
     var side = 'right';
     var start = '-150px';
@@ -142,6 +147,22 @@
     var side = 'left';
     var start = '-270px';
     var end = '0';
+    slideParallax(object, side, start, end);
+  });
+
+  $('.familyOfBrandsButton').waypoint(function() {
+    var object = $(".spoon");
+    var side = 'left';
+    var start = '-100px';
+    var end = '141px';
+    slideParallax(object, side, start, end);
+  });
+
+  $('.betterCupsHeader').waypoint(function() {
+    var object = $(".marshmellows");
+    var side = 'right';
+    var start = '-100px';
+    var end = '97px';
     slideParallax(object, side, start, end);
   });
 

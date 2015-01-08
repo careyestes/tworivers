@@ -24,13 +24,15 @@ $boxes = get_field('brand_boxes');
 		</section>
 		<section class="brandBoxContainer">
 			<?php if($boxes): ?>
+				<?php $counter = 1; ?>
 				<?php foreach($boxes as $box): ?>
 					<?php 
 						$strength = $box['brand_flavor_box_type']; 
 						$url = strtolower($box['brand_flavor_box_title']);
-						$url = str_replace("'", "", $url);
+						$url = preg_replace('/[^\w ]+/', '', $url);
+						$url = str_replace('  ', '-', $url);
 						$url = str_replace(' ', '-', $url);
-						$url = urlencode($url);
+						//$url = urlencode($url);
 					?>
 					<div id="<?php echo $url ?>" class="brandContainerSingle">
 						<img src="<?php echo $box['flavor_box_image'] ?>">
@@ -43,7 +45,9 @@ $boxes = get_field('brand_boxes');
 					</div>
 					<article class="lightbox <?php echo $url; ?>">
 							<button class="lightboxCloseButton" type="button">&times;</button>
-							<img class="lightboxImage" src="<?php echo $box['flavor_lid_image'] ?>">
+							<?php if($box['flavor_lid_cup_image']): ?>
+								<img class="lightboxImage" src="<?php echo $box['flavor_lid_cup_image'] ?>">
+							<?php endif ?>
 							<div class="lightboxHeader"><?php echo $box['brand_flavor_box_title'] ?></div>
 							<?php 
 									$strengthNumber = getFlavorStrength($strength); 
@@ -62,6 +66,7 @@ $boxes = get_field('brand_boxes');
 							<?php endif ?>
 							<?php echo $box['brand_flavor_desc'] ?>
 					</article>
+					<?php if ($counter % 3 == 0) { echo "<div style='clear:both';></div>"; }; $counter++; ?>
 				<?php endforeach ?>
 			<?php endif; ?>
 			<div style="clear: both;"> </div>

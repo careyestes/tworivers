@@ -68,7 +68,7 @@
 		top: 40%;
 		right: -150px;
 		z-index: 2;
-		width: 150px;
+		width: 200px;
 		height: 374px;
 		background: url(assets/images/parallax-Family-Leaves.png) no-repeat;
 	}
@@ -97,11 +97,21 @@
 }
 
 .privateLabel {
+	.spoon {
+		display: none;
+		top: 40%;
+		left: -100px;
+		width: 71px;
+		height: 305px;
+		margin: 0 auto;
+		z-index: 5;
+		background: url(assets/images/parallax-Private-Spoon.png) no-repeat;
+	}
 	.tea {
 		top: 30%;
 		left: -522px;
 		right: 0;
-		width: 500px;
+		width: 407px;
 		height: 417px;
 		margin: 0 auto;
 		z-index: 5;
@@ -133,6 +143,16 @@
 		height: 284px;
 		margin: 0 auto;
 		background: url(assets/images/parallax-Industry-Cocoa.png) no-repeat;
+	}
+	.marshmellows {
+		display: none;
+		top: 69%;
+		right: 97px;
+		z-index: 4;
+		width: 167px;
+		height: 114px;
+		margin: 0 auto;
+		background: url(assets/images/parallax-Industry-Marshmellows.png) no-repeat;
 	}
 	.copy {
 		top: 28%;
