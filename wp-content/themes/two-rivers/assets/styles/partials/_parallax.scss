@@ -61,7 +61,7 @@
 		z-index: 1;
 		width: 395px;
 		height: 402px;
-		background: url(assets/images/parallax-Family-Beans.png);
+		background: url(assets/images/parallax-Family-Beans.png) no-repeat;
 	}
 	.leaves {
 		display: none;
@@ -70,7 +70,7 @@
 		z-index: 2;
 		width: 150px;
 		height: 374px;
-		background: url(assets/images/parallax-Family-Leaves.png);
+		background: url(assets/images/parallax-Family-Leaves.png) no-repeat;
 	}
 	.coffeeNapkin {
 		top: 20px;
@@ -80,7 +80,7 @@
 		width: 382px;
 		height: 361px;
 		margin: 0 auto;
-		background: url(assets/images/parallax-Family-CoffeeNapkin.png);
+		background: url(assets/images/parallax-Family-CoffeeNapkin.png) no-repeat;
 	}
 	.cappuccino {
 		display: none;
@@ -88,7 +88,7 @@
 		left: -300px;
 		width: 309px;
 		height: 340px;
-		background: url(assets/images/parallax-Family-Capuccino.png);
+		background: url(assets/images/parallax-Family-Capuccino.png) no-repeat;
 		z-index: 4
 	}
 	.copy {
@@ -105,7 +105,7 @@
 		height: 303px;
 		margin: 0 auto;
 		z-index: 5;
-		background: url(assets/images/parallax-Private-Tea.png);
+		background: url(assets/images/parallax-Private-Tea.png) no-repeat;
 	}
 	.copy {
 		top: 50%;
@@ -114,22 +114,25 @@
 }
 
 .industryExpertise {
-	.brownSugar {
-		top: 20%;
-		left: 0;
-		width: 161px;
-		height: 468px;
-		background: url(assets/images/parallax-Industry-Sugar.png);
+	.chocolate {
+		display: none;
+		top: 37%;
+		left: -270px;
+		z-index: 6;
+		width: 300px;
+		height: 200px;
+		margin: 0 auto;
+		background: url(assets/images/parallax-betterbeans-chocolate.png) no-repeat;
 	}
 	.cocoa {
 		top: 50%;
 		left: 0;
 		right: -40%;
 		z-index: 6;
-		width: 419px;
-		height: 295px;
+		width: 300px;
+		height: 284px;
 		margin: 0 auto;
-		background: url(assets/images/parallax-Industry-Cocoa.png);
+		background: url(assets/images/parallax-Industry-Cocoa.png) no-repeat;
 	}
 	.copy {
 		top: 28%;

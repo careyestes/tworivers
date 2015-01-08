@@ -41,13 +41,15 @@
     stateHoverAnimation: 150,
     labelBackingHoverStyles: {fill: '#50b5d3'},
     click: function(event, data) {
-      $('.storeListing').css('background-image', 'url('+php_object.assets_url+'/assets/images/ajax-loader.gif)');
+      $('.storeListing').text(" ");
+      $('.storeListing').css('background-image', 'url('+phpObject.assets_url+'/assets/images/ajax-loader.gif)');
+      console.log(data.name);
       $.ajax({
-            url: "http://tworivers.local/locations/"+data.name+"/",
+            url: phpObject.siteUrl+"/locations/"+data.name+"/",
             dataType: "json",
+            contentType:'application/json',
             success: function(data){
               $('.storeListing').css('background-image', 'none');
-              var querySuccess = data.successText;
               var storeRoll = "";
               $.each( data.stores, function(index, value){
                 if(value.storeurl) {
@@ -66,8 +68,12 @@
               });
               $('.storeListing').html("<h3>"+data.statename+"</h3>");
               $('.storeListing').append(storeRoll);
+              $( ".mapStoreItem:nth-child(2n)" ).css('clear','left');
             },
             error: function(jqXHR, textStatus, errorThrown){
+              console.log(jqXHR);
+              console.log(textStatus);
+              console.log(errorThrown);
               $('.storeListing').css('background-image', 'none');
               $('.storeListing').text("No stores listed for "+data.name);
             }
@@ -128,6 +134,14 @@
     var side = 'left';
     var start = '-300px';
     var end = '40px';
+    slideParallax(object, side, start, end);
+  });
+
+  $('.privateLabelButton').waypoint(function() {
+    var object = $(".chocolate");
+    var side = 'left';
+    var start = '-270px';
+    var end = '0';
     slideParallax(object, side, start, end);
   });
 

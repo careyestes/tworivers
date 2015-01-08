@@ -28,7 +28,7 @@ get_header(); ?>
 			<div id="map" class="mapContainer"></div>
 			<div class="storeColumn">
 				<h2 class="entry-title">Stores</h2>
-				<div class="storeListing"></div>
+				<div class="storeListing"><p>Click on a state to see stores that carry Two Rivers products.</p></div>
 			</div>
 		</div><!-- #content -->
 	</div><!-- #primary -->

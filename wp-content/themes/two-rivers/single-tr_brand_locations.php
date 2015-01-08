@@ -1,13 +1,8 @@
 <?php
-
-$randMoreArgs = array(
-	'post_type' => 'tr_brand_locations',
-	'posts_per_page' => -1,
-	); 
-	$locationQuery = new WP_Query($randMoreArgs); 
-	if($locationQuery->have_posts()) {
-		while($locationQuery->have_posts()) {
-			$locationQuery->the_post();
+header('Content-type: application/json');
+		$bigArray = array();
+		while(have_posts() ) { 
+			the_post(); 
 			$selectedArray = array();
 			$title = get_the_title();
 			$stateName = get_field('brand_location_state_name');
@@ -29,7 +24,6 @@ $randMoreArgs = array(
 			$selectedArray['title'] = $title;
 			$selectedArray['statename'] = $stateName;
 			$selectedArray['stores'] = $storesObject;
-			echo json_encode($selectedArray);
+			echo json_encode($selectedArray); 
 		}
-	}
 ?>	

@@ -9,8 +9,8 @@ function tr_scripts_styles() {
 	// wp_enqueue_script( 'js-main', get_template_directory_uri().'/assets/js/main.min.js', array('js-plugins') , '20141120', true );
 
 	wp_register_script( 'js-main', get_template_directory_uri().'/assets/js/main.min.js', array('js-plugins') , '20141120', true );
-	$translation_array = array( 'assets_url' => get_template_directory_uri() );
-	wp_localize_script( 'js-main', 'php_object', $translation_array );
+	$translation_array = array( 'assets_url' => get_template_directory_uri(), 'siteUrl' => home_url() );
+	wp_localize_script( 'js-main', 'phpObject', $translation_array );
 	wp_enqueue_script( 'js-main' );
 
 }
