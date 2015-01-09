@@ -142,11 +142,24 @@
     slideParallax(object, side, start, end);
   });
 
-  $('.privateLabelButton').waypoint(function() {
-    var object = $(".chocolate");
+  $('.familyOfBrandsButton').waypoint(function() {
+    var object = $(".lemon1");
+    var side = 'right';
+    var start = '-206px';
+    var end = '110px';
+    slideParallax(object, side, start, end);
+    var object2 = $(".lemon2");
+    var side2 = 'right';
+    var start2 = '-510px';
+    var end2 = '40px';
+    slideParallax(object2, side2, start2, end2);
+  });
+
+  $('.privateLabelCupsHeader').waypoint(function() {
+    var object = $(".lemon3");
     var side = 'left';
-    var start = '-270px';
-    var end = '0';
+    var start = '-160px';
+    var end = '-60px';
     slideParallax(object, side, start, end);
   });
 
@@ -154,7 +167,15 @@
     var object = $(".spoon");
     var side = 'left';
     var start = '-100px';
-    var end = '141px';
+    var end = '90px';
+    slideParallax(object, side, start, end);
+  });
+
+  $('.privateLabelButton').waypoint(function() {
+    var object = $(".chocolate");
+    var side = 'left';
+    var start = '-270px';
+    var end = '0';
     slideParallax(object, side, start, end);
   });
 

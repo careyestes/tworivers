@@ -2,4 +2,8 @@
    Home Page Template
    ========================================================================== */
 
-body.home {}
+body.home {
+	.site-footer {
+		position: fixed;
+	}
+}

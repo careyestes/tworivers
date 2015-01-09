@@ -12,6 +12,9 @@
 <section class="storyboardLevel privateLabel">
   <div class="object tea"></div>
   <div class="object spoon"></div>
+  <div class="object lemon1"></div>
+  <div class="object lemon2"></div>
+  <div class="object lemon3"></div>
 	<h3 class="privateLabelCupsHeader">Private Label</h3>
 	<article class="copy"><p>Roasters and Retailers across the U.S. are looking to tap into an extremely lucrative single serve market as more and more of their loyal customers discover the convenience of single serve brewing systems. As the co-packing partner for several different companies with many divergent needs, Two Rivers Coffee offers a complete single serve solution. We have perfected our turnkey system and have established a track record of proven success by putting optimal processes in place.  </p>
 	<button class="readMore" type="button"><a class="readMoreText privateLabelButton" href="private-label">Read More</a></button>

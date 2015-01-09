@@ -107,9 +107,36 @@
 		z-index: 5;
 		background: url(assets/images/parallax-Private-Spoon.png) no-repeat;
 	}
+	.lemon1 {
+		display: none;
+		top: 21%;
+		right: -5206px;
+		width: 175px;
+		height: 165px;
+		z-index: 5;
+		background: url(assets/images/parallax-Private-Lemon1.png) no-repeat;
+	}
+	.lemon2 {
+		display: none;
+		top: 43%;
+		right: -510px;
+		width: 142px;
+		height: 145px;
+		z-index: 5;
+		background: url(assets/images/parallax-Private-Lemon2.png) no-repeat;
+	}
+	.lemon3 {
+		display: none;
+		top: 81%;
+		left: -160px;
+		width: 175px;
+		height: 165px;
+		z-index: 5;
+		background: url(assets/images/parallax-Private-Lemon3.png) no-repeat;
+	}
 	.tea {
 		top: 30%;
-		left: -522px;
+		left: -437px;
 		right: 0;
 		width: 407px;
 		height: 417px;
@@ -147,7 +174,7 @@
 	.marshmellows {
 		display: none;
 		top: 69%;
-		right: 97px;
+		right: -100px;
 		z-index: 4;
 		width: 167px;
 		height: 114px;
