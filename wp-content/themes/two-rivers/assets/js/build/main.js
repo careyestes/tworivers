@@ -126,11 +126,11 @@
   });
 
 
-  $('#tootsie').waypoint(function() {
+  $('.familyOfBrandsCopy').waypoint(function() {
     var object = $(".leaves");
-    var side = 'right';
-    var start = '-150px';
-    var end = '0';
+    var side = 'left';
+    var start = '-350px';
+    var end = '-12%';
     slideParallax(object, side, start, end);
   });
 
@@ -146,7 +146,7 @@
     var object = $(".lemon1");
     var side = 'right';
     var start = '-206px';
-    var end = '110px';
+    var end = '3%';
     slideParallax(object, side, start, end);
     var object2 = $(".lemon2");
     var side2 = 'right';
@@ -159,15 +159,15 @@
     var object = $(".lemon3");
     var side = 'left';
     var start = '-160px';
-    var end = '-60px';
+    var end = '18%';
     slideParallax(object, side, start, end);
   });
 
   $('.familyOfBrandsButton').waypoint(function() {
     var object = $(".spoon");
     var side = 'left';
-    var start = '-100px';
-    var end = '90px';
+    var start = '-210px';
+    var end = '12%';
     slideParallax(object, side, start, end);
   });
 
@@ -175,15 +175,15 @@
     var object = $(".chocolate");
     var side = 'left';
     var start = '-270px';
-    var end = '0';
+    var end = '-2%';
     slideParallax(object, side, start, end);
   });
 
-  $('.betterCupsHeader').waypoint(function() {
+  $('.cocoa').waypoint(function() {
     var object = $(".marshmellows");
     var side = 'right';
     var start = '-100px';
-    var end = '97px';
+    var end = '20%';
     slideParallax(object, side, start, end);
   });
 

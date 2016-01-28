@@ -51,8 +51,9 @@
 				margin: 0;
 				padding-left: 0;
 				li {
-					float: left;
 					position: relative;
+					float: left;
+					width: auto;
 					margin-left: 24px;
 					&:before {
 						margin: 0 0 -2px;
@@ -107,8 +108,10 @@
 		}
 	}
 	.main-navigation {
+		@include clearfix();
 		display: block;
 		float: left;
+		width: auto;
 		margin: 3.4em 0 0 0;
 		border-top: 2px dotted #000;
 		border-bottom: 2px dotted #000;
@@ -117,6 +120,7 @@
 		font-size: 1.4em;
 		a {
 			display: block;
+			width: 100%;
 			text-decoration: none;
 			color: #000;
 			&:hover {
@@ -124,12 +128,16 @@
 			}
 		}
 		ul {
+			@include clearfix();
+			width: 100%;
 			list-style: disc;
 			margin: 0;
 			padding-left: 0;
 			li {
+				// position: relative;
+				display: inline-block;
 				float: left;
-				position: relative;
+				width: auto;
 				margin-left: 20px;
 				&:before {
 					margin: 0 0 -2px;

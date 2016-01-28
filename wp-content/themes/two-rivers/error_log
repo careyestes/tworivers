@@ -1,0 +1,7 @@
+[24-Feb-2015 14:36:45 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17
+[25-Jul-2015 18:50:40 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17
+[02-Aug-2015 18:02:25 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/404.php on line 10
+[24-Sep-2015 10:21:54 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17
+[06-Nov-2015 04:42:19 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17
+[06-Nov-2015 04:42:35 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17
+[09-Nov-2015 09:07:23 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home1/karenspl/public_html/tworivers/wp-content/themes/two-rivers/index.php on line 17

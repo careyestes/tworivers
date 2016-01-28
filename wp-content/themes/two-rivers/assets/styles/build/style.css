@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 Theme Name: Two Rivers 1.0
 Author: Carey Estes
@@ -725,8 +726,9 @@ address {
   padding-left: 0;
 }
 .stickyHeader .stickyHeaderContainer .main-navigation ul li {
-  float: left;
   position: relative;
+  float: left;
+  width: auto;
   margin-left: 24px;
 }
 .stickyHeader .stickyHeaderContainer .main-navigation ul li:before {
@@ -780,6 +782,7 @@ address {
 .site-header .main-navigation {
   display: block;
   float: left;
+  width: auto;
   margin: 3.4em 0 0 0;
   border-top: 2px dotted #000;
   border-bottom: 2px dotted #000;
@@ -787,8 +790,18 @@ address {
   text-transform: uppercase;
   font-size: 1.4em;
 }
+.site-header .main-navigation:before, .site-header .main-navigation:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.site-header .main-navigation:after {
+  clear: both;
+}
 .site-header .main-navigation a {
   display: block;
+  width: 100%;
   text-decoration: none;
   color: #000;
 }
@@ -796,13 +809,24 @@ address {
   color: #a50000;
 }
 .site-header .main-navigation ul {
+  width: 100%;
   list-style: disc;
   margin: 0;
   padding-left: 0;
 }
+.site-header .main-navigation ul:before, .site-header .main-navigation ul:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.site-header .main-navigation ul:after {
+  clear: both;
+}
 .site-header .main-navigation ul li {
+  display: inline-block;
   float: left;
-  position: relative;
+  width: auto;
   margin-left: 20px;
 }
 .site-header .main-navigation ul li:before {
@@ -1525,7 +1549,7 @@ hr {
   position: absolute;
   top: 0;
   left: 0;
-  content: "\2022";
+  content: "•";
   width: 20px;
   height: 20px;
   font-family: "slick";
@@ -1625,8 +1649,10 @@ hr {
 }
 .storyboardLevel .copy {
   position: absolute;
+  z-index: 0;
   width: 35%;
   padding: 1em;
+  background: white;
   background: rgba(255, 255, 255, 0.8);
   font-family: "Georgia", Times, serif;
   font-size: 1.1em;
@@ -1637,11 +1663,13 @@ hr {
   margin: 0 auto;
 }
 .storyboardLevel .readMore {
+  position: relative;
+  z-index: 1000;
   display: block;
   width: 180px;
   height: 43px;
   margin: 0 auto;
-  padding: 0 0.5em;
+  padding: 0.4em 0.5em 0.5em;
   text-align: center;
   background: #50b5d3;
   border: 0;
@@ -1666,14 +1694,13 @@ hr {
   height: 402px;
   background: url(assets/images/parallax-Family-Beans.png) no-repeat;
 }
-.familyOfBrands .leaves {
-  display: none;
-  top: 40%;
-  right: -150px;
-  z-index: 2;
-  width: 200px;
-  height: 374px;
-  background: url(assets/images/parallax-Family-Leaves.png) no-repeat;
+.familyOfBrands .stain {
+  top: 30%;
+  right: -2%;
+  z-index: 1;
+  width: 231px;
+  height: 195px;
+  background: url(assets/images/parallax-Family-Stain.png) no-repeat;
 }
 .familyOfBrands .coffeeNapkin {
   top: 20px;
@@ -1705,13 +1732,22 @@ hr {
   width: 71px;
   height: 305px;
   margin: 0 auto;
-  z-index: 5;
+  z-index: 3;
   background: url(assets/images/parallax-Private-Spoon.png) no-repeat;
+}
+.privateLabel .leaves {
+  display: none;
+  top: 5%;
+  left: -350px;
+  z-index: 6;
+  width: 300px;
+  height: 374px;
+  background: url(assets/images/parallax-Family-Leaves.png) no-repeat;
 }
 .privateLabel .lemon1 {
   display: none;
   top: 21%;
-  right: -5206px;
+  right: -206px;
   width: 175px;
   height: 165px;
   z-index: 5;
@@ -1719,8 +1755,8 @@ hr {
 }
 .privateLabel .lemon2 {
   display: none;
-  top: 43%;
-  right: -510px;
+  top: 46%;
+  right: -210px;
   width: 142px;
   height: 145px;
   z-index: 5;
@@ -1728,7 +1764,7 @@ hr {
 }
 .privateLabel .lemon3 {
   display: none;
-  top: 81%;
+  top: 82%;
   left: -160px;
   width: 175px;
   height: 165px;
@@ -1736,7 +1772,7 @@ hr {
   background: url(assets/images/parallax-Private-Lemon3.png) no-repeat;
 }
 .privateLabel .tea {
-  top: 30%;
+  top: 6%;
   left: -437px;
   right: 0;
   width: 407px;
@@ -1746,8 +1782,8 @@ hr {
   background: url(assets/images/parallax-Private-Tea.png) no-repeat;
 }
 .privateLabel .copy {
-  top: 50%;
-  right: -30%;
+  top: 36%;
+  right: -29%;
 }
 
 .industryExpertise .chocolate {
@@ -1761,9 +1797,9 @@ hr {
   background: url(assets/images/parallax-betterbeans-chocolate.png) no-repeat;
 }
 .industryExpertise .cocoa {
-  top: 50%;
+  top: 0;
   left: 0;
-  right: -40%;
+  right: -24%;
   z-index: 6;
   width: 300px;
   height: 284px;
@@ -1772,7 +1808,7 @@ hr {
 }
 .industryExpertise .marshmellows {
   display: none;
-  top: 69%;
+  top: 39%;
   right: -100px;
   z-index: 4;
   width: 167px;
